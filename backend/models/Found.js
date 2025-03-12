@@ -12,5 +12,6 @@ const FoundDetails=new mongoose.Schema({
      owner: User,
      date: Date,
      identifying: Array,
+     id: Number
 })
 module.exports=mongoose.module('Found',FoundDetails)
