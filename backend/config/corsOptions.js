@@ -2,6 +2,8 @@
     'http://localhose:5173',
     'http://localhose:8000',
     'http://localhose:7000',
+    'http://localhose:5000',
+
 
  ]
 var whitelist = ['http://localhost:3000/']
