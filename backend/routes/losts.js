@@ -1,12 +1,13 @@
 const express=require("express")
 const router=express.Router()
 const {getAllLosts,addLost,deleteLost,updateLost,getLostById}=require("../controllers/losts")
+const verifyJWT = require("../middlewares/verifyJWT")
 
 router.get('/',getAllLosts)
 router.post('/',addLost)
-router.delete('/:id',deleteLost)
-router.put('/:id',updateLost)
-router.get('/:id',getLostById)
+router.delete('/:id',verifyJWT,deleteLost)
+router.put('/:id',verifyJWT,updateLost)
+router.get('/:id',verifyJWT,getLostById)
 
 
 module.exports=router
