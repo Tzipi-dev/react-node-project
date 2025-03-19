@@ -9,8 +9,11 @@ const LostDetails=new mongoose.Schema({
     name: String,
     city: String,
     street: String,
-    owner: User,
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: User
+    },
     date: Date,
-    id: Number
+    
 })
-module.exports=mongoose.module('Lost',LostDetails)
+module.exports=mongoose.model('Lost',LostDetails)

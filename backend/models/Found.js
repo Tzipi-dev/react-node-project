@@ -9,9 +9,12 @@ const FoundDetails=new mongoose.Schema({
      name: String,
      city: String,
      street: String,
-     owner: User,
+     owner: {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: User
+       },
      date: Date,
      identifying: Array,
-     id: Number
+   
 })
-module.exports=mongoose.module('Found',FoundDetails)
+module.exports=mongoose.model('Found',FoundDetails)
