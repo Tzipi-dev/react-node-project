@@ -1,7 +1,10 @@
-import apiSlice from "./apiSlice";
-import { Found } from "../../interfaces/models";
 
-const apiFoundSlice = apiSlice.injectEndpoints({
+import { Found } from "../../interfaces/models";
+import apiSliceFound from "./apiSliceFound";
+
+
+
+const apiFoundSlice = apiSliceFound.injectEndpoints({
     endpoints: (builder) => ({
         getAllFounds: builder.query<Found[], void>({
             query: () => "/founds",

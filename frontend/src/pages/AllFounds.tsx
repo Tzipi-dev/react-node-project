@@ -1,8 +1,8 @@
-
-
 const AllFounds = () => {
   return (
-    <div>AllFounds</div>
+    <div>
+      AllFound
+    </div>
   )
 }
 

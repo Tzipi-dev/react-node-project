@@ -1,7 +1,7 @@
-import apiSlice from "./apiSlice";
 import { Lost } from "../../interfaces/models";
+import apiSliceLost from "./apiSliceLost";
 
-const apiLostSlice = apiSlice.injectEndpoints({
+const apiLostSlice = apiSliceLost.injectEndpoints({
     endpoints: (builder) => ({
         getAllLosts: builder.query<Lost[], void>({
             query: () => "/losts",

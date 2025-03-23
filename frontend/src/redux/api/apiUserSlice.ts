@@ -1,7 +1,10 @@
-import apiSlice from "./apiSlice";
-import { User } from "../../interfaces/models";
 
-const apiUserSlice = apiSlice.injectEndpoints({
+import { User } from "../../interfaces/models";
+import apiSliceUser from "./apiSliceUser";
+
+
+
+const apiUserSlice = apiSliceUser.injectEndpoints({
     endpoints: (builder) => ({
         getAllUsers: builder.query<User[], void>({
             query: () => "/users",
