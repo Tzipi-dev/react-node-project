@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router";
 import AppLayout from "../components/AppLayout";
 import HomePage from "../components/HomePage";
-import AddLost from "../components/AddLost";
-import AddFound from "../components/AddFound";
-import AllLosts from "../components/AllLosts";
-import AllFounds from "../components/AllFounds";
+import AddLost from "../pages/AddLost";
+import AddFound from "../pages/AddFound";
+import AllLosts from "../pages/AllLosts";
+import AllFounds from "../pages/AllFounds";
 
 
 const router = createBrowserRouter([{
