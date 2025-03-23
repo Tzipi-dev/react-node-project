@@ -1,22 +1,21 @@
- const allowedOrigins=[
-    'http://localhose:5173',
-    'http://localhose:8000',
-    'http://localhose:7000',
-    'http://localhose:5000',
+const whitelist = [
+  'http://localhost:5173',
+  'http://localhost:8000',
+  'http://localhost:7000',
+  'http://localhost:5000',
+];
 
-
- ]
-var whitelist = ['http://localhost:3000/']
-var corsOptions = {
+const corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
+      if (whitelist.indexOf(origin) !== -1 || !origin) { 
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
   },
-  credential: true,
-  optionsSuccessStatus: 200
-}
-module.exports=corsOptions
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
+module.exports = corsOptions;
  
