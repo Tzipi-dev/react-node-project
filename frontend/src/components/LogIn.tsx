@@ -5,6 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
 
 import { errorCSS } from "../globalStyle";
+
+import { LogInUser } from "../interfaces/models";
 interface LogInProps {
   setOpenModal: (isOpenModal: boolean) => void;
 }
@@ -12,7 +14,8 @@ interface LogInProps {
 const LogIn = ({ setOpenModal }: LogInProps) => {
  
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
-  const onSubmit = () => {
+  const onSubmit = (data: LogInUser) => {
+    
     setOpenModal(false)
   }
 
@@ -25,7 +28,8 @@ const LogIn = ({ setOpenModal }: LogInProps) => {
           {errors.email && <p style={errorCSS}>{errors.email.message}</p>}
         </div>
         <div>
-          <TextField id="filled-basic" label="סיסמה" variant="filled" />
+          <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)}/>
+          {errors.password && <p style={errorCSS}>{errors.password.message}</p>}
         </div>
         <Button variant="outlined" type="submit">log in</Button>
       </form>

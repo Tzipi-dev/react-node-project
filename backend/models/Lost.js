@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const User = require('./User')
 const LostDetails=new mongoose.Schema({
-    categiry: {
+  category: {
         type: String,
         enum: ['תכשיטים ושעונים', 'תיקים ומזוודות', 'ארנקים וכספים','טלפונים ואלקטרוניקה','יהדות','ביגוד','בעלי חיים','ציוד רפואי','אחר'], 
         default: 'אחר' 
