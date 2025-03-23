@@ -4,13 +4,27 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { errorCSS } from "../globalStyle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserSchema from "../schemas/UserSchema";
+import { useAddUserMutation } from "../redux/api/apiUserSlice";
+import { User } from "../interfaces/models";
 interface SignUpProps {
     setSignUpModal: (isSignUpOpen: boolean) => void;
 }
 const SignUp = ({ setSignUpModal }: SignUpProps) => {
-    
     const { handleSubmit,register, formState: {errors} } = useForm({resolver: zodResolver(UserSchema)})
-    const onSubmit = () => {
+    const [AddUserMutation]= useAddUserMutation()
+    const onSubmit  = async(data: User) => {
+        try {
+            const result = await AddUserMutation({
+              name: data.name,
+              password: data.password,
+              phone: data.phone,
+              email: data.email,
+            }).unwrap();
+            console.log('User added successfully:', result);
+          } 
+          catch (error) {
+            console.error('Error adding user:', error);
+        }
         setSignUpModal(false)
     }
     return (
@@ -34,5 +48,13 @@ const SignUp = ({ setSignUpModal }: SignUpProps) => {
         </div>
     )
 }
-
 export default SignUp
+
+
+
+
+
+
+
+
+

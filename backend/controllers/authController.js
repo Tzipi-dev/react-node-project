@@ -1,11 +1,12 @@
 const User=require('../models/User')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
+
 const login=async(req,res)=>{
-    const {name, passward}=req.body
-    if (!name||!passward)
+    const {email, passward}=req.body
+    if (!email||!passward)
         return res.status(400).json({message: "please fill all the required parameters"})
-    const foundUser=await User.findOne({name}).lean()
+    const foundUser=await User.findOne({email}).lean()
     if (!foundUser)
         return res.status(401).json({message: "UnauthOrilized"})
     const match=await bcrypt.compare(passward, foundUser.passward)
@@ -15,6 +16,8 @@ const login=async(req,res)=>{
     const accessToken=jwt.sign(userInfo,process.env.accessToken)
     res.json({accessToken:accessToken, user:userInfo})
 }
+
+
 const register=async(req,res)=>{
     const {name,email,phone,_id, passward}=req.body
     if (!name||!passward)

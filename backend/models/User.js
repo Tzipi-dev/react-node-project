@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const UserDetails=new mongoose.Schema({
     name: String,
-    passward: String,
+    password: String,
     phone: String,
     email: String,
    

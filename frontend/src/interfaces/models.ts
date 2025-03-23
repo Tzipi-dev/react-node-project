@@ -2,10 +2,10 @@ import { ObjectId } from "mongodb";
 
 export interface User {
     name: String,
-    passward: String,
+    password: String,
     phone: String,
     email: String,
-    _id: ObjectId
+    _id?: ObjectId
 }
 enum Categiry{
 'תכשיטים ושעונים',
@@ -25,7 +25,7 @@ export interface Lost{
     street: String,
     owner:  User,
     date: Date,
-    _id: ObjectId
+    _id?: ObjectId
 }
 export interface Found{
     categiry:Categiry,
@@ -35,5 +35,9 @@ export interface Found{
     owner: User,
     date: Date,
     identifying: Array<String>,
-    _id: ObjectId
+    _id?: ObjectId
+}
+export interface LogInUser{
+    email: String,
+    password: String
 }

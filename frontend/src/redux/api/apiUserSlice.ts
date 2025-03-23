@@ -16,12 +16,12 @@ const apiUserSlice = apiSliceUser.injectEndpoints({
         }),
         addUser: builder.mutation<User, User>({
             query: (newUser) => ({
-                url: "/users",
-                method: "POST",
-                body: newUser,
+              url: "/users",
+              method: "POST",
+              body: newUser,
             }),
             invalidatesTags: ["User"],
-        }),
+          }),
         updateUser: builder.mutation<User, User>({
             query: (updateUser) => ({
                 url: `/users/${updateUser._id}`,
