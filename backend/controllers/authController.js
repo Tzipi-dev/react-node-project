@@ -19,14 +19,14 @@ const login=async(req,res)=>{
 
 
 const register=async(req,res)=>{
-    const {name,email,phone,_id, passward}=req.body
-    if (!name||!passward)
+    const {name,email,phone,_id, password}=req.body
+    if (!name||!password)
          return res.status(400).json({message: "please fill all the required parameters"})  
     const duplicate=await User.findOne({name}).lean()
     if (duplicate)
         return res.status(409).json({message: "duplicated user name"})
-    const hashpwd=await bcrypt.hash(passward,10)
-    const userObject={name,email,phone,_id,passward: hashpwd}
+    const hashpwd=await bcrypt.hash(password,10)
+    const userObject={name,email,phone,_id,password: hashpwd}
     const user=await User.create(userObject)
     if (user)
         return res.status(201).json({message: `${user.name} created`})

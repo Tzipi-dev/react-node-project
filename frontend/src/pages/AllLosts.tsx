@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux"
 import { useGetAllLostsQuery } from "../redux/api/apiLostSlice"
 import { setAllLosts } from "../redux/slice/lostsSlice"
 import { useEffect } from "react"
+import ButtomNav from "../components/ButtomNav"
 
 const AllLosts = () => {
   const dispatch = useDispatch()
@@ -21,6 +22,7 @@ const AllLosts = () => {
   },[])
 
   return (
+<>
 
     <div>
       {
@@ -43,6 +45,8 @@ const AllLosts = () => {
 
       }
     </div>
+    <ButtomNav/>
+    </>
   )
 }
 
