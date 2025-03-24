@@ -12,6 +12,7 @@ const AllFounds = () => {
     fetchingData()
     console.log(GetAllFoundsQuery);
   }, [])
+  
   const fetchingData = async () => {
     try {
       await dispatch(setAllFounds(GetAllFoundsQuery))

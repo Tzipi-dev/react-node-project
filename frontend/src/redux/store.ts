@@ -16,7 +16,10 @@ const store = configureStore({
     foundSlice: foundSlice
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiFoundSlice.middleware), 
+    getDefaultMiddleware().concat(
+      apiSliceLost.middleware,
+      apiSliceUser.middleware,
+      apiSliceFound.middleware)
 });
 
 export default store;
