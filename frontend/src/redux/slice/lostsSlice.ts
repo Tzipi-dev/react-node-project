@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Lost } from "../../interfaces/models";
-
 const initialState: { allLosts: Lost[] } = {
     allLosts: [],
 };
 
-const foundSlice = createSlice({
+const lostSlice = createSlice({
     name: "founds",
     initialState,
     reducers: {
@@ -17,5 +16,5 @@ const foundSlice = createSlice({
         }
     }
 })
-export const { setAllLosts,addLost } = foundSlice.actions
-export default foundSlice.reducer
+export const { setAllLosts, addLost } = lostSlice.actions
+export default lostSlice.reducer
