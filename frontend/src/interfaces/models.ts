@@ -39,5 +39,6 @@ export interface Found{
 }
 export interface LogInUser{
     email: String,
-    password: String
+    password: String,
+    _id?:ObjectId
 }

@@ -1,5 +1,5 @@
 
-import { Found } from "../../interfaces/models";
+import { Found } from "../../../interfaces/models";
 import apiSliceFound from "./apiSliceFound";
 
 

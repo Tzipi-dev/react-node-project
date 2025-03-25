@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { useGetAllFoundsQuery } from "../redux/api/apiFoundSlice"
+import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice"
 import { setAllFounds } from "../redux/slice/foundSlice";
 
 import { useEffect } from "react";

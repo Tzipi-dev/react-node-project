@@ -1,4 +1,4 @@
-import { Lost } from "../../interfaces/models";
+import { Lost } from "../../../interfaces/models";
 import apiSliceLost from "./apiSliceLost";
 
 const apiLostSlice = apiSliceLost.injectEndpoints({
