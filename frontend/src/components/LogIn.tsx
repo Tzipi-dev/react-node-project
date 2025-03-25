@@ -7,21 +7,37 @@ import LogInSchema from "../schemas/LogInSchema";
 import { errorCSS } from "../globalStyle";
 
 import { LogInUser } from "../interfaces/models";
+import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
+import { useDispatch } from "react-redux";
+
 interface LogInProps {
-  setOpenModal: (isOpenModal: boolean) => void;
+  setOpenModal?: (isOpenModal: boolean) => void;
 }
 
 const LogIn = ({ setOpenModal }: LogInProps) => {
- 
+  //const dispatch=useDispatch()
+ const [ AddLoginMutation]=useAddLoginMutation()
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
-  const onSubmit = (data: LogInUser) => {
+  const onSubmit = async(data: LogInUser) => {
     
-    setOpenModal(false)
+       try {
+        const result = await AddLoginMutation(data).unwrap()
+        //localStorage.setItem('token', result);
+       
+    } catch (err) {
+        
+    }
+    finally{
+      if (setOpenModal)
+        {
+         setOpenModal(false)
+        } 
+    }
   }
 
   return (
     <div>
-      <div onClick={() => { setOpenModal(false) }}><CancelRoundedIcon /></div>
+      <div onClick={() => {if (setOpenModal) setOpenModal(false) }}><CancelRoundedIcon /></div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <TextField id="filled-basic" label="מייל" variant="filled" {...register("email",)} />

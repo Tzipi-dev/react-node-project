@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { useGetAllLostsQuery } from "../redux/api/apiLostSlice"
+import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice"
 import { setAllLosts } from "../redux/slice/lostsSlice"
 import { useEffect } from "react"
 

@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, Modal } from "@mui/material";
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import LogIn from "./LogIn";
 import { CSSProperties } from 'react';
 import SignUp from "./SignUp";
@@ -37,9 +37,9 @@ const Header = () => {
                     <label>Losses & founds</label>
                 </NavLink>
                 <div style={loggingStyle}>
-                    <div style={moveLeft} onClick={HandleClickLogIn}>
+                    <Link to="/login" style={moveLeft} onClick={HandleClickLogIn}>
                         log in
-                    </div>
+                    </Link>
                     <Modal open={isOpenModal}>
                         <Dialog open={isOpenModal}>
                             <DialogActions />

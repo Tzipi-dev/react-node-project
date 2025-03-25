@@ -1,5 +1,5 @@
 
-import { User } from "../../interfaces/models";
+import { User } from "../../../interfaces/models";
 import apiSliceUser from "./apiSliceUser";
 
 

@@ -4,7 +4,7 @@ import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { errorCSS } from "../globalStyle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserSchema from "../schemas/UserSchema";
-import { useAddUserMutation } from "../redux/api/apiUserSlice";
+import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 interface SignUpProps {
     setSignUpModal: (isSignUpOpen: boolean) => void;
