@@ -12,18 +12,18 @@ const apiLoginSlice = apiSliceLogin.injectEndpoints({
             providesTags: ["LogInUser"],
         }),
         addLogin: builder.mutation<LogInUser, LogInUser>({
-            query: (newLost) => ({
+            query: (updateLog) => ({
                 url: "/login",
                 method: "POST",
-                body: newLost,
+                body: updateLog,
             }),
             invalidatesTags: ["LogInUser"],
         }),
         updateLogin: builder.mutation<LogInUser, LogInUser>({
-            query: (updateLost) => ({
-                url: `/login/${updateLost._id}`,
+            query: (updateLog) => ({
+                url: `/login/${updateLog._id}`,
                 method: "PUT",
-                body: updateLost,
+                body: updateLog,
             }),
             invalidatesTags: ["LogInUser"],
         }),

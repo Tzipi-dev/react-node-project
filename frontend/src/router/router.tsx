@@ -6,6 +6,7 @@ import AddFound from "../pages/AddFound";
 import AllLosts from "../pages/AllLosts";
 import AllFounds from "../pages/AllFounds";
 import LogIn from "../components/LogIn";
+import SignUp from "../components/SignUp";
 
 
 
@@ -18,7 +19,8 @@ const router = createBrowserRouter([{
         {path: "addFound", element: <AddFound/>},
         {path: "allLosts", element: <AllLosts/>},
         {path: "allFounds", element: <AllFounds/>},
-        {path:"login",element:<LogIn/>}
+        {path:"login",element:<LogIn/>},
+        {path:"users", element:<SignUp/>}
         
        
     ]
