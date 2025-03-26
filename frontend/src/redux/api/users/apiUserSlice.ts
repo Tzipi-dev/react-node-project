@@ -10,7 +10,7 @@ const apiUserSlice = apiSliceUser.injectEndpoints({
             query: () => "/users",
             providesTags: ["User"],
         }),
-        getUserById: builder.query<User, string>({
+        getUserById: builder.query<User, string|undefined>({
             query: (_id) => `/users/${_id}`,
             providesTags: ["User"],
         }),

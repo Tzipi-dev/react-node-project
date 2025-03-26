@@ -7,21 +7,16 @@ import { errorCSS } from "../globalStyle";
 import { LogInUser } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
 import { Link } from "react-router";
+import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
 const LogIn = () => {
   const [AddLoginMutation] = useAddLoginMutation()
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
   const onSubmit = async (data: LogInUser) => {
     try {
-      const result = await AddLoginMutation(data).unwrap()
-     
-      
-      console.log(result);
+      const result = await AddLoginMutation(data)
+       const currentUser=await useGetUserByIdQuery(result.data?._id?result.data._id.toString():undefined)
+       console.log(currentUser);
 
-
-    
-  
-      
-      
     } catch (err) {
 
     }
@@ -45,8 +40,8 @@ const LogIn = () => {
         <Button variant="outlined" type="submit">log in</Button>
       </form>
       <Button variant="outlined">
-                <Link to="/">ביטול</Link>
-            </Button>
+        <Link to="/">ביטול</Link>
+      </Button>
     </div>
   )
 }
