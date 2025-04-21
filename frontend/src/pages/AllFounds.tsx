@@ -12,6 +12,7 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
+import { Link } from "react-router";
 const AllFounds = () => {
   const dispatch = useDispatch()
   const { data: GetAllFoundsQuery, isError, isLoading } = useGetAllFoundsQuery();
@@ -41,6 +42,7 @@ const AllFounds = () => {
                 {
                   GetAllFoundsQuery?.map(found => (
                     <div key={found._id?.toString()}>
+                       <Link to={`/Founds/${found._id?.toString()}`}>
                       <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
                         <CardOverflow>
                           <AspectRatio ratio="1" sx={{ width: 90 }}>
@@ -77,7 +79,7 @@ const AllFounds = () => {
                           Lost
                         </CardOverflow>
                       </Card>
-
+                      </Link>
                     </div>
                   ))
                 }

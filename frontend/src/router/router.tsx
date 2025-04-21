@@ -7,6 +7,7 @@ import AllLosts from "../pages/AllLosts";
 import AllFounds from "../pages/AllFounds";
 import LogIn from "../components/LogIn";
 import SignUp from "../components/SignUp";
+import FoundDetails from "../pages/FoundDetails";
 
 
 
@@ -14,15 +15,21 @@ import SignUp from "../components/SignUp";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
-        {index: true, element: <HomePage />},
-        {path: "addLost", element: <AddLost /> },
-        {path: "addFound", element: <AddFound/>},
-        {path: "allLosts", element: <AllLosts/>},
-        {path: "allFounds", element: <AllFounds/>},
-        {path:"login",element:<LogIn/>},
-        {path:"users", element:<SignUp/>}
-        
-       
+        { index: true, element: <HomePage /> },
+        { path: "addLost", element: <AddLost /> },
+        { path: "addFound", element: <AddFound /> },
+        { path: "Losts", element: <AllLosts /> },
+        {
+            path: "Founds",
+            children: [
+                { index: true, element: <AllFounds /> },
+                { path: ":id", element: <FoundDetails /> }
+            ]
+        },
+        { path: "login", element: <LogIn /> },
+        { path: "users", element: <SignUp /> }
+
+
     ]
 }])
 export default router

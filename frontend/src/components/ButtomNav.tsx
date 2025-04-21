@@ -27,12 +27,12 @@ const ButtomNav = () => {
                     הוספת מציאה
                 </Button>
                 </NavLink>
-                <NavLink to="/allLosts">
+                <NavLink to="/Losts">
                 <Button variant="contained" disableElevation>
                     צפיה בכל האבידות
                 </Button>
                 </NavLink>
-                <NavLink to="/allFounds">
+                <NavLink to="/Founds">
                 <Button variant="contained" disableElevation>
                     צפיה בכל המציאות
                 </Button>
