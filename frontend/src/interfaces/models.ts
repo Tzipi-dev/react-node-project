@@ -1,11 +1,11 @@
-import { ObjectId } from "mongodb";
+
 
 export interface User {
     name: String,
     password: String,
     phone: String,
     email: String,
-    _id?: ObjectId
+    _id?: string 
 }
 enum Categiry{
 'תכשיטים ושעונים',
@@ -25,7 +25,7 @@ export interface Lost{
     street: String,
     owner:  User,
     date: Date,
-    _id?: ObjectId
+    _id?: string 
 }
 export interface Found{
     categiry:Categiry,
@@ -35,12 +35,12 @@ export interface Found{
     owner: User,
     date: Date,
     identifying: Array<String>,
-    _id?: ObjectId
+    _id?: string 
 }
 export interface LogInUser{
     email: String,
     password: String,
-    _id?:ObjectId
+    _id?:string 
 }
 export interface LoginResponse {
     accessToken: String;
@@ -49,6 +49,6 @@ export interface LoginResponse {
       name: String;
       password: String; 
       phone: String;
-      _id: ObjectId;
+      _id: string ;
     };
   }

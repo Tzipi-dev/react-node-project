@@ -3,6 +3,7 @@ const app = express()
 require('dotenv').config();
 const cors=require("cors")
 const userRouter = require('./routes/users')
+const cookieParser = require('cookie-parser');
 const lostRouter = require('./routes/losts')
 const foundRouter = require('./routes/founds')
 const loginRouter=require('./routes/login')
@@ -12,11 +13,14 @@ const PORT = process.env.PORT || 5000
 connectDB()
 const  mongoose = require("mongoose")
 app.use(cors(corsOptions))
+
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.static("public"))
 app.use('/users', userRouter)
 app.use('/losts', lostRouter)
 app.use('/founds', foundRouter)
+
 app.use('/login', loginRouter)
 mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => app.listen(PORT, () => {

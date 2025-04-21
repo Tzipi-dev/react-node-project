@@ -8,13 +8,20 @@ const login=async(req,res)=>{
     const foundUser=await User.findOne({email}).lean()
     if (!foundUser)
         return res.status(401).json({message: "UnauthOrilized"})
-    console.log(foundUser);
-    console.log(foundUser.password);
+    // console.log(foundUser);
+    // console.log(foundUser.password);
     const match=await bcrypt.compare(password, foundUser.password)
     if (!match)
         return res.status(401).json({message: "UnauthOrilized"})
     const userInfo={_id: foundUser._id, name: foundUser.name, email: foundUser.email, phone: foundUser.phone,password: foundUser.password}
     const accessToken=jwt.sign(userInfo,process.env.ACCESS_TOKEN_SECRET)
+    res.cookie('token', accessToken, {
+        httpOnly: true,       // מונע גישה ל-JS בצד לקוח
+        secure: true,         // דורש HTTPS (בפיתוח אפשר להוריד)
+        sameSite: 'Strict',   // מונע שליחה מדומיינים אחרים
+        path: '/',            // רלוונטי לכל האתר
+        maxAge: 24 * 60 * 60 * 1000, // תוקף של יום
+      });
     res.json({accessToken:accessToken, user:userInfo})
 }
 const register=async(req,res)=>{

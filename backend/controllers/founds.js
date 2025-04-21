@@ -58,7 +58,8 @@ exports.updateFound=async(req,res)=>{
 exports.getFoundById=async(req,res)=>{
     const {id}=req.params
     try{
-        const found=await Found.findOne({id})
+        console.log('GET /founds/:id hit', req.params.id);
+        const found=await Found.findById(id);
         if (!found){
             return res.status(404).json({message: 'found not found'})
         }
@@ -69,6 +70,7 @@ exports.getFoundById=async(req,res)=>{
         res.status(500).json({ message: 'Failed to get found' });
     }
 }
+
 
 
 

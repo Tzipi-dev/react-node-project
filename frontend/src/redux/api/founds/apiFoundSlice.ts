@@ -1,9 +1,5 @@
-
 import { Found } from "../../../interfaces/models";
 import apiSliceFound from "./apiSliceFound";
-
-
-
 const apiFoundSlice = apiSliceFound.injectEndpoints({
     endpoints: (builder) => ({
         getAllFounds: builder.query<Found[], void>({
@@ -13,7 +9,8 @@ const apiFoundSlice = apiSliceFound.injectEndpoints({
         getFoundById: builder.query<Found, string>({
             query: (_id) => `/founds/${_id}`,
             providesTags: ["Found"],
-        }),
+          }),
+      
         addFound: builder.mutation<Found, Found>({
             query: (newFound) => ({
                 url: "/founds",

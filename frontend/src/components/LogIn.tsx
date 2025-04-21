@@ -8,12 +8,15 @@ import { LogInUser, User } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
 import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+// import { getCookie } from "../utils/cookieUtils";
 const LogIn = () => {
   const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User>()
   // const [AddLoginMutation] = useAddLoginMutation()
   const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
+
+
   const navigate=useNavigate()
   const onSubmit = async (data: LogInUser) => {
     try {
@@ -22,6 +25,9 @@ const LogIn = () => {
       console.log("מספר טלפון:", result.user.phone);
       console.log("accessToken",result.accessToken);
       setLoggedInUserId(result.user._id.toString());
+      // document.cookie = `token=${result.accessToken}; path=/; secure; HttpOnly; SameSite=Strict`;
+      console.log(loggedInUserId);
+      // console.log("Token:", getCookie('token'));
       setCurrentUser({_id:result.user._id, name: result.user.name, email:result.user.email,  phone: result.user.phone, password: result.user.password})
       console.log(result);
       navigate('/')
