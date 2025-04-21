@@ -42,3 +42,13 @@ export interface LogInUser{
     password: String,
     _id?:ObjectId
 }
+export interface LoginResponse {
+    accessToken: String;
+    user: {
+      email: String;
+      name: String;
+      password: String; 
+      phone: String;
+      _id: ObjectId;
+    };
+  }

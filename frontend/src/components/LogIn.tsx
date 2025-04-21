@@ -4,51 +4,58 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
 import { errorCSS } from "../globalStyle";
-import { LogInUser } from "../interfaces/models";
+import { LogInUser, User } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 const LogIn = () => {
-  const [AddLoginMutation] = useAddLoginMutation()
+  const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
+  const [currentUser, setCurrentUser] = useState<User>()
+  // const [AddLoginMutation] = useAddLoginMutation()
+  const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
+  const navigate=useNavigate()
   const onSubmit = async (data: LogInUser) => {
     try {
-      const result = await AddLoginMutation(data).unwrap()
-     
-      
+      const result = await addLogin(data).unwrap();
+      console.log("שם המשתמש:", result.user.name);
+      console.log("מספר טלפון:", result.user.phone);
+      console.log("accessToken",result.accessToken);
+      setLoggedInUserId(result.user._id.toString());
+      setCurrentUser({_id:result.user._id, name: result.user.name, email:result.user.email,  phone: result.user.phone, password: result.user.password})
       console.log(result);
+      navigate('/')
+      } catch (err) {
 
+      }
+      finally {
 
-    
-  
-      
-      
-    } catch (err) {
-
+      }
     }
-    finally {
-
-    }
+    useEffect(() => {
+      if (currentUser) {
+        console.log("פרטי משתמש (מ-useGetUserByIdQuery):", currentUser);
+      }
+    }, [currentUser]);
+  return (
+      <div>
+        {/* <div onClick={}><CancelRoundedIcon /></div> */}
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <TextField id="filled-basic" label="מייל" variant="filled" {...register("email",)} />
+            {errors.email && <p style={errorCSS}>{errors.email.message}</p>}
+          </div>
+          <div>
+            <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} />
+            {errors.password && <p style={errorCSS}>{errors.password.message}</p>}
+          </div>
+          <Button variant="outlined" type="submit">log in</Button>
+        </form>
+        <Button variant="outlined">
+          <Link to="/">ביטול</Link>
+        </Button>
+      </div>
+    )
   }
 
-  return (
-    <div>
-      {/* <div onClick={}><CancelRoundedIcon /></div> */}
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <TextField id="filled-basic" label="מייל" variant="filled" {...register("email",)} />
-          {errors.email && <p style={errorCSS}>{errors.email.message}</p>}
-        </div>
-        <div>
-          <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} />
-          {errors.password && <p style={errorCSS}>{errors.password.message}</p>}
-        </div>
-        <Button variant="outlined" type="submit">log in</Button>
-      </form>
-      <Button variant="outlined">
-                <Link to="/">ביטול</Link>
-            </Button>
-    </div>
-  )
-}
-
-export default LogIn
+  export default LogIn
