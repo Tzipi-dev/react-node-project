@@ -1,5 +1,5 @@
 
-import { LogInUser } from "../../../interfaces/models";
+import { LoginResponse, LogInUser } from "../../../interfaces/models";
 import apiSliceLogin from "./apiSliceLogin";
 const apiLoginSlice = apiSliceLogin.injectEndpoints({
     endpoints: (builder) => ({
@@ -11,7 +11,7 @@ const apiLoginSlice = apiSliceLogin.injectEndpoints({
             query: (_id) => `/login/${_id}`,
             providesTags: ["LogInUser"],
         }),
-        addLogin: builder.mutation<LogInUser, LogInUser>({
+        addLogin: builder.mutation<LoginResponse, LogInUser>({
             query: (updateLog) => ({
                 url: "/login",
                 method: "POST",

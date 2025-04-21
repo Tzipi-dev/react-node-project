@@ -5,6 +5,13 @@ import { setAllFounds } from "../redux/slice/foundSlice";
 import { useEffect } from "react";
 
 
+
+
+import AspectRatio from '@mui/joy/AspectRatio';
+import Card from '@mui/joy/Card';
+import CardContent from '@mui/joy/CardContent';
+import CardOverflow from '@mui/joy/CardOverflow';
+import Typography from '@mui/joy/Typography';
 const AllFounds = () => {
   const dispatch = useDispatch()
   const { data: GetAllFoundsQuery, isError, isLoading } = useGetAllFoundsQuery();
@@ -12,7 +19,7 @@ const AllFounds = () => {
     fetchingData()
     console.log(GetAllFoundsQuery);
   }, [])
-  
+
   const fetchingData = async () => {
     try {
       await dispatch(setAllFounds(GetAllFoundsQuery))
@@ -34,9 +41,42 @@ const AllFounds = () => {
                 {
                   GetAllFoundsQuery?.map(found => (
                     <div key={found._id?.toString()}>
-                      <div>{found.name}</div>
-                      <div>{found.categiry}</div>
-                      <div>{found.city}</div>
+                      <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
+                        <CardOverflow>
+                          <AspectRatio ratio="1" sx={{ width: 90 }}>
+                            <img
+                              src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
+                              srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
+                              loading="lazy"
+                              alt=""
+                            />
+                          </AspectRatio>
+                        </CardOverflow>
+                        <CardContent>
+                          <Typography component="div" textColor="success.plainColor" sx={{ fontWeight: 'md' }}>
+                            <div>{found.name}</div>
+                            <div>{found.city}</div>
+                          </Typography>
+                          <Typography level="body-sm">{found.categiry}</Typography>
+                        </CardContent>
+                        <CardOverflow
+                          variant="soft"
+                          color="primary"
+                          sx={{
+                            px: 0.2,
+                            writingMode: 'vertical-rl',
+                            justifyContent: 'center',
+                            fontSize: 'xs',
+                            fontWeight: 'xl',
+                            letterSpacing: '1px',
+                            textTransform: 'uppercase',
+                            borderLeft: '1px solid',
+                            borderColor: 'divider',
+                          }}
+                        >
+                          Lost
+                        </CardOverflow>
+                      </Card>
 
                     </div>
                   ))
