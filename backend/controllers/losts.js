@@ -54,7 +54,8 @@ exports.updateLost=async(req,res)=>{
 exports.getLostById=async(req,res)=>{
     const {id}=req.params
     try{
-        const lost=await Lost.findOne({id})
+        console.log('GET /losts/:id hit', req.params.id);
+        const lost=await Lost.findById(id);
         if (!lost){
             return res.status(404).json({message: 'lost not found'})
         }
@@ -65,5 +66,3 @@ exports.getLostById=async(req,res)=>{
         res.status(500).json({ message: 'Failed to get lost' });
     }
 }
-
-

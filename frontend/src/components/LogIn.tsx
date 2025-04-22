@@ -15,16 +15,9 @@ const LogIn = () => {
   const navigate = useNavigate()
   const onSubmit = async (data: LogInUser) => {
     try {
-      console.log("in submit");
-      
       const result = await addLogin(data).unwrap();
-      console.log("שם המשתמש:", result.user.name);
-      console.log("מספר טלפון:", result.user.phone);
-      console.log("accessToken", result.accessToken);
       setLoggedInUserId(result.user._id.toString());
-      console.log(loggedInUserId);
       setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password })
-      console.log(result);
       navigate('/')
     } catch (err) {
       console.log(err);
@@ -33,11 +26,11 @@ const LogIn = () => {
 
     }
   }
-  useEffect(() => {
-    if (currentUser) {
-      console.log("פרטי משתמש (מ-useGetUserByIdQuery):", currentUser);
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     console.log("פרטי משתמש (מ-useGetUserByIdQuery):", currentUser);
+  //   }
+  // }, [currentUser]);
   return (
     <div>
       <div >
@@ -49,8 +42,8 @@ const LogIn = () => {
             <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} style={margin} />
             {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
             <div style={topbtn}>
-            <Button variant="contained" color="primary" type="submit" fullWidth style={topbtn}>log in</Button>
-            <Button variant="outlined" color="primary" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
+            <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
+            <Button variant="outlined" color="success" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
           </div>
           </form>
          
