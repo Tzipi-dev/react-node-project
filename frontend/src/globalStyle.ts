@@ -49,3 +49,16 @@ export const errorCSS: CSSProperties = {
     marginTop:"1%"
   }
 export const font:CSSProperties={fontFamily:"Calibri"}
+
+export const Alltext: CSSProperties = {
+  textAlign: "right",
+  fontSize: "larger",
+  fontWeight: 100,
+  color:"black",fontFamily:"Calibri"
+};
+export const detailTitle: CSSProperties = {
+  textAlign: "right",
+  fontSize: "x-large",
+  fontWeight: 200,
+  color:"black",fontFamily:"Calibri"
+};

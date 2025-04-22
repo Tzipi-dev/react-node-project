@@ -11,10 +11,12 @@ import { useNavigate } from "react-router";
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
     const [AddUserMutation] = useAddUserMutation()
+    const navigate=useNavigate()
     const onSubmit = async (data: User) => {
         try {
             const result = await AddUserMutation(data).unwrap();
             console.log('User added successfully:', result);
+            navigate(1)
         }
         catch (error) {
             console.error('Error adding user:', error);
@@ -23,7 +25,7 @@ const SignUp = () => {
 
         }
     }
-    const navigate=useNavigate()
+    
 
     return (
         <div>
@@ -40,8 +42,8 @@ const SignUp = () => {
                         <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} style={margin}/>
                         {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
                         <div> 
-                        <Button variant="contained" color="primary" type="submit" fullWidth style={topbtn}>sign up</Button>
-                        <Button variant="outlined" color="primary" fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
+                        <Button variant="contained" color="success" type="submit" fullWidth style={topbtn} >sign up</Button>
+                        <Button variant="outlined" color="success" fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
                         </div>
                     </form>
                 </div>
