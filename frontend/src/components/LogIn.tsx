@@ -1,42 +1,35 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-// import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
-import { errorCSS, loginBox, loginContainer, loginForm, loginTitle } from "../globalStyle";
+import { errorCSS, loginBox, loginForm, loginTitle, margin, topbtn } from "../globalStyle";
 import { LogInUser, User } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-
-// import { getCookie } from "../utils/cookieUtils";
 const LogIn = () => {
   const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User>()
-  // const [AddLoginMutation] = useAddLoginMutation()
   const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
-  console.log(loginBox);
-  
-
   const navigate = useNavigate()
   const onSubmit = async (data: LogInUser) => {
     try {
+      console.log("in submit");
+      
       const result = await addLogin(data).unwrap();
       console.log("שם המשתמש:", result.user.name);
       console.log("מספר טלפון:", result.user.phone);
       console.log("accessToken", result.accessToken);
       setLoggedInUserId(result.user._id.toString());
-      // document.cookie = `token=${result.accessToken}; path=/; secure; HttpOnly; SameSite=Strict`;
       console.log(loggedInUserId);
-      // console.log("Token:", getCookie('token'));
       setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password })
       console.log(result);
       navigate('/')
     } catch (err) {
-
+      console.log(err);
     }
-    finally {
+    finally{
 
     }
   }
@@ -47,25 +40,20 @@ const LogIn = () => {
   }, [currentUser]);
   return (
     <div>
-      <div style={loginContainer}>
+      <div >
         <div style={loginBox}>
-          <Typography sx={loginTitle}>LogIn</Typography>
-          {/* <div onClick={}><CancelRoundedIcon /></div> */}
-          <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
-
-            <div>
-              <TextField id="filled-basic" label="מייל" variant="filled" {...register("email",)} />
-              {errors.email && <p style={errorCSS}>{errors.email.message}</p>}
-            </div>
-            <div>
-              <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} />
-              {errors.password && <p style={errorCSS}>{errors.password.message}</p>}
-            </div>
-            <Button variant="outlined" type="submit">log in</Button>
+          <Typography sx={loginTitle}>Log In</Typography>
+          <form style={loginForm} onSubmit={handleSubmit(onSubmit)} >
+            <TextField id="filled-basic" label="מייל" variant="filled"  {...register("email",)} style={margin} />
+            {errors.email && <div style={errorCSS}>{errors.email.message}</div>}
+            <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} style={margin} />
+            {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
+            <div style={topbtn}>
+            <Button variant="contained" color="primary" type="submit" fullWidth style={topbtn}>log in</Button>
+            <Button variant="outlined" color="primary" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
+          </div>
           </form>
-          <Button variant="outlined">
-            <Link to="/">ביטול</Link>
-          </Button>
+         
         </div>
       </div>
     </div>
