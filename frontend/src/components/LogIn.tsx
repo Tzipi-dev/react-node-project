@@ -1,4 +1,4 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, Input, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
@@ -13,6 +13,9 @@ const LogIn = () => {
   const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
   const navigate = useNavigate()
+  const [loginError, setloginError] = useState<string>("")
+  const [isError, setIsError] = useState<boolean>(false)
+  
   const onSubmit = async (data: LogInUser) => {
     try {
       const result = await addLogin(data).unwrap();
@@ -21,9 +24,8 @@ const LogIn = () => {
       navigate('/')
     } catch (err) {
       console.log(err);
-    }
-    finally{
-
+      setloginError("המשתמש אינו קיים או שאחד מהנתונים שגוי")
+      setIsError(true)
     }
   }
   // useEffect(() => {
@@ -41,12 +43,12 @@ const LogIn = () => {
             {errors.email && <div style={errorCSS}>{errors.email.message}</div>}
             <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} style={margin} />
             {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
+            {isError && <div style={errorCSS}>{loginError}</div>}
             <div style={topbtn}>
-            <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
-            <Button variant="outlined" color="success" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
-          </div>
+              <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
+              <Button variant="outlined" color="success" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
+            </div>
           </form>
-         
         </div>
       </div>
     </div>

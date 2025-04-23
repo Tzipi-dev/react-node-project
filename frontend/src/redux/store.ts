@@ -9,12 +9,14 @@ import lostsSlice from './slice/lostsSlice';
 import userSlice from './slice/userSlice'
 import { configureStore } from '@reduxjs/toolkit';
 import apiLoginSlice from './api/loging/apiLoginSlice';
+import apiCitiesSlice from './api/cities/apiCitiesSlice';
 const store = configureStore({
   reducer: {
     [apiLostSlice.reducerPath]: apiSliceLost.reducer,
     [apiUserSlice.reducerPath]: apiSliceUser.reducer,
     [apiFoundSlice.reducerPath]: apiSliceFound.reducer,
     [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
+    [apiCitiesSlice.reducerPath]:apiCitiesSlice.reducer,
     foundSlice: foundSlice,
     lostsSlice:lostsSlice,
     user:userSlice
@@ -24,7 +26,8 @@ const store = configureStore({
       apiSliceLost.middleware,
       apiSliceUser.middleware,
       apiSliceFound.middleware,
-      apiLoginSlice.middleware)
+      apiLoginSlice.middleware,
+    apiCitiesSlice.middleware)
 });
 
 export default store;
