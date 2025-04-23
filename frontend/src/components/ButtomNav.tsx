@@ -18,22 +18,22 @@ const ButtomNav = () => {
         <div>
             <nav style={navStyle}>
                 <NavLink to="/addLost">
-                    <Button variant="contained" disableElevation>
+                    <Button variant="contained" color="success" disableElevation>
                         הוספת אבידה
                     </Button>
                 </NavLink>
                 <NavLink to="/addFound">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" color="success" disableElevation>
                     הוספת מציאה
                 </Button>
                 </NavLink>
                 <NavLink to="/Losts">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" color="success" disableElevation>
                     צפיה בכל האבידות
                 </Button>
                 </NavLink>
                 <NavLink to="/Founds">
-                <Button variant="contained" disableElevation>
+                <Button variant="contained" color="success" disableElevation>
                     צפיה בכל המציאות
                 </Button>
                 </NavLink>
