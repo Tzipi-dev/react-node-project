@@ -5,24 +5,20 @@ import AddLost from "../pages/AddLost";
 import AddFound from "../pages/AddFound";
 import AllLosts from "../pages/AllLosts";
 import AllFounds from "../pages/AllFounds";
-import LogIn from "../components/Login";
+import LogIn from "../components/LogIn";
 import SignUp from "../components/SignUp";
 import FoundDetails from "../pages/FoundDetails";
 import LostDetails from "../pages/LostDetails";
-
-
-
-
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
         { index: true, element: <HomePage /> },
         { path: "addLost", element: <AddLost /> },
         { path: "addFound", element: <AddFound /> },
-        { path: "Losts", 
+        { path: "Losts",
             children: [
-                { index: true, element: <AllLosts /> },
-                { path: ":id", element: <LostDetails /> }
+            { index: true, element: <AllLosts /> },
+            { path: ":id", element: <LostDetails/> }
             ]
         },
         {
@@ -34,8 +30,6 @@ const router = createBrowserRouter([{
         },
         { path: "login", element: <LogIn /> },
         { path: "users", element: <SignUp /> }
-
-
     ]
 }])
 export default router

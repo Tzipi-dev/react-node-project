@@ -1,17 +1,16 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getCookie } from '../../../utils/cookieUtils';
+import { Cookies } from 'react-cookie';
 
+const cookies = new Cookies();
 const apiSliceFound = createApi({
     reducerPath: "founds",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
-        credentials: 'include', // חשוב לשלוח את העוגיות בצד הלקוח
+        credentials: 'include',
         prepareHeaders: (headers) => {
-            const token = getCookie('token');
-            console.log('Token from cookie:', token); // נוודא שהטוקן נשלח
+            const token = cookies.get('token'); 
             if (token) {
-                headers.set('Authorization', `Bearer ${token}`); // שולח את הטוקן ב־Authorization header
+                headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         },
@@ -21,4 +20,3 @@ const apiSliceFound = createApi({
 });
 
 export default apiSliceFound;
-

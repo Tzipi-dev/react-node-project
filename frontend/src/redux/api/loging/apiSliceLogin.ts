@@ -1,15 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getCookie } from "../../../utils/cookieUtils";
 
+import { Cookies } from 'react-cookie';
+
+const cookies = new Cookies();
 const apiSliceLogin = createApi({
     reducerPath: "login",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
         credentials: 'include', 
         prepareHeaders: (headers) => {
-            const token = getCookie('token');
+            const token = cookies.get('token'); 
             if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
+              headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         },
@@ -19,4 +21,3 @@ const apiSliceLogin = createApi({
 });
 
 export default apiSliceLogin;
-
