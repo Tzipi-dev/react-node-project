@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { useGetFoundByIdQuery } from "../redux/api/founds/apiFoundSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { Alltext, detailTitle, loginBox, loginTitle } from "../globalStyle";
+import { Alltext, detailTitle, loginBox } from "../globalStyle";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { HDate } from '@hebcal/core';
@@ -34,6 +34,7 @@ return (
                 <div style={loginBox}>
                     <div >
                         <Typography sx={detailTitle}>פרטי מציאה</Typography>
+                        <Typography sx={Alltext}>המציאה: {found.name}</Typography>
                         <Typography sx={Alltext}>תאריך מציאה: {foreignDate}</Typography>
                         <Typography sx={Alltext}>תאריך עברי: {hebrewDate}</Typography>
                         <Typography sx={Alltext}>עיר:  {found.city}</Typography>
