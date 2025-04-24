@@ -12,6 +12,8 @@ exports.getAllFounds=async(req,res)=>{
 }
 
 exports.addFound=async(req,res)=>{
+    console.log("in addFound");
+    
     const found=await Found.create(req.body)
     res.json(found)
 }
