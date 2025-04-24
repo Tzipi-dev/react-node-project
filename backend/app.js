@@ -13,10 +13,7 @@ const connectDB=require("./config/dbConn")
 const PORT = process.env.PORT || 5000
 connectDB()
 const  mongoose = require("mongoose");
-
 app.use(cors(corsOptions))
-
-app.use(cookieParser());
 app.use(express.json())
 app.use(express.static("public"))
 app.use('/users', userRouter)
@@ -29,3 +26,7 @@ mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedT
         console.log(`server is runing on port ${PORT}`);
     })
 ).catch((error) => { console.log(error) })
+
+
+
+

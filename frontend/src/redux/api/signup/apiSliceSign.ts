@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from "../../../utils/cookieUtils";
+
 const apiSliceSign = createApi({
-    reducerPath: "signup",
+    reducerPath: "sigup",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
         credentials: 'include', 
@@ -18,4 +19,3 @@ const apiSliceSign = createApi({
 });
 
 export default apiSliceSign;
-
