@@ -10,6 +10,7 @@ import {  useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentUser as setReduxUser } from "../redux/slice/currentuser";
 import {useCookies} from "react-cookie"
+import { loginButtonStyle } from "./CSS-components";
 const LogIn = () => {
   const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<User>()
@@ -45,9 +46,9 @@ const LogIn = () => {
             <TextField id="filled-basic" label="סיסמה" variant="filled" {...register("password",)} style={margin} />
             {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
             {isError && <div style={errorCSS}>{loginError}</div>}
-            <div style={topbtn}>
+            <div >
               <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
-              <Button variant="outlined" color="success" fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
+              <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
             </div>
           </form>
         </div>

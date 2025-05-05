@@ -17,4 +17,6 @@ const foundSlice = createSlice({
     }
 })
 export const { setAllFounds ,addFound} = foundSlice.actions
+export const selectFounds = (state:{foundsArray:Found[]} )=>
+  state.foundsArray
 export default foundSlice.reducer

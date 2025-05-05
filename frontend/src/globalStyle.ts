@@ -42,7 +42,16 @@ export const errorCSS: CSSProperties = {
   };
   export const topbtn: CSSProperties={
     marginBottom: "2%",
-    marginTop:"2%"
+    marginTop:"2%",
+    backgroundColor: "#5c4033", // חום כהה
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    padding: "0.6rem 1rem",
+    fontSize: "0.9rem",
+    cursor: "pointer",
+    transition: "background-color 0.3s ease",
+    // marginLeft: "1vw"
   }
   export const margin: CSSProperties={
     marginBottom:"1%",

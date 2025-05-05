@@ -5,6 +5,7 @@ import { Alltext, detailTitle, loginBox } from "../globalStyle";
 import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { HDate } from '@hebcal/core';
+import { mainContentStyle } from "../components/CSS-components";
 const FoundDetails = () => {
     const { id } = useParams();
     const { data: found, isLoading, isError } = useGetFoundByIdQuery(id ? id : skipToken);
@@ -28,7 +29,7 @@ const FoundDetails = () => {
         ConvertDates(dateToConvert);
       }, [found]);
 return (
-    <div>
+    <div style={mainContentStyle}>
         {
             isLoading ? <div>Loading...</div> : isError ? <div>error...</div> : found ? (
                 <div style={loginBox}>

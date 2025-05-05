@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { HDate } from "@hebcal/core";
 import { Alltext, detailTitle, loginBox } from "../globalStyle";
 import { Typography } from "@mui/material";
+import { mainContentStyle } from "../components/CSS-components";
 const LostDetails = () => {
   const { id } = useParams();
   const { data: lost, isLoading, isError } = useGetLostByIdQuery(id ? id : skipToken);
@@ -28,7 +29,7 @@ const LostDetails = () => {
           ConvertDates(dateToConvert);
         }, [lost]);
   return (
-    <div>
+    <div style={mainContentStyle}>
        {
             isLoading ? <div>Loading...</div> : isError ? <div>error...</div> : lost ? (
                 <div style={loginBox}>

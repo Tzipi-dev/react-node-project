@@ -6,6 +6,7 @@ import UserSchema from "../schemas/UserSchema";
 import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 import { useNavigate } from "react-router";
+import { loginButtonStyle } from "./CSS-components";
 // import { Link } from "react-router";
 
 const SignUp = () => {
@@ -37,8 +38,8 @@ const SignUp = () => {
                         <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} style={margin}/>
                         {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
                         <div> 
-                        <Button variant="contained" color="success" type="submit" fullWidth style={topbtn} >sign up</Button>
-                        <Button variant="outlined" color="success" fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
+                        <Button variant="contained"  type="submit" fullWidth style={topbtn} >הירשם</Button>
+                        <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
                         </div>
                     </form>
                 </div>

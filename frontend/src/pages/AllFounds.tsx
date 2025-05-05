@@ -13,6 +13,7 @@ import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
 import { Link } from "react-router";
+import { mainContentStyle } from "../components/CSS-components";
 const AllFounds = () => {
   const dispatch = useDispatch()
   const { data: GetAllFoundsQuery, isError, isLoading } = useGetAllFoundsQuery();
@@ -33,7 +34,7 @@ const AllFounds = () => {
 
 
   return (
-    <div>
+    <div style={mainContentStyle}>
       {
         isLoading ? (<div>Loading...</div>) :
           isError ? (<div>{isError}</div>) :
