@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import AppLayout from "../components/AppLayout";
-import HomePage from "../components/HomePage";
+import HomePage from "../pages/HomePage";
 import AddLost from "../pages/AddLost";
 import AddFound from "../pages/AddFound";
 import AllLosts from "../pages/AllLosts";

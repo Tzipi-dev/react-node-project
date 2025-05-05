@@ -11,6 +11,7 @@ import { selectCurrentUser } from "../redux/slice/currentuser";
 import { useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
+import { mainContentStyle } from "../components/CSS-components";
 const AddLost = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddLostSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -54,7 +55,7 @@ const AddLost = () => {
     setSelectedCategory(event.target.value);
   };
   return (
-    <div>
+    <div style={mainContentStyle}>
       <div style={loginBox}>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
           <TextField

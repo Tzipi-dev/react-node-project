@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../redux/slice/currentuser";
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { useNavigate } from "react-router";
+import { mainContentStyle } from "../components/CSS-components";
 const AddFound = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddFoundSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -53,7 +54,7 @@ const AddFound = () => {
     setSelectedCategory(event.target.value);
   };
   return (
-    <div>
+    <div style={mainContentStyle}>
       <div style={loginBox}>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
           <TextField
