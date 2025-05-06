@@ -1,6 +1,7 @@
 import { Button } from "@mui/material"
 import { brownContainerStyle, buttonsContainerStyle, reportFoundButtonStyle, reportLostButtonStyle } from "../pages/CSS-pages"
 import { Link } from "react-router"
+import { IoMdAdd } from "react-icons/io"
 
 const Add = () => {
     return (
@@ -11,11 +12,14 @@ const Add = () => {
                 <div style={buttonsContainerStyle}>
                     <Link to="/addLost">
                         <Button style={reportLostButtonStyle} >
+                        <IoMdAdd />
                           הוספת אבידה
+                         
                         </Button>
                     </Link>
                     <Link to="/addFound">
                         <Button style={reportFoundButtonStyle}>
+                        <IoMdAdd />
                          הוספת מציאה
                         </Button>
                     </Link>
