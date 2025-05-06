@@ -58,6 +58,7 @@ export const navStyle: React.CSSProperties = {
   left: 0, // ממקם אותו בצד שמאל (לרוחב מלא)
   right: 0, // מרחיב אותו עד לצד ימין (לרוחב מלא)
   zIndex: 1000,
+  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)"
 };
 
 export const logoStyle: React.CSSProperties = {
@@ -121,9 +122,10 @@ export const signupButtonStyleHover: React.CSSProperties = {
   color: "#fff",
 };
 export const mainContentStyle: React.CSSProperties = {
-  marginTop: "60px", // מונע גלישה מתחת לניווט העליון
-  // marginLeft: "220px", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
+  marginTop: "5vh", // מונע גלישה מתחת לניווט העליון
+  marginLeft: "15vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
   padding: "1rem", // ריווח פנימי לתוכן
+  
   // ... סגנונות נוספים לתוכן שלך
 };
 export const cardsContainerStyle: CSSProperties = {
@@ -201,4 +203,58 @@ export const ContainerInfo: CSSProperties = {
   // textAlign: "center",
   marginLeft: "15.2vw",
   justifyContent: "space-around",
-  textAlign: 'right'}
+  textAlign: 'right'
+}
+export const recentItemsContainer: CSSProperties = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '16px',
+  width: '70vw',
+  marginLeft: "8vw",
+  marginTop:"5vh"
+}
+export const items: CSSProperties = {
+  backgroundColor: 'background.paper',
+  borderRadius: 1,
+  padding: 2, 
+  width: "13vw", 
+  height: "20vh",
+  color:"#795548",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"300",
+ textAlign: "right",
+  // alignItems: "start",
+  justifyContent: "flex-start"
+}
+export const foundTitle: CSSProperties={
+     backgroundColor: " #f0f0f0",
+     color: "#333",
+     boxShadow: " 2px 2px 5px rgb(80, 39, 23)",
+     
+}
+export const lostTitle: CSSProperties={
+  backgroundColor: " #f0f0f0",
+     color: "#333",
+     boxShadow: "1px 1px 5px rgb(255, 0, 0)"
+}
+export const showItemsDiv: CSSProperties={
+  display: "flex",
+  color: "rgb(61, 29, 17)",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"500",
+  // width: "100vw",
+  justifyContent: "space-between",
+  fontSize: "large",
+  marginBottom: "1vh"
+}
+export const btnAllItems:CSSProperties={
+  backgroundColor: 'transparent',
+  color: 'red',
+  border: '1px solid red',
+  borderRadius: '5px',
+  padding: '0.7rem 1.5rem',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+}

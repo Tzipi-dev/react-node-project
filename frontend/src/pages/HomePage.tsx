@@ -1,12 +1,12 @@
-import Add from "../components/Add"
-import DashboardCards from "../components/DashboardCards"
 
+import Add from "../components/Add"
+import LastItems from "../components/LastItems"
 
 const HomePage = () => {
   return (
     <>
-     <Add/>
-     <DashboardCards/>
+      <Add />
+      <LastItems/>
     </>
   )
 }

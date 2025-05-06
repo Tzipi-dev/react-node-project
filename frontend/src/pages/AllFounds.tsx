@@ -1,19 +1,13 @@
 import { useDispatch } from "react-redux"
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice"
 import { setAllFounds } from "../redux/slice/foundSlice";
-
 import { useEffect } from "react";
-
-
-
-
-import AspectRatio from '@mui/joy/AspectRatio';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
 import { Link } from "react-router";
-import { mainContentStyle } from "../components/CSS-components";
+import { foundTitle, items, mainContentStyle } from "../components/CSS-components";
+import { Box, Chip } from "@mui/material";
+import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
+import { containerOfFound } from "./CSS-pages";
 const AllFounds = () => {
   const dispatch = useDispatch()
   const { data: GetAllFoundsQuery, isError, isLoading } = useGetAllFoundsQuery();
@@ -21,7 +15,6 @@ const AllFounds = () => {
     fetchingData()
     console.log(GetAllFoundsQuery);
   }, [])
-
   const fetchingData = async () => {
     try {
       await dispatch(setAllFounds(GetAllFoundsQuery))
@@ -30,56 +23,37 @@ const AllFounds = () => {
       console.error(error)
     }
   }
-
-
-
   return (
     <div style={mainContentStyle}>
       {
         isLoading ? (<div>Loading...</div>) :
           isError ? (<div>{isError}</div>) :
             (
-              <div>
+              <div style={containerOfFound}>
                 {
                   GetAllFoundsQuery?.map(found => (
                     <div key={found._id?.toString()}>
-                       <Link to={`/Founds/${found._id?.toString()}`}>
-                      <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
-                        <CardOverflow>
-                          <AspectRatio ratio="1" sx={{ width: 90 }}>
-                            <img
-                              src="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90"
-                              srcSet="https://images.unsplash.com/photo-1507833423370-a126b89d394b?auto=format&fit=crop&w=90&dpr=2 2x"
-                              loading="lazy"
-                              alt=""
-                            />
-                          </AspectRatio>
-                        </CardOverflow>
-                        <CardContent>
-                          <Typography component="div" textColor="success.plainColor" sx={{ fontWeight: 'md' }}>
-                            <div>{found.name}</div>
-                            <div>{found.city}</div>
-                          </Typography>
-                          <Typography level="body-sm">{found.categiry}</Typography>
-                        </CardContent>
-                        <CardOverflow
-                          variant="soft"
-                          color="primary"
-                          sx={{
-                            px: 0.2,
-                            writingMode: 'vertical-rl',
-                            justifyContent: 'center',
-                            fontSize: 'xs',
-                            fontWeight: 'xl',
-                            letterSpacing: '1px',
-                            textTransform: 'uppercase',
-                            borderLeft: '1px solid',
-                            borderColor: 'divider',
-                          }}
+                      <Link to={`/Founds/${found._id?.toString()}`}>
+                        <Box
+                          sx={items}
                         >
-                          Lost
-                        </CardOverflow>
-                      </Card>
+                          <Chip label="Found" size="small" sx={foundTitle} />
+                          <Typography  mt={1} mb={1}>
+                            {found.name}
+                          </Typography>
+                          <Box display="flex" alignItems="center" mb={0.5}>
+                            <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
+                            <Typography  >
+                              {found.city}
+                            </Typography>
+                          </Box>
+                          <Box display="flex" alignItems="center">
+                            <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
+                            <Typography >
+                              {found.categiry}
+                            </Typography>
+                          </Box>
+                        </Box>
                       </Link>
                     </div>
                   ))
