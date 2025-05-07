@@ -116,3 +116,8 @@ export interface FieldFillByUser_Lost{
     thirdIdentity: string,
 
 }
+export enum Filters{
+      הכל,
+      אבדות,
+      מציאות
+}
