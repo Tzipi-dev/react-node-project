@@ -229,7 +229,7 @@ export const items: CSSProperties = {
 export const foundTitle: CSSProperties={
      backgroundColor: " #f0f0f0",
      color: "#333",
-     boxShadow: " 2px 2px 5px rgb(80, 39, 23)",
+     boxShadow: " 1px 1px 5px rgb(80, 39, 23)",
      
 }
 export const lostTitle: CSSProperties={

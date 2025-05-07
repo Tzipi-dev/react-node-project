@@ -57,7 +57,7 @@ export const item: CSSProperties={
   fontFamily: "Segoe UI, sans-serif",
   fontWeight:"600",
   fontSize: "large",
-   textAlign: "right"
+  //  textAlign: "right"
 }
 export const itemdetails: CSSProperties={
   fontFamily: "Segoe UI, sans-serif",
@@ -67,12 +67,80 @@ export const itemdetails: CSSProperties={
 }
 export const filterContainer: CSSProperties={
   backgroundColor: "white",
-  width: "100%",
+  width: "97%",
   height: "10vh",
-  borderBottom: "1px solidrgb(255, 255, 255)",
+  borderBottom: "1px solid rgb(255, 255, 255)",
   boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
   marginBottom: "3vh",
-  marginTop: "3vh"
+  marginTop: "6vh",
+  padding: "2vh",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+
 }
 
+export const frameToGroupButton: CSSProperties={
+  height: "10vh",
+  width: "14vw",
+  alignItems:"cenetr",
+  justifyContent: "space-between",
+  backgroundColor: " #f4ece1",
+  display: "flex",
+  // borderBlock: "2px solid brown",
+  paddingLeft: "1vw",
+  paddingRight: "1vw",
+  borderRadius: "10px",
+  
+ 
+}
+export const btnFound: CSSProperties={
+  color: "rgb(46, 46, 46)",
+  border: "none",
+  height:"6vh",
+  marginTop: "2vh",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"200",
+  fontSize: "medium",
+  backgroundColor: "rgb(237, 237, 237)",
+ marginLeft: "1vw"
+}
+export const btnAll: CSSProperties={
+  color: "rgb(80, 39, 23)",
+  
+  height:"6vh",
+  marginTop: "2vh",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"200",
+  fontSize: "medium",
+  border: "none",
+  backgroundColor: "rgb(237, 237, 237)",
+marginLeft: "1vw"
+  
+}
+export const btnLost: CSSProperties={
+  color: "rgb(255, 0, 0)",
+  height:"6vh",
+  marginTop: "2vh",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"200",
+  fontSize: "medium",
+  border: "none",
+  backgroundColor: "rgb(237, 237, 237)",
+  
+}
+export const resetByn: React.CSSProperties = {
+  backgroundColor: "#5c4033", // חום כהה
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  padding: "0.6rem 1rem",
+  cursor: "pointer",
+  transition: "background-color 0.3s ease",
+  height: "6vh",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight:"400",
+  fontSize: "medium",
+  marginRight: "1vw"
 
+};
