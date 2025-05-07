@@ -69,7 +69,7 @@ const LastItems = () => {
                                     <Box display="flex" alignItems="right">
                                         <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                                         <Typography style={itemdetails}>
-                                            {list[0]?.categiry}
+                                            {list[0]?.category}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -91,7 +91,7 @@ const LastItems = () => {
                                     <Box display="flex" alignItems="right">
                                         <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                                         <Typography style={itemdetails}>
-                                            {list[1]?.categiry}
+                                            {list[1]?.category}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -113,7 +113,7 @@ const LastItems = () => {
                                     <Box display="flex" alignItems="right">
                                         <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                                         <Typography style={itemdetails}>
-                                            {list[2]?.categiry}
+                                            {list[2]?.category}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -135,7 +135,7 @@ const LastItems = () => {
                                     <Box display="flex" alignItems="right">
                                         <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                                         <Typography style={itemdetails}>
-                                            {list[3]?.categiry}
+                                            {list[3]?.category}
                                         </Typography>
                                     </Box>
                                 </Box>

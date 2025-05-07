@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import AddFoundSchema from "../schemas/AddFoundSchema";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { Categiry, Cities, FieldFillByUser_Found, Found } from "../interfaces/models";
+import { Category, Cities, FieldFillByUser_Found, Found } from "../interfaces/models";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../redux/slice/currentuser";
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
@@ -30,7 +30,7 @@ const AddFound = () => {
       city: data.city,
       street: data.street,
       identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
-      categiry: Categiry[selectedCategory as keyof typeof Categiry],
+      category: Category[selectedCategory as keyof typeof Category],
       owner: currentUser,
     };
     addFound(updatedFound);
@@ -112,7 +112,7 @@ const AddFound = () => {
               onChange={handleChangeCategory}
               value={selectedCategory}
             >
-              {Object.values(Categiry).map((category) => (
+              {Object.values(Category).map((category) => (
                 <MenuItem key={category} value={category}>
                   {category}
                 </MenuItem>
