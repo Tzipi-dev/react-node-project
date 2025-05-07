@@ -1,5 +1,5 @@
 
-import { User } from "../../../interfaces/models";
+import { LoginResponse, User } from "../../../interfaces/models";
 import apiSliceUser from "./apiSliceUser";
 const apiUserSlice = apiSliceUser.injectEndpoints({
     endpoints: (builder) => ({
@@ -11,7 +11,7 @@ const apiUserSlice = apiSliceUser.injectEndpoints({
             query: (_id) => `/users/${_id}`,
             providesTags: ["User"],
         }),
-        addUser: builder.mutation<User, User>({
+        addUser: builder.mutation<LoginResponse, User>({
             query: (newUser) => ({
               url: "/users",
               method: "POST",

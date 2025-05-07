@@ -4,10 +4,9 @@ import {  useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { Categiry, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
+import { Category, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../redux/slice/currentuser";
-
 import { useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
@@ -25,18 +24,22 @@ const AddLost = () => {
       console.error("Invalid date format:", data.date);
       return;
     }
-    const updatedLost = {
-      name: data.name,
-      date: date,
-      city: data.city,
-      street: data.street,
-      identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
-      categiry: Categiry[selectedCategory as keyof typeof Categiry],
-      owner: currentUser,
-    };
-    addLost(updatedLost);
-    setLost(updatedLost);
-    navigate('/')
+    if (currentUser?._id) {
+      const updatedLost = {
+        name: data.name,
+        date: date,
+        city: data.city,
+        street: data.street,
+        identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
+        category: Category[selectedCategory as keyof typeof Category],
+        owner: currentUser._id,
+      };
+      addLost(updatedLost as Lost);
+      setLost(updatedLost);
+      navigate('/');
+    } else {
+      console.error("currentUser is undefined or missing _id, cannot submit lost item.");
+    }
   }
   const addLost = async (data: Lost | null) => {
     try {
@@ -113,7 +116,7 @@ const AddLost = () => {
               onChange={handleChangeCategory}
               value={selectedCategory}
             >
-              {Object.values(Categiry)
+              {Object.values(Category)
                 .filter((val) => isNaN(Number(val)))
                 .map((category) => (
                   <MenuItem key={category} value={category}>

@@ -5,6 +5,7 @@ const apiSliceUser = createApi({
     reducerPath: "users",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
+        credentials: 'include', 
         prepareHeaders: (headers) => {
             const token = getCookie('token');
             if (token) {

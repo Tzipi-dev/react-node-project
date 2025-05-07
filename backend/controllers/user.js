@@ -56,7 +56,7 @@ exports.updateUser=async(req,res)=>{
 exports.getUserById=async(req,res)=>{
     const {id}=req.params
     try{
-        const user=await User.findOne({id})
+        const user=await User.findById(id)
         if (!user){
             return res.status(404).json({message: 'user not found'})
         }
@@ -67,6 +67,4 @@ exports.getUserById=async(req,res)=>{
         res.status(500).json({ message: 'Failed to get user' });
     }
 }
-
-
 

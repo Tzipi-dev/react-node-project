@@ -60,7 +60,7 @@ const AllItems = () => {
                     <Box display="flex" alignItems="cenetr">
                       <FaShoppingBag style={{  color: 'grey' }} />
                       <Typography style={itemdetails}>
-                        {lost.categiry}
+                        {lost.category}
                       </Typography>
                     </Box>
                   </Box>
@@ -88,7 +88,7 @@ const AllItems = () => {
                     <Box display="flex" alignItems="center">
                       <FaShoppingBag style={{  color: 'grey' }} />
                       <Typography style={itemdetails}>
-                        {found.categiry}
+                        {found.category}
                       </Typography>
                     </Box>
                   </Box>
@@ -119,7 +119,7 @@ const AllItems = () => {
                     <Box display="flex" alignItems="center">
                       <FaShoppingBag style={{  color: 'grey' }} />
                       <Typography style={itemdetails}>
-                        {lost.categiry}
+                        {lost.category}
                       </Typography>
                     </Box>
                   </Box>
@@ -153,7 +153,7 @@ const AllItems = () => {
                     <Box display="flex" alignItems="center">
                       <FaShoppingBag style={{  color: 'grey' }} />
                       <Typography style={itemdetails}>
-                        {found.categiry}
+                        {found.category}
                       </Typography>
                     </Box>
                   </Box>

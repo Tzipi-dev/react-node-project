@@ -50,7 +50,7 @@ const AllFounds = () => {
                           <Box display="flex" alignItems="center">
                             <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                             <Typography >
-                              {found.categiry}
+                              {found.category}
                             </Typography>
                           </Box>
                         </Box>

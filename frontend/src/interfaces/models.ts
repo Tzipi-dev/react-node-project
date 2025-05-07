@@ -7,30 +7,30 @@ export interface User {
     email: String,
     _id?: string 
 }
-export enum Categiry {
-    תכשיטים_ושעונים = "תכשיטים ושעונים",
-    תיקים_ומזוודות = "תיקים ומזוודות",
-    ארנקים_וכספים = "ארנקים וכספים",
-    טלפונים_ואלקטרוניקה = "טלפונים ואלקטרוניקה",
-    יהדות = "יהדות",
-    ביגוד = "ביגוד",
-    בעלי_חיים = "בעלי חיים",
-    ציוד_רפואי = "ציוד רפואי",
-    אחר = "אחר"
+export enum Category {
+  תכשיטים_ושעונים = "תכשיטים_ושעונים",
+  תיקים_ומזוודות = "תיקים_ומזוודות",
+  ארנקים_וכספים = "ארנקים_וכספים",
+  טלפונים_ואלקטרוניקה = "טלפונים_ואלקטרוניקה",
+  יהדות = "יהדות",
+  ביגוד = "ביגוד",
+  בעלי_חיים = "בעלי_חיים",
+  ציוד_רפואי = "ציוד_רפואי",
+  אחר = "אחר"
   }
   
 export interface Lost{
-    categiry: Categiry,
+    category: Category,
     name: String,
     city: String,
     street: String,
-    owner:  User|null,
+    owner:  User|string|null,
     date: Date,
     identifying: Array<String>,
     _id?: string 
 }
 export interface Found{
-    categiry:Categiry,
+    category:Category,
     name: String,
     city: string,
     street: string,

@@ -6,11 +6,15 @@ import { HDate } from "@hebcal/core";
 import { Alltext, detailTitle, loginBox } from "../globalStyle";
 import { Typography } from "@mui/material";
 import { mainContentStyle } from "../components/CSS-components";
+import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
 const LostDetails = () => {
   const { id } = useParams();
   const { data: lost, isLoading, isError } = useGetLostByIdQuery(id ? id : skipToken);
   const [foreignDate, setForeignDate] = useState<string | null>(null);
       const [hebrewDate, setHebrewDate] = useState<string | null>(null);
+      const { data: ownerData, isLoading: isOwnerLoading, isError: isOwnerError } = useGetUserByIdQuery(
+        typeof lost?.owner === 'string' ? lost.owner : skipToken
+      );
       const ConvertDates = (date: Date | undefined) => {
           if (date) {
             const hDate = new HDate(date);
@@ -39,12 +43,12 @@ const LostDetails = () => {
                         <Typography sx={Alltext}>תאריך עברי: {hebrewDate}</Typography>
                         <Typography sx={Alltext}>עיר:  {lost.city}</Typography>
                         <Typography sx={Alltext}>רחוב:  {lost.street?lost.street:""}</Typography>
-                        <Typography sx={Alltext}>קטגוריה:  {lost.categiry?lost.categiry:""}</Typography>
+                        <Typography sx={Alltext}>קטגוריה:  {lost.category?lost.category:""}</Typography>
                        
-                        {/* <Typography sx={detailTitle}>צור קשר</Typography>
-                        <Typography sx={Alltext}>שם: {lost.owner.name}</Typography>
-                        <Typography sx={Alltext}>מייל: {lost.owner.email}</Typography>
-                        <Typography sx={Alltext}>טלפון: {lost.owner.phone}</Typography> */}
+                        <Typography sx={detailTitle}>צור קשר</Typography>
+                        <Typography sx={Alltext}>שם: {ownerData?.name || 'לא זמין'}</Typography>
+                       <Typography sx={Alltext} > {ownerData?.email || 'לא קיים'} :מייל</Typography>
+                       <Typography sx={Alltext}>טלפון: {ownerData?.phone || 'לא קיים'}</Typography>
                         
                         
                     </div>
