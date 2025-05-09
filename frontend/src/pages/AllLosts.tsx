@@ -54,7 +54,7 @@ const AllLosts = () => {
                           <Box display="flex" alignItems="center">
                             <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
                             <Typography >
-                              {lost.categiry}
+                              {lost.category}
                             </Typography>
                           </Box>
                         </Box>

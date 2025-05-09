@@ -7,16 +7,22 @@ import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 import { useNavigate } from "react-router";
 import { loginButtonStyle } from "./CSS-components";
-// import { Link } from "react-router";
+import {useCookies} from "react-cookie"
+import { useDispatch } from "react-redux";
+import {setCurrentUser } from "../redux/slice/currentuser";
 
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
     const [AddUserMutation] = useAddUserMutation()
     const navigate=useNavigate()
+    const [cookies, setCookie] = useCookies(['token']);
+    const dispatch=useDispatch()
     const onSubmit = async (data: User) => {
         try {
             const result = await AddUserMutation(data).unwrap();
             console.log('User added successfully:', result);
+            setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
+            dispatch(setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password }));
             navigate(1)
         }
         catch (error) {
@@ -71,12 +77,3 @@ const SignUp = () => {
     )
 }
 export default SignUp
-
-
-
-
-
-
-
-
-

@@ -40,7 +40,7 @@ return (
                         <Typography sx={Alltext}>תאריך עברי: {hebrewDate}</Typography>
                         <Typography sx={Alltext}>עיר:  {found.city}</Typography>
                         <Typography sx={Alltext}>רחוב:  {found.street}</Typography>
-                        <Typography sx={Alltext}>קטגוריה:  {found.categiry}</Typography>
+                        <Typography sx={Alltext}>קטגוריה:  {found.category}</Typography>
                         <Typography sx={detailTitle}>יצירת קשר:  </Typography>
                         <Typography sx={Alltext}>שם: {found.owner?.name}</Typography>
                         {/* <Typography sx={Alltext}> {found.identifying.map((i,index)=><label key={index}>, {i}</label>)}</Typography> */}
