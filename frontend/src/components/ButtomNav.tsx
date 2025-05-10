@@ -32,6 +32,10 @@ const ButtomNav = () => {
                 <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
                 צפיה בכל הפריטים
             </NavLink>
+            <NavLink to="/UserProfile" style={menuItemStyle}>
+                <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
+               פרופיל משתמש
+            </NavLink>
         </div>
     )
 }

@@ -12,6 +12,7 @@ import LostDetails from "../pages/LostDetails";
 import AllItems from "../pages/AllItems";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
+import UserProfile from "../pages/UserProfile";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -35,7 +36,8 @@ const router = createBrowserRouter([{
         { path: "users", element: <SignUp /> },
         {path: "AllItems", element: <AllItems/>},
         {path:"forgot-password" , element: <ForgotPassword />},
-        {path:"reset-password/:token" , element: <ResetPassword />}
+        {path:"reset-password/:token" , element: <ResetPassword />},
+        {path: "UserProfile", element: <UserProfile/>}
 
     ]
 }])

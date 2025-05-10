@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Button, TextField, Typography } from "@mui/material";
 import { useResetPasswordMutation } from "../redux/api/users/apiUserSlice";
+import { topbtn } from "../globalStyle";
 
 
 const ResetPassword = () => {
@@ -67,7 +68,7 @@ const ResetPassword = () => {
         />
         {error && <div style={{ color: "red" }}>{error}</div>}
         {message && <div style={{ color: "green" }}>{message}</div>}
-        <Button type="submit" fullWidth variant="contained" color="primary" disabled={isLoading}>
+        <Button type="submit" fullWidth variant="contained" color="primary" disabled={isLoading} style={topbtn}>
           {isLoading ? "מעדכן..." : "אפס סיסמה"}
         </Button>
       </form>

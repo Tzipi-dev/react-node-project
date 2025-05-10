@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import { useForgotPasswordMutation } from "../redux/api/users/apiUserSlice";
+import { topbtn } from "../globalStyle";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +40,7 @@ const ForgotPassword = () => {
           variant="contained"
           color="primary"
           disabled={sent || isLoading} 
+          style={topbtn}
         >
           {isLoading ? 'שולח...' : 'שלח קישור לאיפוס'}
         </Button>
