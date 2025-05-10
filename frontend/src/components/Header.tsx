@@ -12,7 +12,9 @@ const Header = () => {
         <div>
             <nav style={navStyle}>
                 <NavLink to="/" style={logoStyle}>
+                <span style={{color: "red"}}> | </span>
                     Losses & founds
+                     <span style={{color: "red"}}> | </span>
                 </NavLink>
                 <div style={loggingStyle}>
                     <Link to="/login" style={linkStyle} >
