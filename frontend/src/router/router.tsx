@@ -10,6 +10,8 @@ import SignUp from "../components/SignUp";
 import FoundDetails from "../pages/FoundDetails";
 import LostDetails from "../pages/LostDetails";
 import AllItems from "../pages/AllItems";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -31,7 +33,10 @@ const router = createBrowserRouter([{
         },
         { path: "login", element: <LogIn /> },
         { path: "users", element: <SignUp /> },
-        {path: "AllItems", element: <AllItems/>}
+        {path: "AllItems", element: <AllItems/>},
+        {path:"forgot-password" , element: <ForgotPassword />},
+        {path:"reset-password/:token" , element: <ResetPassword />}
+
     ]
 }])
 export default router

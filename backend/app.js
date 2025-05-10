@@ -29,4 +29,3 @@ mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedT
 
 
 
-
