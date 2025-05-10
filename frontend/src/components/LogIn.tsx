@@ -5,7 +5,7 @@ import LogInSchema from "../schemas/LogInSchema";
 import { errorCSS, loginBox, loginForm, loginTitle, margin, topbtn } from "../globalStyle";
 import { LogInUser, User } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import {  useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentUser as setReduxUser } from "../redux/slice/currentuser";
@@ -50,6 +50,7 @@ const LogIn = () => {
               <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
               <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
             </div>
+            <NavLink to="/forgot-password"  style={{ textTransform: 'none', marginTop: '10px' ,color:"black"}}>שכחתי סיסמה</NavLink>
           </form>
         </div>
       </div>
