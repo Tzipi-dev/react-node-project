@@ -4,6 +4,8 @@ import { foundIconStyle, lostIconStyle, menuItemStyle, sidebarStyle } from "./CS
 import { CiHome } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { IoBody } from "react-icons/io5";
+import { TbListDetails } from "react-icons/tb";
 const ButtomNav = () => {
    
     return (
@@ -29,11 +31,11 @@ const ButtomNav = () => {
                 צפיה בכל המציאות
             </NavLink>
             <NavLink to="/AllItems" style={menuItemStyle}>
-                <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
+                <span style={{ marginRight: "0.5rem", color: "darkred" }}><TbListDetails /></span>
                 צפיה בכל הפריטים
             </NavLink>
             <NavLink to="/UserProfile" style={menuItemStyle}>
-                <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
+                <span style={{ marginRight: "0.5rem", color: "darkolivegreen" }}><IoBody /></span>
                פרופיל משתמש
             </NavLink>
         </div>

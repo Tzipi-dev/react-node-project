@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import { useForgotPasswordMutation } from "../redux/api/users/apiUserSlice";
-import { topbtn } from "../globalStyle";
+import { detailTitle, loginBox, topbtn } from "../globalStyle";
+import { lostTitle } from "../components/CSS-components";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -22,8 +23,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 50 }}>
-      <Typography variant="h5" gutterBottom>שחזור סיסמה</Typography>
+    <div style={loginBox}>
+      <Typography variant="h5" gutterBottom sx={detailTitle}>שחזור סיסמה</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
