@@ -1,24 +1,28 @@
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { errorCSS, loginBox, loginForm, margin, topbtn } from "../globalStyle";
-import {  useForm } from "react-hook-form";
+import { errorCSS, loginForm, margin, topbtn } from "../globalStyle";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Category, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentuser";
+
 import { Link, useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
+
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../redux/slice/currentuser";
 const AddLost = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddLostSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [, setLost] = useState<Lost | null>(null)
-  const currentUser = useSelector(selectCurrentUser)
   const [AddLostMutation] = useAddLostMutation()
   const navigate = useNavigate()
+  const currentUser = useSelector(selectCurrentUser)
+  console.log(currentUser);
+  
   const onSubmit = (data: FieldFillByUser_Lost) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
@@ -33,7 +37,7 @@ const AddLost = () => {
         street: data.street,
         identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
         category: Category[selectedCategory as keyof typeof Category],
-        owner: currentUser._id,
+        owner: currentUser,
       };
       addLost(updatedLost as Lost);
       setLost(updatedLost);
@@ -41,12 +45,9 @@ const AddLost = () => {
     } else {
       console.error("currentUser is undefined or missing _id, cannot submit lost item.");
       console.log("id of current user is: ", currentUser?._id);
-      
     }
   }
-  
 
- 
   const addLost = async (data: Lost | null) => {
     try {
       if (data) {
@@ -80,14 +81,14 @@ const AddLost = () => {
           <TextField
             id="filled-date"
             label="תאריך אבידה"
-          sx={inputStyle}
+            sx={inputStyle}
             type="date"
             {...register("date")}
             style={margin}
-             variant="outlined"
+            variant="outlined"
           />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-          <FormControl  variant="outlined" sx={inputStyle} style={margin} fullWidth>
+          <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
             <InputLabel id="city-select-label">עיר</InputLabel>
             <Select
               labelId="city-select-label"
@@ -112,14 +113,14 @@ const AddLost = () => {
           <TextField
             id="filled-street"
             label="רחוב"
-             variant="outlined"
+            variant="outlined"
             type="text"
             {...register("street")}
             style={margin}
             sx={inputStyle}
           />
           {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
-          <FormControl  variant="outlined" sx={inputStyle} style={margin} fullWidth>
+          <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
             <InputLabel id="category-select-label" style={margin}>קטגוריה</InputLabel>
             <Select
               labelId="category-select-label"
@@ -139,7 +140,7 @@ const AddLost = () => {
             <TextField
               id="filled-identity-1"
               label="מזהה 1"
-               variant="outlined"
+              variant="outlined"
               type="text"
               {...register("firstIdentity")}
               style={margin}
@@ -150,7 +151,7 @@ const AddLost = () => {
             <TextField
               id="filled-identity-2"
               label="מזהה 2"
-               variant="outlined"
+              variant="outlined"
               type="text"
               {...register("secondIdentity")}
               style={margin}
@@ -160,7 +161,7 @@ const AddLost = () => {
             <TextField
               id="filled-identity-3"
               label="מזהה 3"
-               variant="outlined"
+              variant="outlined"
               type="text"
               {...register("thirdIdentity")}
               style={margin}

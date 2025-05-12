@@ -1,33 +1,32 @@
-import { Button , TextField, Typography } from "@mui/material";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
 import { errorCSS, loginBox, loginForm, loginTitle, margin, topbtn } from "../globalStyle";
-import { LogInUser, User } from "../interfaces/models";
+import { LogInUser } from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
 import { NavLink, useNavigate } from "react-router";
 import {  useState } from "react";
 import { useDispatch } from "react-redux";
-import { setCurrentUser as setReduxUser } from "../redux/slice/currentuser";
+import { setCurrentUser } from "../redux/slice/currentuser";
 import {useCookies} from "react-cookie"
 import { loginButtonStyle } from "./CSS-components";
+import { Button, TextField, Typography } from "@mui/material";
 const LogIn = () => {
-  const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
-  const [currentUser, setCurrentUser] = useState<User>()
+  //const [, setLoggedInUserId] = useState<string | undefined>(undefined);
+//const [currentUser, setCurrentUser2] = useState<User>()
   const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
   const navigate = useNavigate()
   const [loginError, setloginError] = useState<string>("")
   const [isError, setIsError] = useState<boolean>(false)
   const dispatch=useDispatch()
-  const [cookies, setCookie] = useCookies(['token']);
+  const [, setCookie] = useCookies(['token']);
   const onSubmit = async (data: LogInUser) => {
     try {
       const result = await addLogin(data).unwrap();
-      setLoggedInUserId(result.user._id.toString());
-      setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password })
+      dispatch(setCurrentUser(result.user))
       setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
-      dispatch(setReduxUser(currentUser))
       navigate('/')
     } catch (err) {
       console.log(err);

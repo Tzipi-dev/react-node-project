@@ -1,6 +1,6 @@
 import { Link } from "react-router";
-import { foundTitle, items, mainContentStyle } from "../components/CSS-components";
-import { detailTitle } from "../globalStyle";
+import { foundTitle, items, lostTitle, mainContentStyle } from "../components/CSS-components";
+import { detailTitle, margin } from "../globalStyle";
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
 import { containerOfFound, itemStyle, wrapperStyle } from "./CSS-pages";
@@ -17,7 +17,7 @@ const UserProfile = () => {
   const { data: GetAllLostsQuery } = useGetAllLostsQuery();
   const currentUser = useSelector(selectCurrentUser);
   const userFounds = GetAllFoundsQuery?.filter((found: Found) => found.owner?._id === currentUser?._id) || [];
-  const userLosts = GetAllLostsQuery?.filter((lost: Lost) => lost.owner === currentUser) || [];
+  const userLosts = GetAllLostsQuery?.filter((lost: Lost) => lost.owner?._id === currentUser?._id) || [];
   const dispatch=useDispatch()
    const fetchingData = async () => {
      try {
@@ -71,7 +71,7 @@ const UserProfile = () => {
                   <div key={lost._id?.toString()} style={itemStyle}>
                     <Link to={`/Losts/${lost._id?.toString()}`}>
                       <Box sx={items}>
-                        <Chip label="Lost" size="small" sx={foundTitle} />
+                        <Chip label="Lost" size="small" sx={lostTitle} />
                         <Typography mt={1} mb={1}>{lost.name}</Typography>
                         <Box display="flex" alignItems="center" mb={0.5}>
                           <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />

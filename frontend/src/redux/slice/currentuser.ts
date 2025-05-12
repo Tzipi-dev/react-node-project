@@ -1,23 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "../../interfaces/models";
+ import { User } from "../../interfaces/models";
+ const defaultUser: User = {
+     name: 'Guest',
+     email: '',
+     password: "",
+     phone: ""
+ };
+ interface UserState {
+   currentUser: User|null
+ }
+   const initialState: UserState = {
+     currentUser: defaultUser,
+   };
+ const currentUserSlice = createSlice({
+   name: "user",
+   initialState,
+   reducers: {
+     setCurrentUser: (state, action) => {
+       state.currentUser = action.payload;
+     },
+   
+   },
+ });
+ export const { setCurrentUser } = currentUserSlice.actions;
+ export const selectCurrentUser = (state:{user:UserState} ) =>
+ state.user.currentUser;
 
-interface UserState {
-  currentUser: User|null
-}
-  const initialState: UserState = {
-    currentUser: null,
-  };
-const CurrentUserSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-    setCurrentUser: (state, action) => {
-      state.currentUser = action.payload;
-    },
-  
-  },
-});
-export const { setCurrentUser } = CurrentUserSlice.actions;
-export const selectCurrentUser = (state:{user:UserState} ) =>
-  state.user.currentUser;
-export default CurrentUserSlice.reducer;
+ export default currentUserSlice.reducer;
