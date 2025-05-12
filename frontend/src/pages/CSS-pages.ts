@@ -44,28 +44,26 @@ export const reportFoundButtonStyle: CSSProperties = {
   alignItems: 'center',
   gap: '0.5rem',
 };
-export const containerOfFound: CSSProperties={
+export const containerOfFound: CSSProperties = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
   gap: '16px', // זה יצור רווח אחיד בין הפריטים (אופקית ואנכית)
   width: '100%',
-  
-
 }
-export const item: CSSProperties={
+export const item: CSSProperties = {
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"600",
+  fontWeight: "600",
   fontSize: "large",
   //  textAlign: "right"
 }
-export const itemdetails: CSSProperties={
+export const itemdetails: CSSProperties = {
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"200",
+  fontWeight: "200",
   fontSize: "medium",
- 
+
 }
-export const filterContainer: CSSProperties={
+export const filterContainer: CSSProperties = {
   backgroundColor: "white",
   width: "97%",
   height: "10vh",
@@ -77,13 +75,13 @@ export const filterContainer: CSSProperties={
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-
+  minWidth: "64vw"
 }
 
-export const frameToGroupButton: CSSProperties={
+export const frameToGroupButton: CSSProperties = {
   height: "10vh",
   width: "14vw",
-  alignItems:"cenetr",
+  alignItems: "cenetr",
   justifyContent: "space-between",
   backgroundColor: " #f4ece1",
   display: "flex",
@@ -91,43 +89,43 @@ export const frameToGroupButton: CSSProperties={
   paddingLeft: "1vw",
   paddingRight: "1vw",
   borderRadius: "10px",
-  
- 
+
+
 }
-export const btnFound: CSSProperties={
+export const btnFound: CSSProperties = {
   color: "rgb(46, 46, 46)",
   border: "none",
-  height:"6vh",
+  height: "6vh",
   marginTop: "2vh",
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"200",
+  fontWeight: "200",
   fontSize: "medium",
   backgroundColor: "rgb(237, 237, 237)",
- marginLeft: "1vw"
+  marginLeft: "1vw"
 }
-export const btnAll: CSSProperties={
+export const btnAll: CSSProperties = {
   color: "rgb(80, 39, 23)",
-  
-  height:"6vh",
+
+  height: "6vh",
   marginTop: "2vh",
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"200",
+  fontWeight: "200",
   fontSize: "medium",
   border: "none",
   backgroundColor: "rgb(237, 237, 237)",
-marginLeft: "1vw"
-  
+  marginLeft: "1vw"
+
 }
-export const btnLost: CSSProperties={
+export const btnLost: CSSProperties = {
   color: "rgb(255, 0, 0)",
-  height:"6vh",
+  height: "6vh",
   marginTop: "2vh",
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"200",
+  fontWeight: "200",
   fontSize: "medium",
   border: "none",
   backgroundColor: "rgb(237, 237, 237)",
-  
+
 }
 export const resetByn: React.CSSProperties = {
   backgroundColor: "#5c4033", // חום כהה
@@ -139,8 +137,71 @@ export const resetByn: React.CSSProperties = {
   transition: "background-color 0.3s ease",
   height: "6vh",
   fontFamily: "Segoe UI, sans-serif",
-  fontWeight:"400",
+  fontWeight: "400",
   fontSize: "medium",
   marginRight: "1vw"
 
 };
+export const frameToCategoryBtn: CSSProperties = {
+  height: "10vh",
+  width: "10vw",
+  alignItems: "cenetr",
+  justifyContent: "space-between",
+  backgroundColor: " #f4ece1",
+  display: "flex",
+  paddingLeft: "2vw",
+  paddingRight: "1vw",
+  borderRadius: "10px",
+
+}
+export const cateforyBtn: React.CSSProperties = {
+  backgroundColor: "#5c4033", // חום כהה
+  color: "#fff",
+  border: "none",
+  borderRadius: "5px",
+  padding: "0.6rem 1rem",
+  cursor: "pointer",
+  transition: "background-color 0.3s ease",
+  height: "6vh",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "400",
+  fontSize: "medium",
+  marginTop: "2vh",
+  width: "auto"
+};
+export const titleMyFounds: CSSProperties={
+  height: "10vh",
+  width: "70vw",
+  alignItems: "cenetr",
+  justifyContent: "space-between",
+  backgroundColor: "white",
+  display: "flex",
+  // borderBlock: "2px solid brown",
+  paddingLeft: "1vw",
+  paddingRight: "1vw",
+  borderRadius: "10px",
+  minWidth: "70%"
+}
+export const wrapperStyle: CSSProperties = {
+  display: 'flex',
+  overflowX: 'auto',
+  whiteSpace: 'nowrap',
+  gap: '10px',
+  padding: '10px',
+  width: "auto",
+  marginTop: "4vh"
+};
+
+export const itemStyle: CSSProperties = {
+  minWidth: '200px',
+  height: 'auto', // או ערך מספרי כמו '150px'
+  backgroundColor: 'white',
+  flexShrink: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '10px', // אם את רוצה מרווח פנימי
+};
+export const inputStyle: CSSProperties={
+  backgroundColor: "white"
+}

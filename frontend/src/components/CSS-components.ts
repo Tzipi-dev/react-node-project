@@ -122,11 +122,11 @@ export const signupButtonStyleHover: React.CSSProperties = {
   color: "#fff",
 };
 export const mainContentStyle: React.CSSProperties = {
-  marginTop: "5vh", // מונע גלישה מתחת לניווט העליון
-  marginLeft: "15vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
+  marginTop: "8vh", // מונע גלישה מתחת לניווט העליון
+  marginLeft: "10vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
   padding: "1rem", // ריווח פנימי לתוכן
+  minHeight: "100vh",
   
-  // ... סגנונות נוספים לתוכן שלך
 };
 export const cardsContainerStyle: CSSProperties = {
   display: 'flex',

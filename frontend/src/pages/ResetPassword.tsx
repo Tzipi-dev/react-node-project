@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Button, TextField, Typography } from "@mui/material";
 import { useResetPasswordMutation } from "../redux/api/users/apiUserSlice";
-import { topbtn } from "../globalStyle";
+import { detailTitle, loginBox, topbtn } from "../globalStyle";
 
 
 const ResetPassword = () => {
@@ -45,8 +45,8 @@ const ResetPassword = () => {
   if (!token) return <Typography>קישור לא חוקי</Typography>;
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 50 }}>
-      <Typography variant="h5" gutterBottom>איפוס סיסמה</Typography>
+    <div style={loginBox}>
+      <Typography variant="h5" gutterBottom sx={detailTitle}>איפוס סיסמה</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth

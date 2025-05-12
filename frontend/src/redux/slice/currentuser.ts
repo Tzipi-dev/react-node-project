@@ -1,16 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "../../interfaces/models";
-const defaultUser: User = {
-    name: 'Guest',
-    email: '',
-    password: "",
-    phone: ""
-};
+
 interface UserState {
   currentUser: User|null
 }
   const initialState: UserState = {
-    currentUser: defaultUser,
+    currentUser: null,
   };
 const CurrentUserSlice = createSlice({
   name: "user",

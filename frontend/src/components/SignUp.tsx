@@ -10,7 +10,6 @@ import { loginButtonStyle } from "./CSS-components";
 import {useCookies} from "react-cookie"
 import { useDispatch } from "react-redux";
 import {setCurrentUser } from "../redux/slice/currentuser";
-
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
     const [AddUserMutation] = useAddUserMutation()
