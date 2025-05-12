@@ -1,5 +1,5 @@
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { errorCSS, loginBox, loginForm, margin, topbtn } from "../globalStyle";
+import { errorCSS, loginForm, margin, topbtn } from "../globalStyle";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AddFoundSchema from "../schemas/AddFoundSchema";

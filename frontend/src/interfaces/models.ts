@@ -24,7 +24,7 @@ export interface Lost{
     name: String,
     city: String,
     street: String,
-    owner:  User|string|null,
+    owner:  User
     date: Date,
     identifying: Array<String>,
     _id?: string 
