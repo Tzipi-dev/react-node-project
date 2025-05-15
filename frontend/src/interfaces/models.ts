@@ -34,7 +34,7 @@ export interface Found{
     name: String,
     city: string,
     street: string,
-    owner: User|null,
+    owner: User,
     date: Date,
     identifying: Array<String>,
     _id?: string 

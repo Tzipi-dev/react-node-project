@@ -8,17 +8,21 @@ import foundSlice from './slice/foundSlice';
 import lostsSlice from './slice/lostsSlice';
 import userSlice from './slice/userSlice'
 import currentuser from './slice/currentuser'
-
 import { configureStore } from '@reduxjs/toolkit';
 import apiLoginSlice from './api/loging/apiLoginSlice';
-import apiCitiesSlice from './api/cities/apiCitiesSlice';
+import apiUsersLostsSlice from './api/usresLost/apiUsresLostsSlice';
+import apiSliceUsersLosts from './api/usresLost/apiSliceUsersLosts';
+import apiUsersFoundsSlice from './api/usersFound/apiUsersFoundsSlice';
+import apiSliceUsersFounds from './api/usersFound/apiSliceUsersFounds';
+
 const store = configureStore({
   reducer: {
     [apiLostSlice.reducerPath]: apiSliceLost.reducer,
     [apiUserSlice.reducerPath]: apiSliceUser.reducer,
     [apiFoundSlice.reducerPath]: apiSliceFound.reducer,
     [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
-    [apiCitiesSlice.reducerPath]:apiCitiesSlice.reducer,
+    [apiUsersLostsSlice.reducerPath]: apiSliceUsersLosts.reducer,
+    [apiUsersFoundsSlice.reducerPath]:apiSliceUsersFounds.reducer,
     foundSlice: foundSlice,
     lostsSlice:lostsSlice,
     user: currentuser, 
@@ -30,8 +34,8 @@ const store = configureStore({
       apiSliceUser.middleware,
       apiSliceFound.middleware,
       apiLoginSlice.middleware,
-      apiCitiesSlice.middleware,
+     apiSliceUsersLosts.middleware,
+     apiSliceUsersFounds.middleware
   )
 });
-
 export default store;

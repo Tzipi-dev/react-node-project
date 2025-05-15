@@ -1,6 +1,6 @@
 const express=require("express")
 const router=express.Router()
-const {getAllLosts,addLost,deleteLost,updateLost,getLostById}=require("../controllers/losts")
+const {getAllLosts,addLost,deleteLost,updateLost,getLostById, getLostsByIdOwner}=require("../controllers/losts")
 const verifyJWT = require("../middlewares/verifyJWT")
 
 router.get('/',getAllLosts)
