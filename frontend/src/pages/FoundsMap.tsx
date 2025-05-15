@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice";
 
-const KEY_API = 'AIzaSyBxB7-a9FdZheIkxwUyIuUG4z1aMRr6tEE';
+import KEY_API from '.././vite-env'
 
 const containerStyle = {
   width: '100%',
