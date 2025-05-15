@@ -12,7 +12,7 @@ const LostDetails = () => {
   const { data: lost, isLoading, isError } = useGetLostByIdQuery(id ? id : skipToken);
   const [foreignDate, setForeignDate] = useState<string | null>(null);
       const [hebrewDate, setHebrewDate] = useState<string | null>(null);
-      const { data: ownerData, isLoading: isOwnerLoading, isError: isOwnerError } = useGetUserByIdQuery(
+      const { data: ownerData} = useGetUserByIdQuery(
         typeof lost?.owner === 'string' ? lost.owner : skipToken
       );
       const ConvertDates = (date: Date | undefined) => {
