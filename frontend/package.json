@@ -17,6 +17,7 @@
     "@mui/icons-material": "^6.4.7",
     "@mui/joy": "^5.0.0-beta.52",
     "@mui/material": "^6.4.7",
+    "@react-google-maps/api": "^2.20.6",
     "@reduxjs/toolkit": "^2.6.1",
     "axios": "^1.9.0",
     "date-fns": "^4.1.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/google.maps": "^3.58.1",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@types/zxcvbn": "^4.4.5",

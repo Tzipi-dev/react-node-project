@@ -13,6 +13,8 @@ import AllItems from "../pages/AllItems";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import UserProfile from "../pages/UserProfile";
+// import FoundsMap from "../pages/FoundsMap";
+
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -37,7 +39,8 @@ const router = createBrowserRouter([{
         {path: "AllItems", element: <AllItems/>},
         {path:"forgot-password" , element: <ForgotPassword />},
         {path:"reset-password/:token" , element: <ResetPassword />},
-        {path: "UserProfile", element: <UserProfile/>}
+        {path: "UserProfile", element: <UserProfile/>},
+        // {path: "FoundsMap", element: <FoundsMap/>}
 
     ]
 }])

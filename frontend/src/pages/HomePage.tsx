@@ -5,6 +5,9 @@ import { selectCurrentUser, setCurrentUser } from "../redux/slice/currentuser";
 import { useCookies } from "react-cookie";
 import { User } from "../interfaces/models";
 import { useEffect } from "react";
+
+
+
 const HomePage = () => {
   const [cookies] = useCookies(['token']);
   const token = cookies.token;
@@ -50,6 +53,7 @@ const HomePage = () => {
     <>
       <Add />
       <LastItems />
+      
     </>
   );
 };
