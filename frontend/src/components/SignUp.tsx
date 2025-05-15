@@ -1,88 +1,164 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { errorCSS, loginBox, loginForm, loginTitle, margin, topbtn } from "../globalStyle";
+import {
+  errorCSS,
+  loginBox,
+  loginForm,
+  loginTitle,
+  margin,
+  topbtn,
+} from "../globalStyle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserSchema from "../schemas/UserSchema";
 import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 import { useNavigate } from "react-router";
 import { loginButtonStyle } from "./CSS-components";
-import {useCookies} from "react-cookie"
+import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-import {setCurrentUser } from "../redux/slice/currentuser";
+import { setCurrentUser } from "../redux/slice/currentuser";
+import zxcvbn from "zxcvbn";
+import { useState } from "react";
+
 const SignUp = () => {
-    const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
-    const [AddUserMutation] = useAddUserMutation()
-    const navigate=useNavigate()
-    const [,setCookie] = useCookies(['token']);
-    const dispatch=useDispatch()
-    const onSubmit = async (data: User) => {
-        try {
-            const result = await AddUserMutation(data).unwrap();
-            dispatch(setCurrentUser(result.user))
-            console.log('User added successfully:', result);
-            setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
-            localStorage.setItem("currentUser", JSON.stringify(result.user));
-            navigate('/')
-        }
-        catch (error) {
-            console.error('Error adding user:', error);
-        }
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(UserSchema) });
+
+  const [AddUserMutation] = useAddUserMutation();
+  const navigate = useNavigate();
+  const [, setCookie] = useCookies(["token"]);
+  const dispatch = useDispatch();
+  const [strength, setStrength] = useState<string>("");
+
+  const onSubmit = async (data: User) => {
+    try {
+      const result = await AddUserMutation(data).unwrap();
+      dispatch(setCurrentUser(result.user));
+      console.log("User added successfully:", result);
+      setCookie("token", result.accessToken, {
+        path: "/",
+        maxAge: 3600 * 24 * 7,
+      });
+      localStorage.setItem("currentUser", JSON.stringify(result.user));
+      const result2 = zxcvbn(data.password.toString());
+      console.log(result2.score); // 0–4
+      console.log(result2.feedback); // המלצות לחיזוק הסיסמה
+      navigate("/");
+    } catch (error) {
+      console.error("Error adding user:", error);
     }
-    return (
-        <div>
-            <div >
-                <div style={loginBox}>
-                    <Typography sx={loginTitle}>SignUp</Typography>
-                    <form style={loginForm} onSubmit={handleSubmit(onSubmit)} >
-                        <TextField id="filled-basic" label="שם" variant="filled" {...register("name")} style={margin} />
-                        {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
-                        <TextField id="filled-basic" label="מייל" variant="filled" {...register("email")} style={margin}/>
-                        {errors.email && <div style={errorCSS}>{errors.email.message}</div>}
-                        <TextField id="filled-basic" label="טלפון" variant="filled" {...register("phone")}style={margin} />
-                        {errors.phone && <div style={errorCSS}>{errors.phone.message}</div>}
-                        <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} style={margin}/>
-                        {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
-                        <div> 
-                        <Button variant="contained"  type="submit" fullWidth style={topbtn} >הירשם</Button>
-                        <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
-                        </div>
-                    </form>
-                </div>
+  };
+
+  const getPasswordStrength = (password: string) => {
+    if (password.length < 4) return "weak";
+    if (password.length < 8) return "medium";
+    return "strong";
+  };
+
+  const getColorByStrength = (strength: string) => {
+    switch (strength) {
+      case "weak":
+        return "red";
+      case "medium":
+        return "orange";
+      case "strong":
+        return "green";
+      default:
+        return "gray";
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <div style={loginBox}>
+          <Typography sx={loginTitle}>SignUp</Typography>
+          <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              id="filled-basic"
+              label="שם"
+              variant="filled"
+              {...register("name")}
+              style={margin}
+            />
+            {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
+
+            <TextField
+              id="filled-basic"
+              label="מייל"
+              variant="filled"
+              {...register("email")}
+              style={margin}
+            />
+            {errors.email && (
+              <div style={errorCSS}>{errors.email.message}</div>
+            )}
+
+            <TextField
+              id="filled-basic"
+              label="טלפון"
+              variant="filled"
+              {...register("phone")}
+              style={margin}
+            />
+            {errors.phone && (
+              <div style={errorCSS}>{errors.phone.message}</div>
+            )}
+
+            <TextField
+              id="filled-basic"
+              label="סיסמה"
+              variant="filled"
+              type="password"
+              style={margin}
+              {...register("password", {
+                onChange: (e) => {
+                  const value = e.target.value;
+                  const s = getPasswordStrength(value);
+                  setStrength(s);
+                },
+              })}
+            />
+            <div
+              style={{
+                height: "5px",
+                backgroundColor: getColorByStrength(strength),
+                marginTop: "4px",
+                borderRadius: "4px",
+              }}
+            />
+            {errors.password && (
+              <div style={errorCSS}>{errors.password.message}</div>
+            )}
+
+            <div>
+              <Button
+                variant="contained"
+                type="submit"
+                fullWidth
+                style={topbtn}
+              >
+                הירשם
+              </Button>
+              <Button
+                variant="outlined"
+                style={loginButtonStyle}
+                fullWidth
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                ביטול
+              </Button>
             </div>
-
-
-
-
-            {/* <div onClick={}><CancelRoundedIcon /></div> */}
-            {/* <form onSubmit={handleSubmit(onSubmit)}>
-                <div>שם:</div>
-                <TextField id="filled-basic" label="שם" variant="filled" {...register("name")} />
-                {errors.name && <p style={errorCSS}>{errors.name.message}</p>}
-                <div>מייל:</div>
-                <TextField id="filled-basic" label="מייל" variant="filled" {...register("email")} />
-                {errors.email && <p style={errorCSS}>{errors.email.message}</p>}
-                <div>טלפון:</div>
-                <TextField id="filled-basic" label="טלפון" variant="filled" {...register("phone")} />
-                {errors.phone && <p style={errorCSS}>{errors.phone.message}</p>}
-                <div>סיסמה:</div>
-                <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} />
-                {errors.password && <p style={errorCSS}>{errors.password.message}</p>}
-                <div> <Button variant="outlined" type="submit" >sign up</Button></div>
-            </form>
-            <Button variant="outlined">
-                <Link to="/">ביטול</Link>
-            </Button>  */}
+          </form>
         </div>
-    )
-}
-export default SignUp
+      </div>
+    </div>
+  );
+};
 
-
-
-
-
-
-
-
-
+export default SignUp;
