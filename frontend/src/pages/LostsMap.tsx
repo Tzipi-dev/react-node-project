@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
-const KEY_API = 'AIzaSyBxB7-a9FdZheIkxwUyIuUG4z1aMRr6tEE';
+///const KEY_API = 'AIzaSyBxB7-a9FdZheIkxwUyIuUG4z1aMRr6tEE';
+import KEY_API from '.././vite-env'
 const containerStyle = {
   width: '100%',
   height: '600px',
