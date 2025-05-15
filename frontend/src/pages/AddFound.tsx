@@ -3,22 +3,31 @@ import { errorCSS, loginForm, margin, topbtn } from "../globalStyle";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AddFoundSchema from "../schemas/AddFoundSchema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { Category, Cities, FieldFillByUser_Found, Found } from "../interfaces/models";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentuser";
+import { Category, Cities, FieldFillByUser_Found, Found, User } from "../interfaces/models";
+
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { Link, useNavigate } from "react-router";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
+
 const AddFound = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddFoundSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [, setFound] = useState<Found | null>(null)
-  const currentUser = useSelector(selectCurrentUser)
+  const [currentUser, setCurrentUser] = useState<User>()
   const [AddFoundMutation] = useAddFoundMutation()
   const navigate = useNavigate()
+  useEffect(() => {
+    const data = localStorage.getItem("currentUser");
+    if (data) {
+      setCurrentUser(JSON.parse(data));
+    } else {
+      console.log("לא נמצא מידע ב-localStorage");
+    }
+  }, [])
+
   const onSubmit = (data: FieldFillByUser_Found) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
@@ -32,7 +41,7 @@ const AddFound = () => {
       street: data.street,
       identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
       category: Category[selectedCategory as keyof typeof Category],
-      owner: currentUser,
+      owner: currentUser as User
     };
     addFound(updatedFound);
     setFound(updatedFound);
@@ -74,7 +83,7 @@ const AddFound = () => {
           <TextField
             id="filled-date"
             label="תאריך מציאה"
-           variant="outlined"
+            variant="outlined"
             type="date"
             {...register("date")}
             style={margin}
@@ -132,7 +141,7 @@ const AddFound = () => {
             <TextField
               id="filled-identity-1"
               label="מזהה 1"
-            variant="outlined"
+              variant="outlined"
               type="text"
               {...register("firstIdentity")}
               style={margin}

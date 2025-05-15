@@ -14,21 +14,18 @@ import {
   frameToCategoryBtn,
   resetByn
 } from "./CSS-pages";
-
 import { Category } from "../interfaces/models";
-
 const AllFounds = () => {
   const dispatch = useDispatch();
   const { data: GetAllFoundsQuery, isError, isLoading } = useGetAllFoundsQuery();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const open = Boolean(anchorEl);
-
   useEffect(() => {
     fetchingData();
     console.log(GetAllFoundsQuery);
+    
   }, []);
-
   const fetchingData = async () => {
     try {
       await dispatch(setAllFounds(GetAllFoundsQuery));
@@ -36,25 +33,22 @@ const AllFounds = () => {
       console.error(error);
     }
   };
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const handleSelectCategory = (category: Category) => {
     setSelectedCategory(category);
     console.log(category);
     handleClose();
   };
-
   const resetHandling = () => {
     setSelectedCategory(null);
   };
 
+ 
   return (
     <div style={mainContentStyle}>
       {isLoading ? (
@@ -78,7 +72,11 @@ const AllFounds = () => {
                     </MenuItem>
                   ))}
               </Menu>
+              
+
+
             </div>
+
             <Button sx={resetByn} onClick={resetHandling}>
               אפס סינון
             </Button>

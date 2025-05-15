@@ -33,10 +33,6 @@ const LastItems = () => {
         const lostItem1 = GetAllLostsQuery && GetAllLostsQuery[1];
         const foundItem0 = GetAllFoundsQuery && GetAllFoundsQuery[0];
         const foundItem1 = GetAllFoundsQuery && GetAllFoundsQuery[1];
-        console.log(lostItem0);
-        console.log(lostItem1);
-        console.log(foundItem0);
-        console.log(foundItem1);
         setList([lostItem0, lostItem1, foundItem0, foundItem1])
     }, [GetAllLostsQuery, GetAllFoundsQuery])
     

@@ -34,6 +34,7 @@ const apiLostSlice = apiSliceLost.injectEndpoints({
             }),
             invalidatesTags: ["Lost"],
         }),
+       
     }),
 });
 
@@ -43,5 +44,6 @@ export const {
     useAddLostMutation,
     useUpdateLostMutation,
     useDeleteLostMutation,
+  
 } = apiLostSlice;
 export default apiLostSlice

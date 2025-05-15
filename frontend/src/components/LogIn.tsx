@@ -27,6 +27,7 @@ const LogIn = () => {
       const result = await addLogin(data).unwrap();
       dispatch(setCurrentUser(result.user))
       setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
+      localStorage.setItem("currentUser", JSON.stringify(result.user));
       navigate('/')
     } catch (err) {
       console.log(err);
