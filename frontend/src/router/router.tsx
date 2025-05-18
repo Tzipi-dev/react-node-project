@@ -13,8 +13,8 @@ import AllItems from "../pages/AllItems";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import UserProfile from "../pages/UserProfile";
-// import FoundsMap from "../pages/FoundsMap";
-
+import UpdateLost from "../pages/updateLost";
+import UpdateFound from "../pages/UpdateFound";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -24,14 +24,16 @@ const router = createBrowserRouter([{
         { path: "Losts",
             children: [
             { index: true, element: <AllLosts /> },
-            { path: ":id", element: <LostDetails/> }
+            { path: ":id", element: <LostDetails/> },
+            {path: "UpdateLost/:id", element: <UpdateLost/>}
             ]
         },
         {
             path: "Founds",
             children: [
                 { index: true, element: <AllFounds /> },
-                { path: ":id", element: <FoundDetails /> }
+                { path: ":id", element: <FoundDetails /> },
+                {path: "UpdateFound/:id", element: <UpdateFound/>}
             ]
         },
         { path: "login", element: <LogIn /> },
@@ -40,7 +42,7 @@ const router = createBrowserRouter([{
         {path:"forgot-password" , element: <ForgotPassword />},
         {path:"reset-password/:token" , element: <ResetPassword />},
         {path: "UserProfile", element: <UserProfile/>},
-        // {path: "FoundsMap", element: <FoundsMap/>}
+        
 
     ]
 }])

@@ -94,15 +94,14 @@ const forgotPassword = async (req, res) => {
 const resetPassword = async (req, res) => {
   const { token, password } = req.body;
 
-  console.log('Received token:', token);
-  console.log('Received password:', password);
+
   if (!token || !password) {
     return res.status(400).json({ message: 'Missing data' });
   }
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    console.log('Decoded token:', decoded);
+   
     const user = await User.findById(decoded.userId);
     if (!user) return res.status(404).json({ message: 'User not found' });
     const hashedPassword = await bcrypt.hash(password, 10);

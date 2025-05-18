@@ -12,7 +12,7 @@ exports.getAllFounds = async (req, res) => {
 }
 
 exports.addFound = async (req, res) => {
-    console.log("in addFound");
+  
 
     const found = await Found.create(req.body)
     res.json(found)
@@ -60,7 +60,7 @@ exports.updateFound = async (req, res) => {
 exports.getFoundById = async (req, res) => {
     const { id } = req.params
     try {
-        console.log('GET /founds/:id hit', req.params.id);
+    
         const found = await Found.findById(id);
         if (!found) {
             return res.status(404).json({ message: 'found not found' })
@@ -82,7 +82,7 @@ exports.getFoundsByIdOwner = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
     const founds = await Found.find({ owner: new mongoose.Types.ObjectId(id) });
-    console.log("תוצאות שנמצאו:", founds);
+    
     res.json(founds);
   } catch (error) {
     console.error("שגיאת שרת:", error);

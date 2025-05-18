@@ -9,7 +9,7 @@ exports.getAllCitiesInIsrael = async (req, res) => {
          res.status(response.status).json({ message: 'שגיאה בקבלת נתונים מה-API' });
       }
       const data = await response.json();
-      console.log('נתונים שהתקבלו מה-API:', data);
+      
       res.json(data);
     } catch (error) {
       console.error('Fail to get cities:', error);

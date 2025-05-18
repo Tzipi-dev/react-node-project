@@ -13,8 +13,6 @@ import {useCookies} from "react-cookie"
 import { loginButtonStyle } from "./CSS-components";
 import { Button, TextField, Typography } from "@mui/material";
 const LogIn = () => {
-  //const [, setLoggedInUserId] = useState<string | undefined>(undefined);
-//const [currentUser, setCurrentUser2] = useState<User>()
   const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
   const navigate = useNavigate()

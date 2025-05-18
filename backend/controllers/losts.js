@@ -55,7 +55,7 @@ exports.updateLost=async(req,res)=>{
 exports.getLostById=async(req,res)=>{
     const {id}=req.params
     try{
-        console.log('GET /losts/:id hit', req.params.id);
+        
         const lost=await Lost.findById(id);
         if (!lost){
             return res.status(404).json({message: 'lost not found'})
@@ -76,7 +76,7 @@ exports.getLostsByIdOwner = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
     const losts = await Lost.find({ owner: new mongoose.Types.ObjectId(id) });
-    console.log("תוצאות שנמצאו:", losts);
+   
     res.json(losts);
   } catch (error) {
     console.error("שגיאת שרת:", error);

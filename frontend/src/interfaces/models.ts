@@ -26,7 +26,6 @@ export interface Lost{
     street: String,
     owner:  User
     date: Date,
-    identifying: Array<String>,
     _id?: string 
 }
 export interface Found{
@@ -111,9 +110,7 @@ export interface FieldFillByUser_Lost{
     city: string,
     street: string,
     date: string,
-    firstIdentity: string,
-    secondIdentity: string,
-    thirdIdentity: string,
+    
 
 }
 export enum Filters{
