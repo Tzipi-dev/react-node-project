@@ -65,7 +65,7 @@ const AddFound = () => {
   };
   return (
     <div style={mainContentStyle}>
-      <div style={{ justifyContent: "flex-end" }}>
+      <div style={{ justifyContent: "flex-end", width: "60vw" }}>
         <Link to="/"> ← עמוד הבית </Link>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
 

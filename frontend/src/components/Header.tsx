@@ -1,13 +1,11 @@
 import { Link, NavLink } from "react-router";
-
 import { linkStyle, loginButtonStyle, logoStyle, navStyle, signupButtonStyle } from "./CSS-components";
+import { Button } from "@mui/material";
 const Header = () => {
-
     const loggingStyle = {
         display: 'flex',
         color: 'black',
     }
-
     return (
         <div>
             <nav style={navStyle}>
@@ -16,15 +14,14 @@ const Header = () => {
                 </NavLink>
                 <div style={loggingStyle}>
                     <Link to="/login" style={linkStyle} >
-                        <button style={loginButtonStyle}>
+                        <Button style={loginButtonStyle}>
                            התחבר
-                        </button>
+                        </Button>
                     </Link>
-
                     <Link to="/users" style={linkStyle} >
-                        <button style={signupButtonStyle}>
+                        <Button style={signupButtonStyle}>
                             הירשם
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </nav>
@@ -32,3 +29,5 @@ const Header = () => {
     );
 };
 export default Header;
+
+
