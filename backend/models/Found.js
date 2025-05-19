@@ -14,7 +14,7 @@ const FoundDetails=new mongoose.Schema({
          ref: User
        },
      date: Date,
-     identifying: Array,
+     
    
 })
 module.exports=mongoose.model('Found',FoundDetails)
