@@ -4,9 +4,7 @@ const AddFoundSchema=z.object({
      date: z.string(),
      city:z.string(),
      street: z.string(),
-     firstIdentity: z.string(),
-     secondIdentity: z.string(),
-     thirdIdentity: z.string(),
+    
      
 })
 export default AddFoundSchema

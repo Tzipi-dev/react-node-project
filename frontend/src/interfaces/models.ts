@@ -35,7 +35,7 @@ export interface Found{
     street: string,
     owner: User,
     date: Date,
-    identifying: Array<String>,
+   
     _id?: string 
 }
 export interface LogInUser{
@@ -99,9 +99,7 @@ export interface FieldFillByUser_Found{
     city: string,
     street: string,
     date: string,
-    firstIdentity: string,
-    secondIdentity: string,
-    thirdIdentity: string,
+    
 
 }
 export interface FieldFillByUser_Lost{

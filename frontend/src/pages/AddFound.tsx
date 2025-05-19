@@ -39,7 +39,6 @@ const AddFound = () => {
       date: date,
       city: data.city,
       street: data.street,
-      identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
       category: Category[selectedCategory as keyof typeof Category],
       owner: currentUser as User
     };
@@ -137,39 +136,7 @@ const AddFound = () => {
               ))}
             </Select>
           </FormControl>
-          <div style={{ display: "flex", gap: "2%" }}>
-            <TextField
-              id="filled-identity-1"
-              label="מזהה 1"
-              variant="outlined"
-              type="text"
-              {...register("firstIdentity")}
-              style={margin}
-              sx={inputStyle}
-            />
-            {errors.firstIdentity && <div style={errorCSS}>{errors.firstIdentity.message}</div>}
-
-            <TextField
-              id="filled-identity-2"
-              label="מזהה 2"
-              variant="outlined"
-              type="text"
-              {...register("secondIdentity")}
-              style={margin}
-              sx={inputStyle}
-            />
-            {errors.secondIdentity && <div style={errorCSS}>{errors.secondIdentity.message}</div>}
-            <TextField
-              id="filled-identity-3"
-              label="מזהה 3"
-              variant="outlined"
-              type="text"
-              {...register("thirdIdentity")}
-              style={margin}
-              sx={inputStyle}
-            />
-            {errors.thirdIdentity && <div style={errorCSS}>{errors.thirdIdentity.message}</div>}
-          </div>
+         
           <Button
             type="submit"
             fullWidth
