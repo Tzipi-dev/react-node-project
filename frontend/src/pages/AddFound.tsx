@@ -6,12 +6,10 @@ import AddFoundSchema from "../schemas/AddFoundSchema";
 import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Category, Cities, FieldFillByUser_Found, Found, User } from "../interfaces/models";
-
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { Link, useNavigate } from "react-router";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
-
 const AddFound = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddFoundSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -27,7 +25,6 @@ const AddFound = () => {
       console.log("לא נמצא מידע ב-localStorage");
     }
   }, [])
-
   const onSubmit = (data: FieldFillByUser_Found) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {

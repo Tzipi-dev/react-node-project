@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import AddFoundSchema from '../schemas/AddFoundSchema';
 import { Category, Cities, FieldFillByUser_Found, Found, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { mainContentStyle } from '../components/CSS-components';
 import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
@@ -82,7 +82,7 @@ const UpdateFound = () => {
         return `${yyyy}-${mm}-${dd}`;
     };
     if (!thisFound) {
-        return <div>טוען…</div>;   // אל תציג את הטופס לפני שיש נתונים
+        return <CircularProgress color="error" />
     }
     return (
         <div>

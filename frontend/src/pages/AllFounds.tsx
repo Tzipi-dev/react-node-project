@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Typography from '@mui/joy/Typography';
 import { Link } from "react-router";
 import { foundTitle, items, mainContentStyle } from "../components/CSS-components";
-import { Box, Chip, Button, MenuItem, Menu, Modal } from "@mui/material";
+import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
   cateforyBtn,
@@ -78,7 +78,7 @@ const AllFounds = () => {
         </Box>
       </Modal>
       {isLoading ? (
-        <div>Loading...</div>
+        <CircularProgress color="error" />
       ) : isError ? (
         <div>{isError}</div>
       ) : (
