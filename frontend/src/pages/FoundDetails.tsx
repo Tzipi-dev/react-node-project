@@ -2,7 +2,7 @@ import { useParams } from "react-router";
 import { useGetFoundByIdQuery } from "../redux/api/founds/apiFoundSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { Alltext, detailTitle, loginBox } from "../globalStyle";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { HDate } from '@hebcal/core';
 import { mainContentStyle } from "../components/CSS-components";
@@ -35,7 +35,7 @@ const FoundDetails = () => {
   return (
     <div style={mainContentStyle}>
       {
-        isLoading ? <div>Loading...</div> : isError ? <div>error...</div> : found ? (
+        isLoading ? <CircularProgress color="error" /> : isError ? <div>error...</div> : found ? (
           <div style={loginBox}>
             <div >
               <Typography sx={detailTitle}>פרטי מציאה</Typography>

@@ -1,17 +1,18 @@
 import { Link, NavLink } from "react-router";
 import { useEffect, useState } from "react";
-import { Box, Button, Chip, Modal, Typography } from "@mui/material";
+import { Box, Button, Chip, CircularProgress, Modal, Typography } from "@mui/material";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
   foundTitle,
   items,
-  loginButtonStyle,
+
   lostTitle,
   mainContentStyle
 } from "../components/CSS-components";
 import {
   containerOfFound,
   itemStyle,
+  updateButtonStyle,
   wrapperStyle
 } from "./CSS-pages";
 import { detailTitle } from "../globalStyle";
@@ -32,6 +33,7 @@ const UserProfile = () => {
       console.log("לא נמצא מידע ב-localStorage");
     }
   }, []);
+  
   const { data: FoundsByIdUser, isLoading: isLoadingFounds, isError: isErrorFounds } = useGetFoundsByIdUserQuery(
     currentUser?._id ?? skipToken
   );
@@ -39,10 +41,10 @@ const UserProfile = () => {
     currentUser?._id ?? skipToken
   );
   if (!currentUser) {
-    return <div>טוען משתמש...</div>;
+    return <CircularProgress color="error" />
   }
   if (isLoadingFounds || isLoadingLosts) {
-    return <div>טוען נתונים...</div>;
+    return <CircularProgress color="error" />
   }
   if (isErrorFounds || isErrorLosts) {
     return <div>אירעה שגיאה בטעינת הנתונים</div>;
@@ -61,7 +63,9 @@ const UserProfile = () => {
 
   return (
     <div style={mainContentStyle}>
-      <Button onClick={handleOpen} style={loginButtonStyle} sx={{ display: "block" }}>לעדכון אבידה או מציאה</Button>
+     <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+      <Button onClick={handleOpen} style={updateButtonStyle} sx={{ display: "block" }}>לעדכון אבידה או מציאה</Button>
+      </Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -117,7 +121,6 @@ const UserProfile = () => {
       </Modal>
       {FoundsByIdUser && FoundsByIdUser.length > 0 && (
         <>
-
           <label style={detailTitle}>:המציאות שלי</label>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
@@ -143,7 +146,6 @@ const UserProfile = () => {
           </div>
         </>
       )}
-
       {LostByIdUser && LostByIdUser.length > 0 && (
         <>
           <label style={detailTitle}>:האבדות שלי</label>
@@ -171,12 +173,9 @@ const UserProfile = () => {
           </div>
         </>
       )}
-
-      {/* אפשר להוסיף גם הודעה אם אין תוצאות בכלל */}
       {!FoundsByIdUser?.length && !LostByIdUser?.length && (
         <Typography>אין מציאות או אבידות להצגה.</Typography>
       )}
-
     </div>
   );
 };

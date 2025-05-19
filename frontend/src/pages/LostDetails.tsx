@@ -4,7 +4,7 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import { useEffect, useState } from "react";
 import { HDate } from "@hebcal/core";
 import { Alltext, detailTitle, loginBox } from "../globalStyle";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { mainContentStyle } from "../components/CSS-components";
 import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
 const LostDetails = () => {
@@ -35,7 +35,7 @@ const LostDetails = () => {
   return (
     <div style={mainContentStyle}>
        {
-            isLoading ? <div>Loading...</div> : isError ? <div>error...</div> : lost ? (
+            isLoading ? <CircularProgress color="error" />: isError ? <div>error...</div> : lost ? (
                 <div style={loginBox}>
                     <div >
                         <Typography sx={detailTitle}>פרטי אבידה</Typography>

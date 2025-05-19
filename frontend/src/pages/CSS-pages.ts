@@ -205,3 +205,19 @@ export const itemStyle: CSSProperties = {
 export const inputStyle: CSSProperties={
   backgroundColor: "white"
 }
+export const updateButtonStyle: React.CSSProperties = {
+
+   marginInlineStart: 0, // במקום margin-inline-start
+  marginInlineEnd: 'auto', // במקום margin-inline-end: auto
+  display: 'block',
+  backgroundColor: "#fff",
+  color: "#d9534f", // אדום בהיר
+  border: "1px solid rgb(235, 62, 56)",
+  borderRadius: "5px",
+  padding: "0.6rem 1rem",
+  fontSize: "0.9rem",
+  cursor: "pointer",
+  transition: "background-color 0.3s ease, color 0.3s ease",
+
+
+};
