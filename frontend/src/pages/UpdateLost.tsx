@@ -1,158 +1,121 @@
-import {
-    Link,
-    useNavigate,
-    useParams
-} from "react-router";
-import {
-    Button,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-    TextField
-} from "@mui/material";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import {
-    useGetLostByIdQuery,
-    useUpdateLostMutation
-} from "../redux/api/losts/apiLostSlice";
-import { skipToken } from "@reduxjs/toolkit/query";
-
-import AddLostSchema from "../schemas/AddLostSchema";
-import {
-    errorCSS,
-    loginForm,
-    margin,
-    topbtn
-} from "../globalStyle";
-import { inputStyle } from "./CSS-pages";
-import {
-    Category,
-    Cities,
-    FieldFillByUser_Lost,
-    Lost,
-    User
-} from "../interfaces/models";
-import { mainContentStyle } from "../components/CSS-components";
-
-/* ---------- פונקציות עזר ---------- */
-const parseDate = (str: string): Date | undefined => {
-    if (!str) return undefined;
-    // YYYY-MM-DD
-    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
-        const [year, month, day] = str.split('-').map(Number);
-        return new Date(year, month - 1, day); // חודשים ב-JS הם מ-0 עד 11
-    }
-    // ISO מלא (ייתכן שתצטרך את זה אם השרת שולח כך)
-    const isoDate = new Date(str);
-    if (!isNaN(isoDate.getTime())) {
-        return isoDate;
-    }
-    return undefined;
-};
-/* ----------------------------------- */
+import { Link, useNavigate, useParams } from 'react-router'
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Category, Cities, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { mainContentStyle } from '../components/CSS-components';
+import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
+import { inputStyle } from './CSS-pages';
+import { useGetLostByIdQuery, useUpdateLostMutation } from '../redux/api/losts/apiLostSlice';
+import AddLostSchema from '../schemas/AddLostSchema';
 const UpdateLost = () => {
-    const { id } = useParams();
-    const { data: thisLost } = useGetLostByIdQuery(id ?? skipToken);
-    const {
-        handleSubmit,
-        register,
-        formState: { errors },
-        watch
-    } = useForm<FieldFillByUser_Lost>({
-        resolver: zodResolver(AddLostSchema)
-    });
-    const dateValue = watch("date");
-    useEffect(() => {
-        console.log("Watched date value:", dateValue);
-    }, [dateValue]);
-
+    const { id } = useParams()
+    const { data: thisLost } = useGetLostByIdQuery(id ? id : skipToken)
+    const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddLostSchema) });
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [updateLost] = useUpdateLostMutation();
-    const navigate = useNavigate();
-    const [currentUser, setCurrentUser] = useState<User>();
-    /* --- משיכת משתמש מה‑localStorage --- */
+    const [, setLost] = useState<Lost | null>(null)
+    const [UpdateLostMutation] = useUpdateLostMutation()
+    
+    const navigate = useNavigate()
+    const [currentUser, setCurrentUser] = useState<User>()
     useEffect(() => {
-
-        const stored = localStorage.getItem("currentUser");
-        if (stored) setCurrentUser(JSON.parse(stored));
-    }, []);
-    /* --- Submit --- */
-    const onSubmit = async (data: FieldFillByUser_Lost) => {
-        console.log("data.date value:", data.date);
-        let parsedDate: Date | undefined = new Date(data.date);
-        if (isNaN(parsedDate.getTime())) {
-            parsedDate = parseDate(data.date);
-            if (!parsedDate) {
-                console.error("Invalid date format:", data.date);
-                return;
+        const data = localStorage.getItem("currentUser");
+        if (data) {
+            setCurrentUser(JSON.parse(data));
+        } else {
+            console.log("לא נמצא מידע ב-localStorage");
+        }
+    }, [])
+    const addLost = async (data: Lost | null) => {
+        try {
+            if (data) {
+                const result = await UpdateLostMutation(data).unwrap();
+                console.log(result);
+            } else {
+                console.log("אין נתונים. לא מבצעים את הקריאה.");
             }
         }
-        const updatedLost: Lost = {
-            name: data.name,
-            date: parsedDate,
-            city: data.city,
-            street: data.street,
-            category: Category[selectedCategory as keyof typeof Category],
-            owner: currentUser as User
-        };
-        try {
-            console.log("in try");
-            await updateLost({ _id: id!, ...updatedLost }).unwrap();
-            navigate("/");
-        } catch (err) {
-            console.error("Error updating lost:", err);
+        catch (error) {
+            console.error('Error adding user:', error);
         }
+    }
+
+    const onSubmit = (data: FieldFillByUser_Lost) => {
+
+        const isoString = `${data.date}T00:00:00Z`;
+        const date = new Date(isoString);
+        if (isNaN(date.getTime())) {
+            console.error("Invalid date format:", data.date);
+            return;
+        }
+        console.log(thisLost?._id);
+        const updatedLost: Lost = {
+            ...data,
+            date,
+            _id: thisLost?._id!,
+            category: Category[
+                selectedCategory as keyof typeof Category
+            ],
+            owner: currentUser as User,
+        };
+
+        setLost(updatedLost);
+        addLost(updatedLost);
+        navigate('/');
     };
-    /* --- JSX --- */
+    const handleChangeCategory = (event: SelectChangeEvent) => {
+        setSelectedCategory(event.target.value);
+    };
+    const formatDate = (value?: unknown): string => {
+        if (!value) return '';
+        if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value))
+            return value;
+        const d = new Date(value as string | number | Date);
+        if (isNaN(d.getTime())) return '';
+        const yyyy = d.getUTCFullYear();
+        const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const dd = String(d.getUTCDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    };
+    if (!thisLost) {
+        return <div>טוען…</div>;   // אל תציג את הטופס לפני שיש נתונים
+    }
     return (
         <div>
             <div style={mainContentStyle}>
                 <div style={{ justifyContent: "flex-end", width: "60vw" }}>
-                    <Link to=" /">{` ← עמוד הבית `}</Link>
-
+                    <Link to="/"> ← עמוד הבית </Link>
                     <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
-                        {/* שם האבידה */}
                         <TextField
-                            {...register("name")}
-                            sx={inputStyle}
-                            style={margin}
-                            defaultValue={thisLost?.name}
+                            id="filled-basic"
                             variant="outlined"
-                            name="name"
+                            {...register("name")}
+                            style={margin}
+                            sx={inputStyle}
+                            defaultValue={thisLost?.name}
                         />
-                        {errors.name && (
-                            <div style={errorCSS}>{errors.name.message}</div>
-                        )}
-
-                        {/* תאריך */}
+                        {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
                         <TextField
+                            id="filled-date"
+                            sx={inputStyle}
                             type="date"
                             {...register("date")}
-                            sx={inputStyle}
                             style={margin}
-                            defaultValue={thisLost?.date ? (thisLost.date instanceof Date ? thisLost.date.toISOString().split('T')[0] : new Date(thisLost.date).toISOString().split('T')[0]) : ''}
                             variant="outlined"
-                            name="date"
+                            defaultValue={formatDate(thisLost?.date)}
                         />
-                        {errors.date && (
-                            <div style={errorCSS}>{errors.date.message}</div>
-                        )}
-
-                        {/* עיר */}
-                        <FormControl sx={inputStyle} style={margin} fullWidth>
+                        {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
+                        <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
                             <InputLabel id="city-select-label">עיר</InputLabel>
                             <Select
                                 labelId="city-select-label"
+                                id="city-select"
                                 defaultValue={thisLost?.city}
                                 {...register("city", { required: "חובה לבחור עיר" })}
                             >
-                                <MenuItem value="" disabled>
-                                    בחר עיר
-                                </MenuItem>
+                                <MenuItem value="" disabled>בחר עיר</MenuItem>
                                 {Object.values(Cities).map((city) => (
                                     <MenuItem key={city} value={city}>
                                         {city}
@@ -160,48 +123,42 @@ const UpdateLost = () => {
                                 ))}
                             </Select>
                         </FormControl>
-                        {errors.city && (
-                            <div style={errorCSS}>{errors.city.message}</div>
-                        )}
-
-                        {/* רחוב */}
+                        {errors.city && <div style={errorCSS}>{errors.city.message}</div>}
                         <TextField
-                            {...register("street")}
-                            sx={inputStyle}
-                            style={margin}
-                            defaultValue={thisLost?.street}
+                            id="filled-street"
                             variant="outlined"
+                            type="text"
+                            {...register("street")}
+                            style={margin}
+                            sx={inputStyle}
+                            defaultValue={thisLost?.street}
                         />
-                        {errors.street && (
-                            <div style={errorCSS}>{errors.street.message}</div>
-                        )}
-
-                        {/* קטגוריה */}
-                        <FormControl sx={inputStyle} style={margin} fullWidth>
-                            <InputLabel id="category-select-label">קטגוריה</InputLabel>
+                        {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
+                        <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
+                            <InputLabel id="category-select-label" style={margin}>
+                                קטגוריה
+                            </InputLabel>
                             <Select
                                 labelId="category-select-label"
-                                onChange={(e: SelectChangeEvent) =>
-                                    setSelectedCategory(e.target.value)
-                                }
+                                onChange={handleChangeCategory}
                                 defaultValue={thisLost?.category}
                                 label="קטגוריה"
                             >
                                 {Object.values(Category)
-                                    .filter((v) => isNaN(Number(v)))
-                                    .map((cat) => (
-                                        <MenuItem key={cat} value={cat}>
-                                            {cat}
+                                    .filter((val) => isNaN(Number(val)))
+                                    .map((category) => (
+                                        <MenuItem key={category} value={category}>
+                                            {category}
                                         </MenuItem>
                                     ))}
                             </Select>
                         </FormControl>
 
-                        {/* כפתור */}
                         <Button
                             type="submit"
                             fullWidth
                             style={topbtn}
+                            size="medium"
                             variant="contained"
                             color="success"
                         >
@@ -211,7 +168,7 @@ const UpdateLost = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default UpdateLost;
+export default UpdateLost

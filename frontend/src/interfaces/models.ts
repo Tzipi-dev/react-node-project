@@ -116,3 +116,4 @@ export enum Filters{
       אבדות,
       מציאות
 }
+export type UpdateFoundPayload = Partial<Found> & { _id: string };

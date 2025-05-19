@@ -16,7 +16,17 @@ const apiSliceFound = createApi({
         },
     }),
     tagTypes: ["Found"],
-    endpoints: () => ({}),
+ endpoints: () => ({
+        
+    }),
 });
 
 export default apiSliceFound;
+
+
+
+
+
+    
+   
+     

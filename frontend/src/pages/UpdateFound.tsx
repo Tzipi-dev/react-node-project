@@ -12,80 +12,80 @@ import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
 
 const UpdateFound = () => {
-   const { id } = useParams()
-       const { data: thisLost } = useGetFoundByIdQuery(id ? id : skipToken)
-       const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddFoundSchema) });
-       const [selectedCategory, setSelectedCategory] = useState<string>("");
-       const [, setLost] = useState<Found | null>(null)
-       const [UpdateLostMutation] = useUpdateFoundMutation()
-       const navigate = useNavigate()
-       const [currentUser, setCurrentUser] = useState<User>()
-       useEffect(() => {
-           const data = localStorage.getItem("currentUser");
-           if (data) {
-               setCurrentUser(JSON.parse(data));
-           } else {
-               console.log("לא נמצא מידע ב-localStorage");
-           }
-       }, [])
-       const addLost = async (data: Found | null) => {
-           try {
-               if (data) {
-                   const result = await UpdateLostMutation(data).unwrap();
-                   console.log(result);
-               } else {
-                   console.log("אין נתונים. לא מבצעים את הקריאה.");
-               }
-           }
-           catch (error) {
-               console.error('Error adding user:', error);
-           }
-       }
-       const onSubmit = (data: FieldFillByUser_Found) => {
-           const date = new Date(data.date);
-           if (isNaN(date.getTime())) {
-               console.error("Invalid date format:", data.date);
-               return;
-           }
-           const updatedLost = {
-               name: data.name,
-               date: date,
-               city: data.city,
-               street: data.street,
-               category: Category[selectedCategory as keyof typeof Category],
-               owner: currentUser as User
-           };
-           setLost(updatedLost);
-           addLost(updatedLost as Found);
-           navigate('/');
-       }
-       const handleChangeCategory = (event: SelectChangeEvent) => {
-           setSelectedCategory(event.target.value);
-       };
-       const formatDate = (date: Date | undefined | string): string => {
-           if (!date) {
-               return '';
-           }
-           if (typeof date === 'string') {
-               const dateObject = new Date(date);
-               if (isNaN(dateObject.getTime())) {
-                   return '';
-               }
-               const year = dateObject.getFullYear();
-               const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-               const day = dateObject.getDate().toString().padStart(2, '0');
-               return `${year}-${month}-${day}`;
-           }
-           if (date instanceof Date) {
-               const year = date.getFullYear();
-               const month = (date.getMonth() + 1).toString().padStart(2, '0');
-               const day = date.getDate().toString().padStart(2, '0');
-               return `${year}-${month}-${day}`;
-           }
-           return '';
-       };
-  return (
-      <div>
+    const { id } = useParams()
+    const { data: thisFound } = useGetFoundByIdQuery(id ? id : skipToken)
+    const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddFoundSchema) });
+    const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [, setFound] = useState<Found | null>(null)
+    const [UpdateFoundMutation] = useUpdateFoundMutation()
+    const navigate = useNavigate()
+    const [currentUser, setCurrentUser] = useState<User>()
+    useEffect(() => {
+        const data = localStorage.getItem("currentUser");
+        if (data) {
+            setCurrentUser(JSON.parse(data));
+        } else {
+            console.log("לא נמצא מידע ב-localStorage");
+        }
+    }, [])
+    const addFound = async (data: Found | null) => {
+        try {
+            if (data) {
+                const result = await UpdateFoundMutation(data).unwrap();
+                console.log(result);
+            } else {
+                console.log("אין נתונים. לא מבצעים את הקריאה.");
+            }
+        }
+        catch (error) {
+            console.error('Error adding user:', error);
+        }
+    }
+
+    const onSubmit = (data: FieldFillByUser_Found) => {
+
+        const isoString = `${data.date}T00:00:00Z`;
+        const date = new Date(isoString);
+
+        if (isNaN(date.getTime())) {
+            console.error("Invalid date format:", data.date);
+            return;
+        }
+        console.log(thisFound?._id);
+        
+        const updatedFound: Found = {
+            ...data,
+            date,
+            _id: thisFound?._id!,
+            category: Category[
+                selectedCategory as keyof typeof Category
+            ],
+            owner: currentUser as User,
+        };
+
+        setFound(updatedFound);
+        addFound(updatedFound);
+        navigate('/');
+    };
+    const handleChangeCategory = (event: SelectChangeEvent) => {
+        setSelectedCategory(event.target.value);
+    };
+    const formatDate = (value?: unknown): string => {
+        if (!value) return '';
+        if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value))
+            return value;
+        const d = new Date(value as string | number | Date);
+        if (isNaN(d.getTime())) return '';
+        const yyyy = d.getUTCFullYear();
+        const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const dd = String(d.getUTCDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    };
+    if (!thisFound) {
+        return <div>טוען…</div>;   // אל תציג את הטופס לפני שיש נתונים
+    }
+    return (
+        <div>
             <div style={mainContentStyle}>
                 <div style={{ justifyContent: "flex-end", width: "60vw" }}>
                     <Link to="/"> ← עמוד הבית </Link>
@@ -96,7 +96,7 @@ const UpdateFound = () => {
                             {...register("name")}
                             style={margin}
                             sx={inputStyle}
-                            defaultValue={thisLost?.name}
+                            defaultValue={thisFound?.name}
                         />
                         {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
                         <TextField
@@ -106,7 +106,7 @@ const UpdateFound = () => {
                             {...register("date")}
                             style={margin}
                             variant="outlined"
-                            defaultValue={formatDate(thisLost?.date)}
+                            defaultValue={formatDate(thisFound?.date)}
                         />
                         {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
                         <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
@@ -114,7 +114,7 @@ const UpdateFound = () => {
                             <Select
                                 labelId="city-select-label"
                                 id="city-select"
-                                defaultValue={thisLost?.city}
+                                defaultValue={thisFound?.city}
                                 {...register("city", { required: "חובה לבחור עיר" })}
                             >
                                 <MenuItem value="" disabled>בחר עיר</MenuItem>
@@ -133,7 +133,7 @@ const UpdateFound = () => {
                             {...register("street")}
                             style={margin}
                             sx={inputStyle}
-                            defaultValue={thisLost?.street}
+                            defaultValue={thisFound?.street}
                         />
                         {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
                         <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
@@ -143,7 +143,7 @@ const UpdateFound = () => {
                             <Select
                                 labelId="category-select-label"
                                 onChange={handleChangeCategory}
-                                defaultValue={thisLost?.category}
+                                defaultValue={thisFound?.category}
                                 label="קטגוריה"
                             >
                                 {Object.values(Category)
@@ -155,7 +155,7 @@ const UpdateFound = () => {
                                     ))}
                             </Select>
                         </FormControl>
-                      
+
                         <Button
                             type="submit"
                             fullWidth
@@ -164,13 +164,13 @@ const UpdateFound = () => {
                             variant="contained"
                             color="success"
                         >
-                           עדכן מציאה
+                            עדכן מציאה
                         </Button>
                     </form>
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default UpdateFound
