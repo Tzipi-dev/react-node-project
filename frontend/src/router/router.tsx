@@ -16,6 +16,7 @@ import UserProfile from "../pages/UserProfile";
 import UpdateLost from "../pages/UpdateLost";
 import UpdateFound from "../pages/UpdateFound";
 import DeleteFound from "../pages/DeleteFound";
+import DeleteLost from "../pages/DeleteLost";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -26,7 +27,8 @@ const router = createBrowserRouter([{
             children: [
             { index: true, element: <AllLosts /> },
             { path: ":id", element: <LostDetails/> },
-            {path: "UpdateLost/:id", element: <UpdateLost/>}
+            {path: "UpdateLost/:id", element: <UpdateLost/>},
+            {path: "DeleteLost/:id", element: <DeleteLost/>}
             ]
         },
         {

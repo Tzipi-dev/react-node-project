@@ -20,7 +20,7 @@ exports.addLost=async(req,res)=>{
 exports.deleteLost=async(req,res)=>{
     const {id}=req.params
     try{
-        const idLost=await Lost.findOneAndDelete({id:id})
+        const idLost=await Lost.findOneAndDelete({_id: id})
         if (!idLost){
            return  res.status(404).json({message: 'lost not find'})
         }
@@ -40,9 +40,9 @@ exports.updateLost = async (req, res) => {
 
   try {
     const updated = await Lost.findOneAndUpdate(
-      { _id: new mongoose.Types.ObjectId(id) },   // ← המרה מפורשת
+      { _id: new mongoose.Types.ObjectId(id) },   
       { category, name, city, street, owner, date },
-      { new: true, runValidators: true }          // כדאי להפעיל ולידציה
+      { new: true, runValidators: true }          
     );
 
     if (!updated) return res.status(404).json({ message: 'found not found' });
