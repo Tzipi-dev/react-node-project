@@ -27,9 +27,9 @@ const apiFoundSlice = apiSliceFound.injectEndpoints({
             }),
             invalidatesTags: ["Found"],
         }),
-        deleteFound: builder.mutation<void, string>({
-            query: (_id) => ({
-                url: `/founds/${_id}`,
+        deleteFound: builder.mutation<Found, Found>({
+            query: (deletefound) => ({
+                url: `/founds/${deletefound._id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Found"],
