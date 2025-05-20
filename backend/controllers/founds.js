@@ -20,8 +20,9 @@ exports.addFound = async (req, res) => {
 
 exports.deleteFound = async (req, res) => {
     const { id } = req.params
+    console.log(id);  
     try {
-        const idFound = await Found.findOneAndDelete({ id: id })
+        const idFound = await Found.findOneAndDelete({ _id: id })
         if (!idFound) {
             return res.status(404).json({ message: 'found not find' })
         }
@@ -37,9 +38,6 @@ exports.updateFound = async (req, res) => {
     const { id } = req.params
     const { category, name, city, street, owner, date } = req.body
     console.log(category, name, city, street, owner, date);
-    
-    console.log(id);
-    
     try {
         const updateFound = await Found.findOneAndUpdate(
             { _id: id },

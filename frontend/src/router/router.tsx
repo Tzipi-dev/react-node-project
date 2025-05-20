@@ -13,8 +13,9 @@ import AllItems from "../pages/AllItems";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
 import UserProfile from "../pages/UserProfile";
-import UpdateLost from "../pages/updateLost";
+import UpdateLost from "../pages/UpdateLost";
 import UpdateFound from "../pages/UpdateFound";
+import DeleteFound from "../pages/DeleteFound";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -33,7 +34,8 @@ const router = createBrowserRouter([{
             children: [
                 { index: true, element: <AllFounds /> },
                 { path: ":id", element: <FoundDetails /> },
-                {path: "UpdateFound/:id", element: <UpdateFound/>}
+                {path: "UpdateFound/:id", element: <UpdateFound/>},
+                {path: "DeleteFound/:id", element: <DeleteFound/>},
             ]
         },
         { path: "login", element: <LogIn /> },
