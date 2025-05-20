@@ -153,6 +153,28 @@ const UserProfile = () => {
               ))}
             </div>
           </div>
+           <div style={containerOfFound}>
+            <div style={wrapperStyle}>
+              {LostByIdUser?.map((lost: Lost) => (
+                <div key={lost._id?.toString()} style={itemStyle}>
+                  <NavLink to={`/Losts/DeleteLost/${lost._id?.toString()}`}>
+                    <Box sx={items}>
+                      <Chip label="Lost" size="small" sx={lostTitle} />
+                      <Typography mt={1} mb={1}>{lost.name}</Typography>
+                      <Box display="flex" alignItems="center" mb={0.5}>
+                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{lost.city}</Typography>
+                      </Box>
+                      <Box display="flex" alignItems="center">
+                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{lost.category}</Typography>
+                      </Box>
+                    </Box>
+                  </NavLink>
+                </div>
+              ))}
+            </div>
+          </div>
         </Box>
       </Modal>
       {FoundsByIdUser && FoundsByIdUser.length > 0 && (
