@@ -49,15 +49,18 @@ const registerUser = async (req, res, next) => {
 
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
-  if (!email) return res.status(400).json({ message: 'Please provide an email address' });
+  if (!email) return res.status(400).json({ message: 'אנא הזן כתובת אימייל' });
+
   const user = await User.findOne({ email });
-  if (!user) return res.status(404).json({ message: 'User not found' });
+  if (!user) return res.status(404).json({ message: 'משתמש לא נמצא' });
+
   const token = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: '1h',
   });
+
   const resetLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
-    const transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_FROM,
@@ -66,29 +69,29 @@ const forgotPassword = async (req, res) => {
   });
 
   await transporter.sendMail({
-  from: `"Support Team" <${process.env.EMAIL_FROM}>`,
-  to: user.email,
-  subject: 'Reset Your Password',
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-      <h2 style="color: #333;">Hi ${user.name || ''},</h2>
-      <p style="font-size: 16px; color: #555;">
-        We received a request to reset your password. Click the button below to proceed. This link will expire in 1 hour.
-      </p>
-      <div style="text-align: center; margin: 30px 0;">
-        <a href="${resetLink}" style="background-color: #1976d2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-          Reset Password
-        </a>
+    from: `"Support Team <${process.env.EMAIL_FROM}>`,
+    to: user.email,
+    subject: 'איפוס סיסמה',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; direction: rtl; text-align: right;">
+        <h2 style="color: #333;">שלום ${user.name || ''},</h2>
+        <p style="font-size: 16px; color: #555;">
+          קיבלנו בקשה לאיפוס הסיסמה שלך. לחץ/י על הכפתור למטה כדי להמשיך. הקישור יפוג תוך שעה.
+        </p>
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetLink}" style="background-color: #1976d2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            איפוס סיסמה
+          </a>
+        </div>
+        <p style="font-size: 14px; color: #999;">
+          אם לא ביקשת איפוס סיסמה, תוכלי להתעלם מהמייל הזה בבטחה.
+        </p>
+        <p style="font-size: 14px; color: #999;">תודה,<br>צוות התמיכה</p>
       </div>
-      <p style="font-size: 14px; color: #999;">
-        If you didn’t request this, you can safely ignore this email.
-      </p>
-      <p style="font-size: 14px; color: #999;">Thanks,<br>The Support Team</p>
-    </div>
-  `,
-});
+    `,
+  });
 
-  res.status(200).json({ message: 'Password reset link sent to email' });
+  res.status(200).json({ message: 'קישור לאיפוס סיסמה נשלח למייל' });
 };
 
 const resetPassword = async (req, res) => {
