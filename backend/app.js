@@ -3,7 +3,7 @@ const app = express()
 require('dotenv').config();
 const cors=require("cors")
 const userRouter = require('./routes/users')
-const cookieParser = require('cookie-parser');
+// const cookieParser = require('cookie-parser');
 const lostRouter = require('./routes/losts')
 const foundRouter = require('./routes/founds')
 const loginRouter=require('./routes/login')
