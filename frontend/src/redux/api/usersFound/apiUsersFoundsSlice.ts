@@ -5,9 +5,8 @@ const apiUsersFoundsSlice = apiSliceUser.injectEndpoints({
         getFoundsByIdUser: builder.query<Found[], string>({
             query: (_id) => ({
                 url: `/foundsUser/${_id}`,
-            providesTags: ["Found"],
             }),
-
+         providesTags: ["Found"],
         })
     }),
 });
