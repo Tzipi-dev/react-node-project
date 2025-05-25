@@ -90,8 +90,8 @@ const DeleteFound = () => {
               style={margin}
               sx={inputStyle}
               value={thisFound?.street || ''}
-              InputProps={{ readOnly: true }}
-            />
+              slotProps={{ input: { readOnly: true } }}           
+             />
             <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
               <InputLabel id="category-select-label">קטגוריה</InputLabel>
               <Select

@@ -5,7 +5,6 @@ import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
   foundTitle,
   items,
-
   lostTitle,
   mainContentStyle
 } from "../components/CSS-components";
