@@ -17,15 +17,20 @@ const AddLost = () => {
   const [, setLost] = useState<Lost | null>(null)
   const [AddLostMutation] = useAddLostMutation()
   const navigate = useNavigate()
-  const [currentUser,setCurrentUser]=useState<User>()
-  useEffect(()=>{
-   const data = localStorage.getItem("currentUser");
+  const [currentUser, setCurrentUser] = useState<User>()
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const maxDate = `${year}-${month}-${day}`;
+  useEffect(() => {
+    const data = localStorage.getItem("currentUser");
     if (data) {
       setCurrentUser(JSON.parse(data));
     } else {
       console.log("לא נמצא מידע ב-localStorage");
     }
-  },[])
+  }, [])
   const onSubmit = (data: FieldFillByUser_Lost) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
@@ -82,6 +87,13 @@ const AddLost = () => {
             {...register("date")}
             style={margin}
             variant="outlined"
+            slotProps={{
+              input: {
+                inputProps: {
+                  max: maxDate,
+                },
+              },
+            }}
           />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
           <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
@@ -132,7 +144,7 @@ const AddLost = () => {
                 ))}
             </Select>
           </FormControl>
-          
+
           <Button
             type="submit"
             fullWidth
