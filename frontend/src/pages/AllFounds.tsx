@@ -66,7 +66,7 @@ const AllFounds = () => {
   return (
     <div style={mainContentStyle}>
      
-      <Button onClick={handleOpen}> Google Map הצג מציאות באמצעות </Button>
+      <Button onClick={handleOpen}> הצג מציאות באמצעות מפה</Button>
       <Modal
         open={openM}
         onClose={handleClose2}

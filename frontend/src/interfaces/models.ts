@@ -22,7 +22,7 @@ export enum Category {
 export interface Lost{
     category: Category,
     name: String,
-    city: String,
+    city: string,
     street: String,
     owner:  User
     date: Date,
