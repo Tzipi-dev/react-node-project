@@ -72,7 +72,7 @@ const AllLosts = () => {
   const handleClose2 = () => setOpen(false);
   return (
     <div style={mainContentStyle}>
-      <Button onClick={handleOpen}> Google Map הצג מציאות באמצעות </Button>
+      <Button onClick={handleOpen}> הצג אבדות באמצעות מפה</Button>
       <Modal
         open={openM}
         onClose={handleClose2}

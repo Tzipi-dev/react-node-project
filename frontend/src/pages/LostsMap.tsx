@@ -1,108 +1,87 @@
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useState } from "react";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
-const KEYAPI = import.meta.env.VITE_KEYAPI
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Lost } from "../interfaces/models";
+import 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+const customIcon = L.icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // לדוג' סיכת מיקום
+  iconSize: [32, 32], // גודל האייקון
+  iconAnchor: [16, 32], // נקודת העיגון (כדי שייראה מונח על הקרקע)
+  popupAnchor: [0, -32], // מיקום הפופאפ ביחס לאייקון
+});
 
-const containerStyle = {
-    width: '100%',
-    height: '600px',
-};
-const center = {
-    lat: 31.0461,
-    lng: 34.8516,
-};
-const getLatLngFromCity = async (cityName: string): Promise<{ lat: number; lng: number }> => {
-    const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(cityName)}&key=${KEYAPI}`
-    );
-    const data = await response.json();
-    console.log(KEYAPI);
-    
-    if (data.status === "OK") {
-        return data.results[0].geometry.location;
-    } else {
-        throw new Error("לא נמצאו נתונים לעיר הזאת");
-    }
-};
-type LostWithCoords = {
-    _id: String;
-    city: String;
-    position: { lat: number; lng: number };
-};
-const loadGoogleMapsScript = (): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        if (window.google?.maps) {
-            resolve();
-            return;
-        }
-        const existingScript = document.getElementById("googleMaps");
-        if (existingScript) {
-            existingScript.addEventListener("load", () => resolve());
-            return;
-        }
-        const script = document.createElement("script");
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${KEYAPI}&libraries=marker`;
-        script.id = "googleMaps";
-        script.async = true;
-        script.defer = true;
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error("שגיאה בטעינת Google Maps API"));
-        document.body.appendChild(script);
-    });
-};
 const LostsMap = () => {
-    const { data: AllLosts } = useGetAllLostsQuery();
-    const [foundWithCoords, setFoundWithCoords] = useState<LostWithCoords[]>([]);
-    const mapRef = useRef<google.maps.Map | null>(null);
-    const mapDivRef = useRef<HTMLDivElement | null>(null);
+    const { data: items } = useGetAllLostsQuery();
+    const [itemsWithCoords, setItemsWithCoords] = useState<Array<Lost & { lat: number; lng: number }>>([]);
     useEffect(() => {
         const loadCoords = async () => {
-            if (!AllLosts) return;
-            const results: LostWithCoords[] = [];
-            for (const lost of AllLosts) {
-                try {
-                    const cleanCity = lost.city.toString().trim();
-                    const position = await getLatLngFromCity(cleanCity);
-                    results.push({ ...lost, _id: lost._id!, position });
-                } catch (error) {
-                    console.error("שגיאה בקבלת קואורדינטות לעיר:", lost.city, error);
-                }
-                
-            }
-            setFoundWithCoords(results);
+            if (!items) return;
+            const updatedItems = await Promise.all(
+                items.map(async (item) => {
+                    const lat = await returnLat(item.city);
+                    const lng = await returnLon(item.city);
+                    if (lat !== null && lng !== null) {
+                        return { ...item, lat, lng };
+                    }
+                    return null;
+                })
+            );
+            setItemsWithCoords(updatedItems.filter((item): item is Lost & { lat: number; lng: number } => item !== null));
         };
         loadCoords();
-    }, [AllLosts]);
-    useEffect(() => {
-        if (!mapDivRef.current || foundWithCoords.length === 0) return;
-        const initMap = async () => {
-            try {
-                await loadGoogleMapsScript();
-                if (!mapRef.current && mapDivRef.current) {
-                    mapRef.current = new window.google.maps.Map(mapDivRef.current, {
-                        center,
-                        zoom: 8,
-                    });
-                }
-                foundWithCoords.forEach((found) => {
-                    new google.maps.Marker({
-                        position: found.position,
-                        map: mapRef.current!,
-                        title: found.city.toString(),
-                    });
-                });
-            } catch (error) {
-                console.error("שגיאה בטעינת המפה:", error);
-            }
-        };
-        initMap();
-    }, [foundWithCoords]);
+    }, [items]);
+    const returnLat = async (cityName: string): Promise<number | null> => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}`
+            );
+            const data = await response.json();
+            if (!data.length) return null;  // אין תוצאות
+            const latStr = data[0]?.lat;
+            if (!latStr) return null; // אין ערך lat
+            const lat = parseFloat(latStr);
+            if (isNaN(lat)) return null; // לא מספר תקין
+            return lat;
 
+        } catch (error) {
+            console.error("Error fetching lat:", error);
+            return null;
+        }
+    };
+    const returnLon = async (cityName: string): Promise<number | null> => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}`
+            );
+            const data = await response.json();
+            if (!data.length) return null; // אין תוצאות
+            const lonStr = data[0]?.lon;
+            if (!lonStr) return null; // אין ערך lon
+            const lon = parseFloat(lonStr);
+            if (isNaN(lon)) return null; // לא מספר תקין
+            return lon;
+        } catch (error) {
+            console.error("Error fetching lon:", error);
+            return null;
+        }
+    };
     return (
-        <div
-            ref={mapDivRef}
-            style={{ width: containerStyle.width, height: containerStyle.height }}
-        />
+        <MapContainer center={[32.08, 34.78]} zoom={13} style={{ height: "500px", width: "100%" }}>
+            <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap"
+            />
+            {itemsWithCoords.map((item) => (
+                <Marker key={item._id} position={[item.lat, item.lng]} icon={customIcon}>
+                    <Popup>
+                        <strong>{item.category}</strong><br/>
+                        {item.name}
+                    </Popup>
+                </Marker>
+            ))}
+        </MapContainer>
     );
 };
 

@@ -1,127 +1,86 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { Found, Lost } from "../interfaces/models";
+import 'leaflet';
+import L from 'leaflet';
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice";
-
-const KEYAPI = import.meta.env.VITE_KEYAPI;
-
-const containerStyle = {
-  width: "100%",
-  height: "600px",
-};
-
-const center = {
-  lat: 31.0461,
-  lng: 34.8516,
-};
-
-const getLatLngFromCity = async (
-  cityName: string
-): Promise<{ lat: number; lng: number }> => {
-  const response = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      cityName
-    )}&key=${KEYAPI}`
-  );
-  const data = await response.json();
-  if (data.status === "OK" && data.results.length > 0) {
-    return data.results[0].geometry.location;
-  } else {
-    console.log("אין תוצאה לעיר:", data);
-    throw new Error("לא נמצאו נתונים לעיר הזאת");
-  }
-};
-
-type FoundWithCoords = {
-  _id: string;
-  city: string;
-  position: { lat: number; lng: number };
-};
-
-const loadGoogleMapsScript = (): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    if (window.google?.maps) {
-      resolve();
-      return;
-    }
-    const existingScript = document.getElementById("googleMaps");
-    if (existingScript) {
-      existingScript.addEventListener("load", () => resolve());
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${KEYAPI}&libraries=places`;
-    script.id = "googleMaps";
-    script.async = true;
-    script.defer = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("שגיאה בטעינת Google Maps API"));
-    document.body.appendChild(script);
-  });
-};
-
+const customIcon = L.icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // לדוג' סיכת מיקום
+  iconSize: [32, 32], // גודל האייקון
+  iconAnchor: [16, 32], // נקודת העיגון (כדי שייראה מונח על הקרקע)
+  popupAnchor: [0, -32], // מיקום הפופאפ ביחס לאייקון
+});
 const FoundsMap = () => {
-  const { data: AllFounds } = useGetAllFoundsQuery();
-  const [foundWithCoords, setFoundWithCoords] = useState<FoundWithCoords[]>([]);
-  const mapRef = useRef<google.maps.Map | null>(null);
-  const mapDivRef = useRef<HTMLDivElement>(null);
-
-  // שלב 1: טעינת קואורדינטות
-  useEffect(() => {
-    const loadCoords = async () => {
-      if (!AllFounds) return;
-      const results: FoundWithCoords[] = [];
-      for (const found of AllFounds) {
+    const { data: items } = useGetAllFoundsQuery();
+    const [itemsWithCoords, setItemsWithCoords] = useState<Array<Lost & { lat: number; lng: number }>>([]);
+    useEffect(() => {
+        const loadCoords = async () => {
+            if (!items) return;
+            const updatedItems = await Promise.all(
+                items.map(async (item) => {
+                    const lat = await returnLat(item.city);
+                    const lng = await returnLon(item.city);
+                    if (lat !== null && lng !== null) {
+                        return { ...item, lat, lng };
+                    }
+                    return null;
+                })
+            );
+            setItemsWithCoords(updatedItems.filter((item): item is Found & { lat: number; lng: number } => item !== null));
+        };
+        loadCoords();
+    }, [items]);
+    const returnLat = async (cityName: string): Promise<number | null> => {
         try {
-          const position = await getLatLngFromCity(found.city);
-          results.push({
-            ...found,
-            _id: found._id!, // תגידי ל-TypeScript שזה בטוח קיים
-            position,
-          });
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}`
+            );
+            const data = await response.json();
+            if (!data.length) return null;  // אין תוצאות
+            const latStr = data[0]?.lat;
+            if (!latStr) return null; // אין ערך lat
+            const lat = parseFloat(latStr);
+            if (isNaN(lat)) return null; // לא מספר תקין
+            return lat;
+
         } catch (error) {
-          console.error("שגיאה בקבלת קואורדינטות לעיר:", found.city, error);
+            console.error("Error fetching lat:", error);
+            return null;
         }
-      }
-      setFoundWithCoords(results);
     };
-    loadCoords();
-  }, [AllFounds]);
-
-  // שלב 2: טעינת הסקריפט ויצירת המפה
-  useEffect(() => {
-    const initMap = async () => {
-      if (!mapDivRef.current || foundWithCoords.length === 0) return;
-
-      try {
-        await loadGoogleMapsScript();
-
-        if (!mapRef.current) {
-          mapRef.current = new window.google.maps.Map(mapDivRef.current, {
-            center,
-            zoom: 8,
-          });
+    const returnLon = async (cityName: string): Promise<number | null> => {
+        try {
+            const response = await fetch(
+                `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cityName)}`
+            );
+            const data = await response.json();
+            if (!data.length) return null; // אין תוצאות
+            const lonStr = data[0]?.lon;
+            if (!lonStr) return null; // אין ערך lon
+            const lon = parseFloat(lonStr);
+            if (isNaN(lon)) return null; // לא מספר תקין
+            return lon;
+        } catch (error) {
+            console.error("Error fetching lon:", error);
+            return null;
         }
-
-        foundWithCoords.forEach((found) => {
-          new window.google.maps.Marker({
-            position: found.position,
-            map: mapRef.current!,
-            title: found.city,
-          });
-        });
-      } catch (error) {
-        console.error("שגיאה בטעינת המפה או המרקרים:", error);
-      }
     };
-
-    initMap();
-  }, [foundWithCoords]);
-
-  return (
-    <div
-      ref={mapDivRef}
-      style={{ width: containerStyle.width, height: containerStyle.height }}
-    />
-  );
+    return (
+        <MapContainer center={[32.08, 34.78]} zoom={13} style={{ height: "500px", width: "100%" }}>
+            <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution="© OpenStreetMap"
+            />
+            {itemsWithCoords.map((item) => (
+                <Marker key={item._id} position={[item.lat, item.lng]} icon={customIcon}>
+                    <Popup>
+                        <strong>{item.category}</strong><br/>
+                        {item.name}
+                    </Popup>
+                </Marker>
+            ))}
+        </MapContainer>
+    );
 };
 
 export default FoundsMap;
