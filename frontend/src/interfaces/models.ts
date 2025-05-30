@@ -23,7 +23,7 @@ export interface Lost{
     category: Category,
     name: String,
     city: string,
-    street: String,
+    street: string,
     owner:  User
     date: Date,
     _id?: string 
