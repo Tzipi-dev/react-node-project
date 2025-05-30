@@ -21,16 +21,16 @@ export enum Category {
   
 export interface Lost{
     category: Category,
-    name: String,
+    name: string,
     city: string,
-    street: String,
+    street: string,
     owner:  User
     date: Date,
     _id?: string 
 }
 export interface Found{
     category:Category,
-    name: String,
+    name: string,
     city: string,
     street: string,
     owner: User,
