@@ -1,28 +1,44 @@
-import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Autocomplete
+} from "@mui/material";
 import { errorCSS, loginForm, margin, topbtn } from "../globalStyle";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { Category, Cities, FieldFillByUser_Lost, Lost, User } from "../interfaces/models";
-
+import { Category, FieldFillByUser_Lost, Lost, User } from "../interfaces/models";
+import { useGetAllCitiesQuery } from "../redux/api/cities/apiCitiesSlice";
 import { Link, useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
+
 const AddLost = () => {
-  const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddLostSchema) });
+  const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery();
+  const { handleSubmit, register, control, formState: { errors } } = useForm({
+    resolver: zodResolver(AddLostSchema)
+  });
+
   const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [, setLost] = useState<Lost | null>(null)
-  const [AddLostMutation] = useAddLostMutation()
-  const navigate = useNavigate()
-  const [currentUser, setCurrentUser] = useState<User>()
+  const [, setLost] = useState<Lost | null>(null);
+  const [AddLostMutation] = useAddLostMutation();
+  const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<User>();
+  const [, setSelectedCity] = useState<string>("");
+
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, '0');
   const day = String(today.getDate()).padStart(2, '0');
   const maxDate = `${year}-${month}-${day}`;
+
   useEffect(() => {
     const data = localStorage.getItem("currentUser");
     if (data) {
@@ -30,7 +46,8 @@ const AddLost = () => {
     } else {
       console.log("לא נמצא מידע ב-localStorage");
     }
-  }, [])
+  }, []);
+
   const onSubmit = (data: FieldFillByUser_Lost) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
@@ -48,7 +65,8 @@ const AddLost = () => {
     setLost(updatedLost);
     addLost(updatedLost as Lost);
     navigate('/');
-  }
+  };
+
   const addLost = async (data: Lost | null) => {
     try {
       if (data) {
@@ -57,14 +75,15 @@ const AddLost = () => {
       } else {
         console.log("אין נתונים. לא מבצעים את הקריאה.");
       }
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error adding user:', error);
     }
-  }
+  };
+
   const handleChangeCategory = (event: SelectChangeEvent) => {
     setSelectedCategory(event.target.value);
   };
+
   return (
     <div style={mainContentStyle}>
       <div style={{ justifyContent: "flex-end", width: "60vw" }}>
@@ -79,6 +98,7 @@ const AddLost = () => {
             sx={inputStyle}
           />
           {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
+
           <TextField
             id="filled-date"
             label="תאריך אבידה"
@@ -96,28 +116,41 @@ const AddLost = () => {
             }}
           />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-          <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
-            <InputLabel id="city-select-label">עיר</InputLabel>
-            <Select
-              labelId="city-select-label"
-              id="city-select"
-              defaultValue=""
-              {...register("city", { required: "חובה לבחור עיר" })}
-            >
-              <MenuItem value="" disabled>בחר עיר</MenuItem>
-              {Object.values(Cities).map((city) => (
-                <MenuItem key={city} value={city}>
-                  {city}
-                </MenuItem>
-              ))}
-            </Select>
-            {errors.city && (
-              <div style={{ color: "red", fontSize: "0.8rem" }}>
-                {errors.city.message}
-              </div>
+
+          <Controller
+            name="city"
+            control={control}
+            rules={{ required: "חובה לבחור עיר" }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Autocomplete
+                options={cities}
+                value={value || null}
+                onChange={(event, newValue) => {
+                  onChange(newValue);
+                  setSelectedCity(newValue || "");
+                }}
+                getOptionLabel={(option) => option || ""}
+                loading={isLoadingCities}
+                noOptionsText="לא נמצאו ערים"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="עיר"
+                    variant="outlined"
+                    error={!!error}
+                    helperText={error?.message}
+                    sx={inputStyle}
+                    style={margin}
+                  />
+                )}
+                fullWidth
+                disablePortal
+                freeSolo={false}
+              />
             )}
-          </FormControl>
+          />
           {errors.city && <div style={errorCSS}>{errors.city.message}</div>}
+
           <TextField
             id="filled-street"
             label="רחוב"
@@ -128,6 +161,7 @@ const AddLost = () => {
             sx={inputStyle}
           />
           {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
+
           <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
             <InputLabel id="category-select-label" style={margin}>קטגוריה</InputLabel>
             <Select
@@ -159,6 +193,6 @@ const AddLost = () => {
       </div>
     </div>
   );
-}
+};
 
-export default AddLost
+export default AddLost;
