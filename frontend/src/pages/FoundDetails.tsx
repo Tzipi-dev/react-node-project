@@ -37,7 +37,7 @@ const FoundDetails = () => {
     <div style={mainContentStyle}>
       {
         isLoading ? <CircularProgress color="error" /> : isError ? <div>error...</div> : found ? (
-          <div style={containerStyle}>
+         <div style={containerStyle}>
             <div>
               <div style={sectionTitle}> פרטי מציאה</div>
 

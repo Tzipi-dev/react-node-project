@@ -205,7 +205,7 @@ export const itemStyle: CSSProperties = {
 export const inputStyle: CSSProperties={
   backgroundColor: "white"
 }
-export const updateButtonStyle: React.CSSProperties = {
+export const updateButtonStyle: CSSProperties = {
 
    marginInlineStart: 0, // במקום margin-inline-start
   marginInlineEnd: 'auto', // במקום margin-inline-end: auto
@@ -221,6 +221,8 @@ export const updateButtonStyle: React.CSSProperties = {
 
 
 };
+
+ 
 export const containerStyle: React.CSSProperties = {
   width: '40vw',
   // margin: '80px auto',
