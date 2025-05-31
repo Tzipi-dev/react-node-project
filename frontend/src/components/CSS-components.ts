@@ -258,3 +258,17 @@ export const btnAllItems:CSSProperties={
   alignItems: 'center',
   gap: '0.5rem',
 }
+export const iconStyle: React.CSSProperties = {
+      width: '1.7vw', 
+    height: '1.7vw',
+    borderRadius: '50%',
+    backgroundColor: 'rgb(111, 110, 110)',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1vw', 
+    fontWeight: "100",
+    marginLeft: '-0.2vw' 
+  };
+

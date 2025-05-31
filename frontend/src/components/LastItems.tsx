@@ -5,10 +5,8 @@ import { setAllLosts } from "../redux/slice/lostsSlice"
 import { setAllFounds } from "../redux/slice/foundSlice"
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
-import { Box, Chip, Typography } from "@mui/material"
-import { cardStyle, foundTitle, items, lostTitle, mainContentStyle, showItemsDiv, titleStyle } from "./CSS-components"
-import { badgeStyle, containerOfFound, iconStyle, item, itemdetails, textRowStyle } from "../pages/CSS-pages"
-import { FaMapMarked, FaShoppingBag } from "react-icons/fa"
+import {  mainContentStyle, showItemsDiv, titleStyle } from "./CSS-components"
+import {cardStyle, badgeStyle, containerOfFound, iconStyle, textRowStyle } from "../pages/CSS-pages"
 import { Found, Lost } from "../interfaces/models"
 import { MdLocationOn, MdLock } from "react-icons/md";
 const LastItems = () => {
@@ -27,7 +25,6 @@ const LastItems = () => {
     }
     useEffect(() => {
         fetchingData();
-
     }, [])
     useEffect(() => {
         const lostItem0 = GetAllLostsQuery && GetAllLostsQuery[0];
@@ -36,7 +33,6 @@ const LastItems = () => {
         const foundItem1 = GetAllFoundsQuery && GetAllFoundsQuery[1];
         setList([lostItem0, lostItem1, foundItem0, foundItem1])
     }, [GetAllLostsQuery, GetAllFoundsQuery])
-
     return (
         <>
             <div style={mainContentStyle}>
@@ -54,12 +50,10 @@ const LastItems = () => {
                                 <div style={cardStyle}>
                                     <div style={badgeStyle}>Lost</div>
                                     <div style={titleStyle}>{list[0]?.name}</div>
-
                                     <div style={textRowStyle}>
                                         <MdLocationOn style={iconStyle} />
                                         <span>{list[0]?.city}</span>
                                     </div>
-
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
                                         <p>{list[0]?.category}</p>
@@ -72,12 +66,10 @@ const LastItems = () => {
                                 <div style={cardStyle}>
                                     <div style={badgeStyle}>Lost</div>
                                     <div style={titleStyle}>{list[1]?.name}</div>
-
                                     <div style={textRowStyle}>
                                         <MdLocationOn style={iconStyle} />
                                         <span>{list[1]?.city}</span>
                                     </div>
-
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
                                         <p>{list[1]?.category}</p>
@@ -90,12 +82,10 @@ const LastItems = () => {
                                 <div style={cardStyle}>
                                     <div style={badgeStyle}>Found</div>
                                     <div style={titleStyle}>{list[2]?.name}</div>
-
                                     <div style={textRowStyle}>
                                         <MdLocationOn style={iconStyle} />
                                         <span>{list[2]?.city}</span>
                                     </div>
-
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
                                         <p>{list[2]?.category}</p>
@@ -103,18 +93,15 @@ const LastItems = () => {
                                 </div>
                             </Link>
                         </div>
-
                         <Link to={`/founds/${list[3]?._id?.toString()}`}>
                             <div  >
                                 <div style={cardStyle}>
                                     <div style={badgeStyle}>Found</div>
                                     <div style={titleStyle}>{list[3]?.name}</div>
-
                                     <div style={textRowStyle}>
                                         <MdLocationOn style={iconStyle} />
                                         <span>{list[3]?.city}</span>
                                     </div>
-
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
                                         <p>{list[3]?.category}</p>
@@ -122,10 +109,8 @@ const LastItems = () => {
                                 </div>
                             </div>
                         </Link>
-                  </div>
-
+                    </div>
                 }
-
             </div>
         </>
     )

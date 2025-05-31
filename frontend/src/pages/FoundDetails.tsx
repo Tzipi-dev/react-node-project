@@ -1,8 +1,8 @@
 import { useParams } from "react-router";
 import { useGetFoundByIdQuery } from "../redux/api/founds/apiFoundSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { Alltext, detailTitle, loginBox } from "../globalStyle";
-import { CircularProgress, Typography } from "@mui/material";
+
+import { CircularProgress } from "@mui/material";
 import { useEffect, useState } from "react";
 import { HDate } from '@hebcal/core';
 import { mainContentStyle } from "../components/CSS-components";
