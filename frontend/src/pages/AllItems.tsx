@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import { badgeStyle, btnAll, btnFound, btnLost, cardStyle, containerOfFound, filterContainer, frameToGroupButton, iconStyle, item, itemdetails, resetByn, textRowStyle, titleStyle } from "./CSS-pages";
-import { Box, Button, Chip, Typography } from "@mui/material";
-import { foundTitle, items, lostTitle, mainContentStyle } from "../components/CSS-components";
-import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
+import { badgeStyle, btnAll, btnFound, btnLost, cardStyle, containerOfFound, filterContainer, frameToGroupButton, iconStyle,  resetByn, textRowStyle, titleStyle } from "./CSS-pages";
+import {  Button } from "@mui/material";
+import {  mainContentStyle } from "../components/CSS-components";
+
 import { useDispatch } from "react-redux";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
 import { setAllLosts } from "../redux/slice/lostsSlice";

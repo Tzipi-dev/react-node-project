@@ -1,21 +1,27 @@
-
 import { NavLink } from "react-router";
-import { foundIconStyle, lostIconStyle, menuItemStyle, sidebarStyle } from "./CSS-components";
+import { foundIconStyle, iconStyle, lostIconStyle, menuItemStyle, sidebarStyle } from "./CSS-components";
 import { CiHome } from "react-icons/ci";
 import { IoMdAdd } from "react-icons/io";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { IoBody } from "react-icons/io5";
 import { TbListDetails } from "react-icons/tb";
+import { useEffect, useState } from "react";
+
 const ButtomNav = () => {
-   
+    const [firstLetter, setFirstLetter] = useState("א"); // ברירת מחדל לאות א'
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
+        const userName = user?.name || "אנונימי";
+        const first = userName.charAt(0).toUpperCase();
+        setFirstLetter(first);
+    }, []);
     return (
         <div style={sidebarStyle}>
             <NavLink to="/" style={menuItemStyle}>
-                <span style={lostIconStyle}><CiHome/></span>
+                <span style={lostIconStyle}><CiHome /></span>
                 עמוד הבית
             </NavLink>
             <NavLink to="/addLost" style={menuItemStyle}>
-                <span style={lostIconStyle} ><IoMdAdd /></span>
+                <span style={lostIconStyle}><IoMdAdd /></span>
                 הוספת אבידה
             </NavLink>
             <NavLink to="/addFound" style={menuItemStyle}>
@@ -35,11 +41,13 @@ const ButtomNav = () => {
                 צפיה בכל הפריטים
             </NavLink>
             <NavLink to="/UserProfile" style={menuItemStyle}>
-                <span style={{ marginRight: "0.5rem", color: "darkolivegreen" }}><IoBody /></span>
-               פרופיל משתמש
+                <span style={iconStyle}>
+                    {firstLetter}
+                </span>
+                פרופיל משתמש
             </NavLink>
         </div>
-    )
-}
+    );
+};
 
-export default ButtomNav
+export default ButtomNav;

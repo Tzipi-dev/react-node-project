@@ -1,11 +1,9 @@
 import { Link, NavLink } from "react-router";
 import { useEffect, useState } from "react";
-import { Box, Button, Chip, CircularProgress, Modal, Typography } from "@mui/material";
-import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
+import { Box, Button,CircularProgress, Modal, Typography } from "@mui/material";
+
 import {
-  foundTitle,
-  items,
-  lostTitle,
+ 
   mainContentStyle
 } from "../components/CSS-components";
 import {

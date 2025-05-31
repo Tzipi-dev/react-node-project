@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux";
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice";
 import { setAllFounds } from "../redux/slice/foundSlice";
 import { useEffect, useState } from "react";
-import Typography from '@mui/joy/Typography';
+
 import { Link } from "react-router";
-import { foundTitle, items, mainContentStyle } from "../components/CSS-components";
-import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
-import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
+import {  mainContentStyle } from "../components/CSS-components";
+import { Box,  Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
+
 import {
   badgeStyle,
   cardStyle,

@@ -3,8 +3,8 @@ import { useGetLostByIdQuery } from "../redux/api/losts/apiLostSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useEffect, useState } from "react";
 import { HDate } from "@hebcal/core";
-import { Alltext, detailTitle, loginBox } from "../globalStyle";
-import { CircularProgress, Typography } from "@mui/material";
+
+import { CircularProgress } from "@mui/material";
 import { mainContentStyle } from "../components/CSS-components";
 import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
 import { containerStyle, detailRow, labelStyle, sectionTitle, valueStyle } from "./CSS-pages";

@@ -12,7 +12,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Link, useNavigate } from "react-router";
-
 import AddFoundSchema from "../schemas/AddFoundSchema";
 import {
   errorCSS,
@@ -22,7 +21,6 @@ import {
 } from "../globalStyle";
 import {
   Category,
-  Cities,
   FieldFillByUser_Found,
   Found,
   User
@@ -31,12 +29,10 @@ import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
 import { useGetAllCitiesQuery } from "../redux/api/cities/apiCitiesSlice";
-
 const AddFound = () => {
   const { handleSubmit, register, formState: { errors },control } = useForm({
     resolver: zodResolver(AddFoundSchema)
   });
-
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [AddFoundMutation] = useAddFoundMutation();
   const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery();
@@ -44,10 +40,8 @@ const AddFound = () => {
   const [, setFound] = useState<Found | null>(null);
   const [, setSelectedCity] = useState<string>("");
   const navigate = useNavigate();
-
   const today = new Date();
   const maxDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
-
   useEffect(() => {
     const data = localStorage.getItem("currentUser");
     if (data) {
@@ -56,11 +50,9 @@ const AddFound = () => {
       console.warn("לא נמצא מידע ב-localStorage");
     }
   }, []);
-
   const handleChangeCategory = (event: SelectChangeEvent) => {
     setSelectedCategory(event.target.value);
   };
-
   const addFound = async (data: Found | null) => {
     if (!data) return console.warn("אין נתונים. לא מבצעים את הקריאה.");
     try {
@@ -70,14 +62,12 @@ const AddFound = () => {
       console.error("Invalid date format:", error);
     }
   };
-
   const onSubmit = (data: FieldFillByUser_Found) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
       console.error("תאריך לא תקין:", data.date);
       return;
     }
-
     const updatedFound: Found = {
       name: data.name,
       date,
@@ -86,18 +76,15 @@ const AddFound = () => {
       category: Category[selectedCategory as keyof typeof Category],
       owner: currentUser as User
     };
-
     addFound(updatedFound);
     setFound(updatedFound);
     navigate("/");
   };
-
   return (
     <div style={mainContentStyle}>
       <div style={{ justifyContent: "flex-end", width: "60vw" }}>
         <Link to="/">← עמוד הבית</Link>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
-
           <TextField
             label="שם"
             variant="outlined"
@@ -108,7 +95,6 @@ const AddFound = () => {
             sx={inputStyle}
           />
           {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
-
           <TextField
             label="תאריך מציאה"
             variant="outlined"
