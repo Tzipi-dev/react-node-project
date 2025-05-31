@@ -1,23 +1,26 @@
 import { Link, useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Category, Cities, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Autocomplete, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { mainContentStyle } from '../components/CSS-components';
 import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
 import { useGetLostByIdQuery, useUpdateLostMutation } from '../redux/api/losts/apiLostSlice';
 import AddLostSchema from '../schemas/AddLostSchema';
+import { useGetAllCitiesQuery } from '../redux/api/cities/apiCitiesSlice';
 const UpdateLost = () => {
     const { id } = useParams()
     const { data: thisLost } = useGetLostByIdQuery(id ? id : skipToken)
-    const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddLostSchema) });
+    const { handleSubmit, register, formState: { errors },control } = useForm({ resolver: zodResolver(AddLostSchema) });
     const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [selectedCity, setSelectedCity] = useState<string>("");
     const [, setLost] = useState<Lost | null>(null)
     const [UpdateLostMutation] = useUpdateLostMutation()
-    
+    const {data:cities = [],isLoading:isLoadingCities}=useGetAllCitiesQuery()
+
     const navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState<User>()
     useEffect(() => {
@@ -80,7 +83,7 @@ const UpdateLost = () => {
         return `${yyyy}-${mm}-${dd}`;
     };
     if (!thisLost) {
-        return<CircularProgress color="error" />  
+        return <CircularProgress color="error" />
     }
     return (
         <div>
@@ -107,22 +110,38 @@ const UpdateLost = () => {
                             defaultValue={formatDate(thisLost?.date)}
                         />
                         {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-                        <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
-                            <InputLabel id="city-select-label">עיר</InputLabel>
-                            <Select
-                                labelId="city-select-label"
-                                id="city-select"
-                                defaultValue={thisLost?.city}
-                                {...register("city", { required: "חובה לבחור עיר" })}
-                            >
-                                <MenuItem value="" disabled>בחר עיר</MenuItem>
-                                {Object.values(Cities).map((city) => (
-                                    <MenuItem key={city} value={city}>
-                                        {city}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        <Controller
+                            name="city"
+                            control={control}
+                            rules={{ required: "חובה לבחור עיר" }}
+                            render={({ field: { onChange, value }, fieldState: { error } }) => (
+                                <Autocomplete
+                                    options={cities}
+                                    value={value || null}
+                                    onChange={(event, newValue) => {
+                                        onChange(newValue);
+                                        setSelectedCity(newValue || "");
+                                    }}
+                                    getOptionLabel={(option) => option || ""}
+                                    loading={isLoadingCities}
+                                    noOptionsText="לא נמצאו ערים"
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="עיר"
+                                            variant="outlined"
+                                            error={!!error}
+                                            helperText={error?.message}
+                                            sx={inputStyle}
+                                            style={margin}
+                                        />
+                                    )}
+                                    fullWidth
+                                    disablePortal
+                                    freeSolo={false}
+                                />
+                            )}
+                        />
                         {errors.city && <div style={errorCSS}>{errors.city.message}</div>}
                         <TextField
                             id="filled-street"
