@@ -14,12 +14,12 @@ import { useGetAllCitiesQuery } from '../redux/api/cities/apiCitiesSlice';
 const UpdateLost = () => {
     const { id } = useParams()
     const { data: thisLost } = useGetLostByIdQuery(id ? id : skipToken)
-    const { handleSubmit, register, formState: { errors },control } = useForm({ resolver: zodResolver(AddLostSchema) });
+    const { handleSubmit, register, formState: { errors }, control } = useForm({ resolver: zodResolver(AddLostSchema) });
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [selectedCity, setSelectedCity] = useState<string>("");
     const [, setLost] = useState<Lost | null>(null)
     const [UpdateLostMutation] = useUpdateLostMutation()
-    const {data:cities = [],isLoading:isLoadingCities}=useGetAllCitiesQuery()
+    const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery()
 
     const navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState<User>()
@@ -134,6 +134,7 @@ const UpdateLost = () => {
                                             helperText={error?.message}
                                             sx={inputStyle}
                                             style={margin}
+                                            defaultValue={thisLost?.city}
                                         />
                                     )}
                                     fullWidth
