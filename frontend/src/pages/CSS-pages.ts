@@ -205,7 +205,7 @@ export const itemStyle: CSSProperties = {
 export const inputStyle: CSSProperties={
   backgroundColor: "white"
 }
-export const updateButtonStyle: React.CSSProperties = {
+export const updateButtonStyle: CSSProperties = {
 
    marginInlineStart: 0, // במקום margin-inline-start
   marginInlineEnd: 'auto', // במקום margin-inline-end: auto
@@ -220,4 +220,42 @@ export const updateButtonStyle: React.CSSProperties = {
   transition: "background-color 0.3s ease, color 0.3s ease",
 
 
+};
+export const containerStyle: React.CSSProperties = {
+  width: '50vw',
+  // margin: '80px auto',
+  background: 'linear-gradient(to bottom right, #fefefe, #f7f7f7)',
+  padding: '40px',
+  borderRadius: '24px',
+  boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+  fontFamily: '"Varela Round", sans-serif',
+  direction: 'rtl',
+  color: '#222',
+  marginTop: "3vh"
+};
+
+export const sectionTitle: React.CSSProperties = {
+  fontSize: '26px',
+  fontWeight: 700,
+  marginBottom: '20px',
+  color: '#3f3f3f',
+  borderBottom: '2px solid #ddd',
+  paddingBottom: '6px',
+};
+
+export const detailRow: React.CSSProperties = {
+  fontSize: '18px',
+  padding: '6px 0',
+  borderBottom: '1px solid #eee',
+  display: 'flex',
+  justifyContent: 'space-between',
+};
+
+export const labelStyle: React.CSSProperties = {
+  fontWeight: 600,
+  color: '#555',
+};
+
+export const valueStyle: React.CSSProperties = {
+  color: '#333',
 };
