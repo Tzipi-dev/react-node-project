@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { HDate } from '@hebcal/core';
 import { mainContentStyle } from "../components/CSS-components";
 import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
+import { containerStyle, detailRow, labelStyle, sectionTitle, valueStyle } from "./CSS-pages";
 const FoundDetails = () => {
   const { id } = useParams();
   const { data: found, isLoading, isError } = useGetFoundByIdQuery(id ? id : skipToken);
@@ -36,19 +37,22 @@ const FoundDetails = () => {
     <div style={mainContentStyle}>
       {
         isLoading ? <CircularProgress color="error" /> : isError ? <div>error...</div> : found ? (
-          <div style={loginBox}>
-            <div >
-              <Typography sx={detailTitle}>פרטי מציאה</Typography>
-              <Typography sx={Alltext}>המציאה: {found.name}</Typography>
-              <Typography sx={Alltext}>תאריך מציאה: {foreignDate}</Typography>
-              <Typography sx={Alltext}>תאריך עברי: {hebrewDate}</Typography>
-              <Typography sx={Alltext}>עיר:  {found.city}</Typography>
-              <Typography sx={Alltext}>רחוב:  {found.street}</Typography>
-              <Typography sx={Alltext}>קטגוריה:  {found.category}</Typography>
-              <Typography sx={detailTitle}>צור קשר</Typography>
-              <Typography sx={Alltext}>שם: {ownerData?.name || 'לא זמין'}</Typography>
-              <Typography sx={Alltext} > {ownerData?.email || 'לא קיים'} :מייל</Typography>
-              <Typography sx={Alltext}>טלפון: {ownerData?.phone || 'לא קיים'}</Typography>
+          <div style={containerStyle}>
+            <div>
+              <div style={sectionTitle}> פרטי מציאה</div>
+
+              <div style={detailRow}><span style={labelStyle}>המציאה:</span> <span style={valueStyle}>{found.name}</span></div>
+              <div style={detailRow}><span style={labelStyle}>תאריך מציאה:</span> <span style={valueStyle}>{foreignDate}</span></div>
+              <div style={detailRow}><span style={labelStyle}>תאריך עברי:</span> <span style={valueStyle}>{hebrewDate}</span></div>
+              <div style={detailRow}><span style={labelStyle}>עיר:</span> <span style={valueStyle}>{found.city}</span></div>
+              <div style={detailRow}><span style={labelStyle}>רחוב:</span> <span style={valueStyle}>{found.street}</span></div>
+              <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{found.category}</span></div>
+
+              <div style={{ ...sectionTitle, marginTop: '30px' }}> צור קשר</div>
+
+              <div style={detailRow}><span style={labelStyle}>שם:</span> <span style={valueStyle}>{ownerData?.name || 'לא זמין'}</span></div>
+              <div style={detailRow}><span style={labelStyle}>מייל:</span> <span style={valueStyle}>{ownerData?.email || 'לא קיים'}</span></div>
+              <div style={detailRow}><span style={labelStyle}>טלפון:</span> <span style={valueStyle}>{ownerData?.phone || 'לא קיים'}</span></div>
             </div>
           </div>
         ) : (

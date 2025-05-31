@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { btnAll, btnFound, btnLost, containerOfFound, filterContainer, frameToGroupButton, item, itemdetails, resetByn } from "./CSS-pages";
+import { badgeStyle, btnAll, btnFound, btnLost, cardStyle, containerOfFound, filterContainer, frameToGroupButton, iconStyle, item, itemdetails, resetByn, textRowStyle, titleStyle } from "./CSS-pages";
 import { Box, Button, Chip, Typography } from "@mui/material";
 import { foundTitle, items, lostTitle, mainContentStyle } from "../components/CSS-components";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
@@ -9,6 +9,7 @@ import { setAllLosts } from "../redux/slice/lostsSlice";
 import { useEffect, useState } from "react";
 import { useGetAllFoundsQuery } from "../redux/api/founds/apiFoundSlice";
 import { setAllFounds } from "../redux/slice/foundSlice";
+import { MdLocationOn, MdLock } from "react-icons/md";
 
 const AllItems = () => {
   const dispatch = useDispatch();
@@ -34,11 +35,11 @@ const AllItems = () => {
     <div style={mainContentStyle}>
       <div style={filterContainer}>
         <div style={frameToGroupButton}>
-            <Button variant="outlined" onClick={() => handleClick('אבדות')} sx={btnLost}>אבדות</Button>
-            <Button variant="outlined" onClick={() => handleClick("מציאות")} sx={btnFound} >מציאות</Button>
-            <Button variant="outlined" onClick={() => handleClick("הכל")} sx={btnAll}>הכל</Button>
+          <Button variant="outlined" onClick={() => handleClick('אבדות')} sx={btnLost}>אבדות</Button>
+          <Button variant="outlined" onClick={() => handleClick("מציאות")} sx={btnFound} >מציאות</Button>
+          <Button variant="outlined" onClick={() => handleClick("הכל")} sx={btnAll}>הכל</Button>
         </div>
-        <Button sx={resetByn} onClick={()=>handleClick("הכל")}>אפס סינון</Button>
+        <Button sx={resetByn} onClick={() => handleClick("הכל")}>אפס סינון</Button>
       </div>
       {
         subject === "הכל" && <div style={containerOfFound}>
@@ -46,24 +47,20 @@ const AllItems = () => {
             GetAllLostsQuery?.map(lost => (
               <div key={lost._id?.toString()} >
                 <Link to={`/losts/${lost._id?.toString()}`}>
-                  <Box sx={items}>
-                    <Chip label="Lost" size="small" sx={lostTitle} />
-                    <Typography mt={1} mb={1} style={item}>
-                      {lost.name}
-                    </Typography>
-                    <Box display="flex" alignItems="cenetr" mb={0.5}>
-                      <FaMapMarkedAlt style={{ color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {lost.city}
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="cenetr">
-                      <FaShoppingBag style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {lost.category}
-                      </Typography>
-                    </Box>
-                  </Box>
+                  <div style={cardStyle}>
+                    <div style={badgeStyle}>Lost</div>
+                    <div style={titleStyle}>{lost.name}</div>
+
+                    <div style={textRowStyle}>
+                      <MdLocationOn style={iconStyle} />
+                      <span>{lost.city}</span>
+                    </div>
+
+                    <div style={textRowStyle}>
+                      <MdLock style={iconStyle} />
+                      <span>{lost.category}</span>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))
@@ -72,26 +69,20 @@ const AllItems = () => {
             GetAllFoundsQuery?.map(found => (
               <div key={found._id?.toString()}>
                 <Link to={`/founds/${found._id?.toString()}`}>
-                  <Box
-                    sx={items}
-                  >
-                    <Chip label="Found" size="small" sx={foundTitle} />
-                    <Typography mt={1} mb={1} style={item}>
-                      {found.name}
-                    </Typography>
-                    <Box display="flex" alignItems="center" mb={0.5}>
-                      <FaMapMarkedAlt style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {found.city}
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      <FaShoppingBag style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {found.category}
-                      </Typography>
-                    </Box>
-                  </Box>
+                 <div style={cardStyle}>
+                    <div style={badgeStyle}>Found</div>
+                    <div style={titleStyle}>{found.name}</div>
+
+                    <div style={textRowStyle}>
+                      <MdLocationOn style={iconStyle} />
+                      <span>{found.city}</span>
+                    </div>
+
+                    <div style={textRowStyle}>
+                      <MdLock style={iconStyle} />
+                      <span>{found.category}</span>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))
@@ -100,29 +91,25 @@ const AllItems = () => {
       }
       {
         subject === "אבדות" &&
-         <div style={containerOfFound}>
+        <div style={containerOfFound}>
           {
             GetAllLostsQuery?.map(lost => (
               <div key={lost._id?.toString()} >
                 <Link to={`/losts/${lost._id?.toString()}`}>
-                  <Box sx={items}>
-                    <Chip label="Lost" size="small" sx={lostTitle} />
-                    <Typography  mt={1} mb={1} style={item}>
-                      {lost.name}
-                    </Typography>
-                    <Box display="flex" alignItems="center" mb={0.5}>
-                      <FaMapMarkedAlt style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {lost.city}
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      <FaShoppingBag style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {lost.category}
-                      </Typography>
-                    </Box>
-                  </Box>
+                 <div style={cardStyle}>
+                    <div style={badgeStyle}>Lost</div>
+                    <div style={titleStyle}>{lost.name}</div>
+
+                    <div style={textRowStyle}>
+                      <MdLocationOn style={iconStyle} />
+                      <span>{lost.city}</span>
+                    </div>
+
+                    <div style={textRowStyle}>
+                      <MdLock style={iconStyle} />
+                      <span>{lost.category}</span>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))
@@ -137,26 +124,20 @@ const AllItems = () => {
             GetAllFoundsQuery?.map(found => (
               <div key={found._id?.toString()}>
                 <Link to={`/founds/${found._id?.toString()}`}>
-                  <Box
-                    sx={items}
-                  >
-                    <Chip label="Found" size="small" sx={foundTitle} />
-                    <Typography mt={1} mb={1} style={item}>
-                      {found.name}
-                    </Typography>
-                    <Box display="flex" alignItems="center" mb={0.5}>
-                      <FaMapMarkedAlt style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {found.city}
-                      </Typography>
-                    </Box>
-                    <Box display="flex" alignItems="center">
-                      <FaShoppingBag style={{  color: 'grey' }} />
-                      <Typography style={itemdetails}>
-                        {found.category}
-                      </Typography>
-                    </Box>
-                  </Box>
+                  <div style={cardStyle}>
+                    <div style={badgeStyle}>Found</div>
+                    <div style={titleStyle}>{found.name}</div>
+
+                    <div style={textRowStyle}>
+                      <MdLocationOn style={iconStyle} />
+                      <span>{found.city}</span>
+                    </div>
+
+                    <div style={textRowStyle}>
+                      <MdLock style={iconStyle} />
+                      <span>{found.category}</span>
+                    </div>
+                  </div>
                 </Link>
               </div>
             ))
