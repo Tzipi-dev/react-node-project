@@ -67,21 +67,24 @@ exports.updateFound = async (req, res) => {
 
 
 exports.getFoundById = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
+
+    // בדיקה מוקדמת שה-id קיים ובפורמט תקין (ObjectId)
+    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({ message: 'Invalid or missing ID' });
+    }
+
     try {
-    
         const found = await Found.findById(id);
         if (!found) {
-            return res.status(404).json({ message: 'found not found' })
+            return res.status(404).json({ message: 'Found not found' });
         }
-        res.json(found)
-    }
-    catch (error) {
+        res.json(found);
+    } catch (error) {
         console.error('Failed to get found:', error);
         res.status(500).json({ message: 'Failed to get found' });
     }
-}
-
+};
 
 exports.getFoundsByIdOwner = async (req, res) => {
   const { id } = req.params;
