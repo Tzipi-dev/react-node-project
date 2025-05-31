@@ -3,17 +3,22 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Typography from '@mui/joy/Typography';
 import { Link } from "react-router";
-import {   items, lostTitle, mainContentStyle } from "../components/CSS-components";
+import { items, lostTitle, mainContentStyle } from "../components/CSS-components";
 import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
+  badgeStyle,
+  cardStyle,
   cateforyBtn,
   containerOfFound,
   filterContainer,
   frameToCategoryBtn,
-  resetByn
+  iconStyle,
+  resetByn,
+  textRowStyle,
+  titleStyle
 } from "./CSS-pages";
-
+import { MdLocationOn, MdLock } from "react-icons/md";
 import { Category } from "../interfaces/models";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
 import { setAllLosts } from "../redux/slice/lostsSlice";
@@ -56,7 +61,7 @@ const AllLosts = () => {
   const resetHandling = () => {
     setSelectedCategory(null);
   };
- const style = {
+  const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -80,7 +85,7 @@ const AllLosts = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <LostsMap/>
+          <LostsMap />
         </Box>
       </Modal>
       {isLoading ? (
@@ -115,18 +120,19 @@ const AllLosts = () => {
               {GetAllLostsQuery?.map((lost) => (
                 <div key={lost._id?.toString()}>
                   <Link to={`/Losts/${lost._id?.toString()}`}>
-                    <Box sx={items}>
-                      <Chip label="Lost" size="small" sx={lostTitle} />
-                      <Typography mt={1} mb={1}>{lost.name}</Typography>
-                      <Box display="flex" alignItems="center" mb={0.5}>
-                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{lost.city}</Typography>
-                      </Box>
-                      <Box display="flex" alignItems="center">
-                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{lost.category}</Typography>
-                      </Box>
-                    </Box>
+                    <div style={cardStyle}>
+                      <div style={badgeStyle}>Lost</div>
+                      <div style={titleStyle}>{lost.name}</div>
+                      <div style={textRowStyle}>
+                        <MdLocationOn style={iconStyle} />
+                        <span>{lost.city}</span>
+                      </div>
+
+                      <div style={textRowStyle}>
+                        <MdLock style={iconStyle} />
+                        <span>{lost.category}</span>
+                      </div>
+                    </div>
                   </Link>
                 </div>
               ))}
@@ -138,18 +144,19 @@ const AllLosts = () => {
                 .map((lost) => (
                   <div key={lost._id?.toString()}>
                     <Link to={`/Losts/${lost._id?.toString()}`}>
-                      <Box sx={items}>
-                        <Chip label="Lost" size="small" sx={lostTitle} />
-                        <Typography mt={1} mb={1}>{lost.name}</Typography>
-                        <Box display="flex" alignItems="center" mb={0.5}>
-                          <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{lost.city}</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                          <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{lost.category}</Typography>
-                        </Box>
-                      </Box>
+                       <div style={cardStyle}>
+                      <div style={badgeStyle}>Lost</div>
+                      <div style={titleStyle}>{lost.name}</div>
+                      <div style={textRowStyle}>
+                        <MdLocationOn style={iconStyle} />
+                        <span>{lost.city}</span>
+                      </div>
+
+                      <div style={textRowStyle}>
+                        <MdLock style={iconStyle} />
+                        <span>{lost.category}</span>
+                      </div>
+                    </div>
                     </Link>
                   </div>
                 ))}

@@ -37,16 +37,19 @@ const FoundDetails = () => {
     <div style={mainContentStyle}>
       {
         isLoading ? <CircularProgress color="error" /> : isError ? <div>error...</div> : found ? (
-          <div style={containerStyle}>
+         <div style={containerStyle}>
             <div>
-              <div style={sectionTitle}>פרטי מציאה</div>
+              <div style={sectionTitle}> פרטי מציאה</div>
+
               <div style={detailRow}><span style={labelStyle}>המציאה:</span> <span style={valueStyle}>{found.name}</span></div>
               <div style={detailRow}><span style={labelStyle}>תאריך מציאה:</span> <span style={valueStyle}>{foreignDate}</span></div>
               <div style={detailRow}><span style={labelStyle}>תאריך עברי:</span> <span style={valueStyle}>{hebrewDate}</span></div>
               <div style={detailRow}><span style={labelStyle}>עיר:</span> <span style={valueStyle}>{found.city}</span></div>
               <div style={detailRow}><span style={labelStyle}>רחוב:</span> <span style={valueStyle}>{found.street}</span></div>
               <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{found.category}</span></div>
+
               <div style={{ ...sectionTitle, marginTop: '30px' }}> צור קשר</div>
+
               <div style={detailRow}><span style={labelStyle}>שם:</span> <span style={valueStyle}>{ownerData?.name || 'לא זמין'}</span></div>
               <div style={detailRow}><span style={labelStyle}>מייל:</span> <span style={valueStyle}>{ownerData?.email || 'לא קיים'}</span></div>
               <div style={detailRow}><span style={labelStyle}>טלפון:</span> <span style={valueStyle}>{ownerData?.phone || 'לא קיים'}</span></div>

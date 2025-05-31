@@ -221,8 +221,10 @@ export const updateButtonStyle: CSSProperties = {
 
 
 };
+
+ 
 export const containerStyle: React.CSSProperties = {
-  width: '50vw',
+  width: '40vw',
   // margin: '80px auto',
   background: 'linear-gradient(to bottom right, #fefefe, #f7f7f7)',
   padding: '40px',
@@ -258,4 +260,47 @@ export const labelStyle: React.CSSProperties = {
 
 export const valueStyle: React.CSSProperties = {
   color: '#333',
+};
+export const cardStyle: React.CSSProperties = {
+  backgroundColor: "#fff",
+  borderRadius: "20px",
+  padding: "32px",
+  boxShadow: "0 4px 18px rgba(0, 0, 0, 0.1)",
+  width: "15vw",
+  margin: "auto",
+  direction: "rtl",
+  fontFamily: "Varela Round, sans-serif",
+  display: "flex",
+  flexDirection: "column",
+  gap: "16px",
+};
+
+export const badgeStyle: React.CSSProperties = {
+  alignSelf: "flex-start",
+  backgroundColor: "#f9f9f9",
+  padding: "4px 12px",
+  borderRadius: "20px",
+  color: "#5e4035",
+  boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
+  fontSize: "14px",
+};
+
+export const textRowStyle: React.CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  color: "#5a5a5a",
+  fontSize: "16px",
+};
+
+export const iconStyle: React.CSSProperties = {
+  fontSize: "18px",
+  color: "#5e4035",
+};
+
+export const titleStyle: React.CSSProperties = {
+  fontWeight: 600,
+  fontSize: "18px",
+  color: "#5e4035",
+  marginBottom: "-8px",
 };

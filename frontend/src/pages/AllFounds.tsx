@@ -8,12 +8,18 @@ import { foundTitle, items, mainContentStyle } from "../components/CSS-component
 import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
+  badgeStyle,
+  cardStyle,
   cateforyBtn,
   containerOfFound,
   filterContainer,
   frameToCategoryBtn,
-  resetByn
+  iconStyle,
+  resetByn,
+  textRowStyle,
+  titleStyle
 } from "./CSS-pages";
+import { MdLocationOn, MdLock } from "react-icons/md";
 import { Category } from "../interfaces/models";
 import FoundsMap from "./FoundsMap";
 const AllFounds = () => {
@@ -22,7 +28,6 @@ const AllFounds = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const open = Boolean(anchorEl);
-
   useEffect(() => {
     fetchingData();
     console.log(GetAllFoundsQuery);
@@ -48,7 +53,6 @@ const AllFounds = () => {
   const resetHandling = () => {
     setSelectedCategory(null);
   };
-  
   const style = {
     position: 'absolute',
     top: '50%',
@@ -65,7 +69,6 @@ const AllFounds = () => {
   const handleClose2 = () => setOpen(false);
   return (
     <div style={mainContentStyle}>
-     
       <Button onClick={handleOpen}> הצג מציאות באמצעות מפה</Button>
       <Modal
         open={openM}
@@ -74,7 +77,7 @@ const AllFounds = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <FoundsMap/>
+          <FoundsMap />
         </Box>
       </Modal>
       {isLoading ? (
@@ -98,33 +101,30 @@ const AllFounds = () => {
                     </MenuItem>
                   ))}
               </Menu>
-
-
-
             </div>
-
             <Button sx={resetByn} onClick={resetHandling}>
               אפס סינון
             </Button>
           </div>
-
           {selectedCategory == null ? (
             <div style={containerOfFound}>
               {GetAllFoundsQuery?.map((found) => (
                 <div key={found._id?.toString()}>
                   <Link to={`/Founds/${found._id?.toString()}`}>
-                    <Box sx={items}>
-                      <Chip label="Found" size="small" sx={foundTitle} />
-                      <Typography mt={1} mb={1}>{found.name}</Typography>
-                      <Box display="flex" alignItems="center" mb={0.5}>
-                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{found.city}</Typography>
-                      </Box>
-                      <Box display="flex" alignItems="center">
-                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{found.category}</Typography>
-                      </Box>
-                    </Box>
+                    <div style={cardStyle}>
+                      <div style={badgeStyle}>Found</div>
+                      <div style={titleStyle}>{found.name}</div>
+
+                      <div style={textRowStyle}>
+                        <MdLocationOn style={iconStyle} />
+                        <span>{found.city}</span>
+                      </div>
+
+                      <div style={textRowStyle}>
+                        <MdLock style={iconStyle} />
+                        <span>{found.category}</span>
+                      </div>
+                    </div>
                   </Link>
                 </div>
               ))}
@@ -136,18 +136,20 @@ const AllFounds = () => {
                 .map((found) => (
                   <div key={found._id?.toString()}>
                     <Link to={`/Founds/${found._id?.toString()}`}>
-                      <Box sx={items}>
-                        <Chip label="Found" size="small" sx={foundTitle} />
-                        <Typography mt={1} mb={1}>{found.name}</Typography>
-                        <Box display="flex" alignItems="center" mb={0.5}>
-                          <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{found.city}</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                          <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{found.category}</Typography>
-                        </Box>
-                      </Box>
+                      <div style={cardStyle}>
+                        <div style={badgeStyle}>Found</div>
+                        <div style={titleStyle}>{found.name}</div>
+
+                        <div style={textRowStyle}>
+                          <MdLocationOn style={iconStyle} />
+                          <span>{found.city}</span>
+                        </div>
+
+                        <div style={textRowStyle}>
+                          <MdLock style={iconStyle} />
+                          <p>{found.category}</p>
+                        </div>
+                      </div>
                     </Link>
                   </div>
                 ))}
