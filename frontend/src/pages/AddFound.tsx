@@ -4,9 +4,10 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormControl
+  FormControl,
+  Autocomplete
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -29,16 +30,19 @@ import {
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { mainContentStyle } from "../components/CSS-components";
 import { inputStyle } from "./CSS-pages";
+import { useGetAllCitiesQuery } from "../redux/api/cities/apiCitiesSlice";
 
 const AddFound = () => {
-  const { handleSubmit, register, formState: { errors } } = useForm({
+  const { handleSubmit, register, formState: { errors },control } = useForm({
     resolver: zodResolver(AddFoundSchema)
   });
 
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [AddFoundMutation] = useAddFoundMutation();
+  const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery();
   const [currentUser, setCurrentUser] = useState<User>();
   const [, setFound] = useState<Found | null>(null);
+  const [, setSelectedCity] = useState<string>("");
   const navigate = useNavigate();
 
   const today = new Date();
@@ -120,20 +124,38 @@ const AddFound = () => {
               },
             }} />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-
-          <FormControl variant="outlined" style={margin} sx={inputStyle} fullWidth>
-            <InputLabel id="city-select-label">עיר</InputLabel>
-            <Select
-              labelId="city-select-label"
-              defaultValue=""
-              {...register("city", { required: "חובה לבחור עיר" })}
-            >
-              <MenuItem value="" disabled>בחר עיר</MenuItem>
-              {Object.values(Cities).map((city) => (
-                <MenuItem key={city} value={city}>{city}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <Controller
+            name="city"
+            control={control}
+            rules={{ required: "חובה לבחור עיר" }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Autocomplete
+                options={cities}
+                value={value || null}
+                onChange={(event, newValue) => {
+                  onChange(newValue);
+                  setSelectedCity(newValue || "");
+                }}
+                getOptionLabel={(option) => option || ""}
+                loading={isLoadingCities}
+                noOptionsText="לא נמצאו ערים"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="עיר"
+                    variant="outlined"
+                    error={!!error}
+                    helperText={error?.message}
+                    sx={inputStyle}
+                    style={margin}
+                  />
+                )}
+                fullWidth
+                disablePortal
+                freeSolo={false}
+              />
+            )}
+          />
           {errors.city && <div style={errorCSS}>{errors.city.message}</div>}
 
           <TextField

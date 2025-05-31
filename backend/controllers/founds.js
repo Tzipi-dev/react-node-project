@@ -118,7 +118,7 @@ const match = async (found) => {
 
   for (const lostMatch of matches) {
     const emailToSend = lostMatch.owner.email;
-    const foundItemLink = `${process.env.CLIENT_URL}/Founds/${found._id}`; // שים לב שאתה רוצה לשלוח קישור לפריט שנמצא (found)
+    const foundItemLink = `${process.env.CLIENT_URL}/Founds/${found._id}`; 
 
     const mailOptions = {
       from: `"Lost & Found Team" <${process.env.EMAIL_FROM}>`,
