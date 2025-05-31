@@ -1,23 +1,26 @@
 import { Link, useNavigate, useParams } from 'react-router'
 import { useGetFoundByIdQuery, useUpdateFoundMutation } from '../redux/api/founds/apiFoundSlice';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import AddFoundSchema from '../schemas/AddFoundSchema';
 import { Category, Cities, FieldFillByUser_Found, Found, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Autocomplete, Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { mainContentStyle } from '../components/CSS-components';
 import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
+import { useGetAllCitiesQuery } from '../redux/api/cities/apiCitiesSlice';
 
 const UpdateFound = () => {
     const { id } = useParams()
     const { data: thisFound } = useGetFoundByIdQuery(id ? id : skipToken)
-    const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddFoundSchema) });
+    const { handleSubmit, register, formState: { errors }, control } = useForm({ resolver: zodResolver(AddFoundSchema) });
     const [selectedCategory, setSelectedCategory] = useState<string>("");
+    const [selectedCity, setSelectedCity] = useState<string>("");
     const [, setFound] = useState<Found | null>(null)
     const [UpdateFoundMutation] = useUpdateFoundMutation()
+    const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery();
     const navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState<User>()
     useEffect(() => {
@@ -52,7 +55,7 @@ const UpdateFound = () => {
             return;
         }
         console.log(thisFound?._id);
-        
+
         const updatedFound: Found = {
             ...data,
             date,
@@ -109,22 +112,38 @@ const UpdateFound = () => {
                             defaultValue={formatDate(thisFound?.date)}
                         />
                         {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-                        <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
-                            <InputLabel id="city-select-label">עיר</InputLabel>
-                            <Select
-                                labelId="city-select-label"
-                                id="city-select"
-                                defaultValue={thisFound?.city}
-                                {...register("city", { required: "חובה לבחור עיר" })}
-                            >
-                                <MenuItem value="" disabled>בחר עיר</MenuItem>
-                                {Object.values(Cities).map((city) => (
-                                    <MenuItem key={city} value={city}>
-                                        {city}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        <Controller
+                            name="city"
+                            control={control}
+                            rules={{ required: "חובה לבחור עיר" }}
+                            render={({ field: { onChange, value }, fieldState: { error } }) => (
+                                <Autocomplete
+                                    options={cities}
+                                    value={value || null}
+                                    onChange={(event, newValue) => {
+                                        onChange(newValue);
+                                        setSelectedCity(newValue || "");
+                                    }}
+                                    getOptionLabel={(option) => option || ""}
+                                    loading={isLoadingCities}
+                                    noOptionsText="לא נמצאו ערים"
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="עיר"
+                                            variant="outlined"
+                                            error={!!error}
+                                            helperText={error?.message}
+                                            sx={inputStyle}
+                                            style={margin}
+                                        />
+                                    )}
+                                    fullWidth
+                                    disablePortal
+                                    freeSolo={false}
+                                />
+                            )}
+                        />
                         {errors.city && <div style={errorCSS}>{errors.city.message}</div>}
                         <TextField
                             id="filled-street"
