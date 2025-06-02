@@ -275,7 +275,6 @@ export const cardStyle: React.CSSProperties = {
   flexDirection: "column",
   gap: "16px",
 };
-
 export const badgeStyle: React.CSSProperties = {
   alignSelf: "flex-start",
   backgroundColor: "#f9f9f9",
