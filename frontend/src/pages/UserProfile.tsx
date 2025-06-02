@@ -1,15 +1,15 @@
 import { Link, NavLink } from "react-router";
 import { useEffect, useState } from "react";
-import { Box, Button,CircularProgress, Modal, Typography } from "@mui/material";
-
+import { Box, Button, CircularProgress, Modal, Typography } from "@mui/material";
 import {
- 
-  mainContentStyle
+  mainContentStyle,
+  signupButtonStyle
 } from "../components/CSS-components";
 import {
   badgeStyle,
   cardStyle,
   containerOfFound,
+  darkBrownCircleStyle,
   iconStyle,
   itemStyle,
   textRowStyle,
@@ -31,7 +31,12 @@ const UserProfile = () => {
   const [openD, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
+  const [firstLetter, setFirstLetter] = useState("א"); // ברירת מחדל לאות א'
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
+    const userName = user?.name || "אנונימי";
+    const first = userName.charAt(0).toUpperCase();
+    setFirstLetter(first);
     const res = localStorage.getItem("currentUser");
     if (res) {
       setCurrentUser(JSON.parse(res));
@@ -66,120 +71,139 @@ const UserProfile = () => {
     boxShadow: 24,
     p: 4,
   }
-
   return (
     <div style={mainContentStyle}>
-      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
-        <Button onClick={handleOpen} style={updateButtonStyle} sx={{ display: "block" }}>לעדכון אבידה או מציאה</Button>
-        <Button onClick={handleOpenDelete} style={updateButtonStyle} sx={{ display: "block" }}>למחיקת אבידה או מציאה</Button>
 
+      <div >
+        <Link to="UpdateUser" >
+            <div style={darkBrownCircleStyle}>
+              <span >{firstLetter}</span>
+          </div>
+        </Link>
+      
+      <Box sx={{ display: 'flex', width: "25vw", marginRight: "50vw", marginTop: "-8vh" }}>
+        <Button onClick={handleOpen} style={updateButtonStyle} sx={{ display: "block" }}>
+          לעדכון אבידה או מציאה
+        </Button>
+        <Button onClick={handleOpenDelete} style={signupButtonStyle} sx={{ display: "block" }}>
+          למחיקת אבידה או מציאה
+        </Button>
       </Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      </div>
+      <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
-              {FoundsByIdUser?.map((found: Found) => (
-                <div key={found._id?.toString()} style={itemStyle}>
-                  <NavLink to={`/Founds/UpdateFound/${found._id?.toString()}`}>
-                    <div style={cardStyle}>
-                      <div style={badgeStyle}>Found</div>
-                      <div style={titleStyle}>{found.name}</div>
-                      <div style={textRowStyle}>
-                        <MdLocationOn style={iconStyle} />
-                        <span>{found.city}</span>
+              {FoundsByIdUser && FoundsByIdUser.length > 0 ? (
+                FoundsByIdUser.map((found: Found) => (
+                  <div key={found._id?.toString()} style={itemStyle}>
+                    <NavLink to={`/Founds/UpdateFound/${found._id?.toString()}`}>
+                      <div style={cardStyle}>
+                        <div style={badgeStyle}>Found</div>
+                        <div style={titleStyle}>{found.name}</div>
+                        <div style={textRowStyle}>
+                          <MdLocationOn style={iconStyle} />
+                          <span>{found.city}</span>
+                        </div>
+                        <div style={textRowStyle}>
+                          <MdLock style={iconStyle} />
+                          <span>{found.category}</span>
+                        </div>
                       </div>
-
-                      <div style={textRowStyle}>
-                        <MdLock style={iconStyle} />
-                        <span>{found.category}</span>
-                      </div>
-                    </div>
-                  </NavLink>
-                </div>
-              ))}
+                    </NavLink>
+                  </div>
+                ))
+              ) : (
+                <div style={{ color: "black", marginLeft: "8vw" }}>אין מציאות לעדכן</div>
+              )}
             </div>
           </div>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
-              {LostByIdUser?.map((lost: Lost) => (
-                <div key={lost._id?.toString()} style={itemStyle}>
-                  <NavLink to={`/Losts/UpdateLost/${lost._id?.toString()}`}>
-                    <div style={cardStyle}>
-                      <div style={badgeStyle}>Lost</div>
-                      <div style={titleStyle}>{lost.name}</div>
-                      <div style={textRowStyle}>
-                        <MdLocationOn style={iconStyle} />
-                        <span>{lost.city}</span>
+              {LostByIdUser && LostByIdUser.length > 0 ? (
+                LostByIdUser.map((lost: Lost) => (
+                  <div key={lost._id?.toString()} style={itemStyle}>
+                    <NavLink to={`/Losts/UpdateLost/${lost._id?.toString()}`}>
+                      <div style={cardStyle}>
+                        <div style={badgeStyle}>Lost</div>
+                        <div style={titleStyle}>{lost.name}</div>
+                        <div style={textRowStyle}>
+                          <MdLocationOn style={iconStyle} />
+                          <span>{lost.city}</span>
+                        </div>
+                        <div style={textRowStyle}>
+                          <MdLock style={iconStyle} />
+                          <span>{lost.category}</span>
+                        </div>
                       </div>
-
-                      <div style={textRowStyle}>
-                        <MdLock style={iconStyle} />
-                        <span>{lost.category}</span>
-                      </div>
-                    </div>
-                  </NavLink>
+                    </NavLink>
+                  </div>
+                ))
+              ) : (
+                <div style={{ color: "black", marginLeft: "8vw" }}>
+                  אין אבדות לעדכן
                 </div>
-              ))}
+              )}
             </div>
           </div>
+
         </Box>
       </Modal>
-      <Modal
-        open={openD}
-        onClose={handleCloseDelete}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
+      <Modal open={openD} onClose={handleCloseDelete}>
         <Box sx={style}>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
-              {FoundsByIdUser?.map((found: Found) => (
-                <div key={found._id?.toString()} style={itemStyle}>
-                  <NavLink to={`/Founds/DeleteFound/${found._id?.toString()}`}>
-                    <div style={cardStyle}>
-                      <div style={badgeStyle}>Found</div>
-                      <div style={titleStyle}>{found.name}</div>
-                      <div style={textRowStyle}>
-                        <MdLocationOn style={iconStyle} />
-                        <span>{found.city}</span>
+              {FoundsByIdUser && FoundsByIdUser.length > 0 ? (
+                FoundsByIdUser.map((found: Found) => (
+                  <div key={found._id?.toString()} style={itemStyle}>
+                    <NavLink to={`/Founds/DeleteFound/${found._id?.toString()}`}>
+                      <div style={cardStyle}>
+                        <div style={badgeStyle}>Found</div>
+                        <div style={titleStyle}>{found.name}</div>
+                        <div style={textRowStyle}>
+                          <MdLocationOn style={iconStyle} />
+                          <span>{found.city}</span>
+                        </div>
+                        <div style={textRowStyle}>
+                          <MdLock style={iconStyle} />
+                          <span>{found.category}</span>
+                        </div>
                       </div>
-
-                      <div style={textRowStyle}>
-                        <MdLock style={iconStyle} />
-                        <span>{found.category}</span>
-                      </div>
-                    </div>
-                  </NavLink>
-                </div>
-              ))}
+                    </NavLink>
+                  </div>
+                ))
+              ) : (
+                <div style={{ color: "black", marginLeft: "8vw" }}>אין מציאות למחוק</div>
+              )}
             </div>
           </div>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
-              {LostByIdUser?.map((lost: Lost) => (
-                <div key={lost._id?.toString()} style={itemStyle}>
-                  <NavLink to={`/Losts/DeleteLost/${lost._id?.toString()}`}>
-                   <div style={cardStyle}>
-                      <div style={badgeStyle}>Lost</div>
-                      <div style={titleStyle}>{lost.name}</div>
-                      <div style={textRowStyle}>
-                        <MdLocationOn style={iconStyle} />
-                        <span>{lost.city}</span>
+              {LostByIdUser && LostByIdUser.length > 0 ? (
+                LostByIdUser.map((lost: Lost) => (
+                  <div key={lost._id?.toString()} style={itemStyle}>
+                    <NavLink to={`/Losts/DeleteLost/${lost._id?.toString()}`}>
+                      <div style={cardStyle}>
+                        <div style={badgeStyle}>Lost</div>
+                        <div style={titleStyle}>{lost.name}</div>
+                        <div style={textRowStyle}>
+                          <MdLocationOn style={iconStyle} />
+                          <span>{lost.city}</span>
+                        </div>
+                        <div style={textRowStyle}>
+                          <MdLock style={iconStyle} />
+                          <span>{lost.category}</span>
+                        </div>
                       </div>
-
-                      <div style={textRowStyle}>
-                        <MdLock style={iconStyle} />
-                        <span>{lost.category}</span>
-                      </div>
-                    </div>
-                  </NavLink>
+                    </NavLink>
+                  </div>
+                ))
+              ) : (
+                <div style={{ color: "black", marginLeft: "8vw" }}>
+                  אין אבדות למחוק
                 </div>
-              ))}
+              )}
+
             </div>
           </div>
         </Box>
@@ -199,7 +223,6 @@ const UserProfile = () => {
                         <MdLocationOn style={iconStyle} />
                         <span>{found.city}</span>
                       </div>
-
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
                         <span>{found.category}</span>
@@ -212,22 +235,22 @@ const UserProfile = () => {
           </div>
         </>
       )}
+
       {LostByIdUser && LostByIdUser.length > 0 && (
         <>
           <label style={detailTitle}>:האבדות שלי</label>
           <div style={containerOfFound}>
             <div style={wrapperStyle}>
               {LostByIdUser.map((lost: Lost) => (
-                <div key={lost._id?.toString()} >
+                <div key={lost._id?.toString()}>
                   <Link to={`/Losts/${lost._id?.toString()}`}>
                     <div style={cardStyle}>
-                      <div style={badgeStyle}>Found</div>
+                      <div style={badgeStyle}>Lost</div>
                       <div style={titleStyle}>{lost.name}</div>
                       <div style={textRowStyle}>
                         <MdLocationOn style={iconStyle} />
                         <span>{lost.city}</span>
                       </div>
-
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
                         <span>{lost.category}</span>
@@ -241,10 +264,9 @@ const UserProfile = () => {
         </>
       )}
       {!FoundsByIdUser?.length && !LostByIdUser?.length && (
-        <Typography>אין מציאות או אבידות להצגה.</Typography>
+        <Typography sx={{ color: "black", fontSize: "large", marginTop: "10vh" }}>אין מציאות או אבידות להצגה.</Typography>
       )}
     </div>
   );
 };
-
 export default UserProfile;

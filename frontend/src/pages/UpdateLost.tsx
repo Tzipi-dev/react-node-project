@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Category, Cities, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
+import { Category, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
 import {
     Autocomplete, Button, CircularProgress, FormControl,
@@ -27,7 +27,7 @@ const UpdateLost = () => {
     } = useForm({ resolver: zodResolver(AddLostSchema) });
 
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const [selectedCity, setSelectedCity] = useState<string>("");
+    const [, setSelectedCity] = useState<string>("");
     const [, setLost] = useState<Lost | null>(null);
     const [UpdateLostMutation] = useUpdateLostMutation();
     const { data: cities = [], isLoading: isLoadingCities } = useGetAllCitiesQuery();

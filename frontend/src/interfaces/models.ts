@@ -1,10 +1,10 @@
 
 
 export interface User {
-    name: String,
-    password: String,
-    phone: String,
-    email: String,
+    name: string,
+    password: string,
+    phone: string,
+    email: string,
     _id?: string 
 }
 export enum Category {
