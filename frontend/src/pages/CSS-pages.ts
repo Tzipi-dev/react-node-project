@@ -218,7 +218,8 @@ export const updateButtonStyle: CSSProperties = {
   fontSize: "0.9rem",
   cursor: "pointer",
   transition: "background-color 0.3s ease, color 0.3s ease",
-
+ fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "100"
 
 };
 
@@ -266,7 +267,7 @@ export const cardStyle: React.CSSProperties = {
   borderRadius: "20px",
   padding: "32px",
   boxShadow: "0 4px 18px rgba(0, 0, 0, 0.1)",
-  width: "15vw",
+  width: "11vw",
   margin: "auto",
   direction: "rtl",
   fontFamily: "Varela Round, sans-serif",
@@ -303,4 +304,20 @@ export const titleStyle: React.CSSProperties = {
   fontSize: "18px",
   color: "#5e4035",
   marginBottom: "-8px",
+};
+export const darkBrownCircleStyle: React.CSSProperties = {
+  width: "80px",
+  height: "80px",
+  borderRadius: "50%",
+  backgroundColor: "#4E342E", // חום כהה
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: "white", // צבע טקסט (אם תוסיפי טקסט פנימי)
+  fontWeight: "200",
+  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // צל לעיצוב יפה
+  marginLeft: "68vw",
+  fontSize:"xx-large",
+  cursor: "pointer",
+  
 };

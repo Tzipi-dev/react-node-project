@@ -7,12 +7,16 @@ import { TbListDetails } from "react-icons/tb";
 import { useEffect, useState } from "react";
 
 const ButtomNav = () => {
-    const [firstLetter, setFirstLetter] = useState("א"); // ברירת מחדל לאות א'
+    const [firstLetter, setFirstLetter] = useState("א");
+    ;
+    const [currentUser, setcurrentUser] = useState<string | null>()
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
         const userName = user?.name || "אנונימי";
         const first = userName.charAt(0).toUpperCase();
         setFirstLetter(first);
+        const Cuser = localStorage.getItem("currentUser")
+        setcurrentUser(Cuser)
     }, []);
     return (
         <div style={sidebarStyle}>
@@ -40,12 +44,14 @@ const ButtomNav = () => {
                 <span style={{ marginRight: "0.5rem", color: "darkred" }}><TbListDetails /></span>
                 צפיה בכל הפריטים
             </NavLink>
-            <NavLink to="/UserProfile" style={menuItemStyle}>
-                <span style={iconStyle}>
-                    {firstLetter}
-                </span>
-                פרופיל משתמש
-            </NavLink>
+            {currentUser && (
+                <NavLink to="/UserProfile" style={menuItemStyle}>
+                    <span style={iconStyle}>
+                        {firstLetter}
+                    </span>
+                    פרופיל משתמש
+                </NavLink>
+            )}
         </div>
     );
 };

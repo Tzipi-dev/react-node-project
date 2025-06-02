@@ -97,7 +97,8 @@ export const loginButtonStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   cursor: "pointer",
   transition: "background-color 0.3s ease, color 0.3s ease",
-
+   fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "100"
 
 };
 
@@ -114,7 +115,9 @@ export const signupButtonStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   cursor: "pointer",
   transition: "background-color 0.3s ease",
-  marginLeft: "1vw"
+  marginLeft: "1vw",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "100"
 };
 
 export const signupButtonStyleHover: React.CSSProperties = {

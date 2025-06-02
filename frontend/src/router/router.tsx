@@ -17,18 +17,20 @@ import UpdateLost from "../pages/UpdateLost";
 import UpdateFound from "../pages/UpdateFound";
 import DeleteFound from "../pages/DeleteFound";
 import DeleteLost from "../pages/DeleteLost";
+import UptadeUser from "../pages/UpdateUser";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
         { index: true, element: <HomePage /> },
         { path: "addLost", element: <AddLost /> },
         { path: "addFound", element: <AddFound /> },
-        { path: "Losts",
+        {
+            path: "Losts",
             children: [
-            { index: true, element: <AllLosts /> },
-            { path: ":id", element: <LostDetails/> },
-            {path: "UpdateLost/:id", element: <UpdateLost/>},
-            {path: "DeleteLost/:id", element: <DeleteLost/>}
+                { index: true, element: <AllLosts /> },
+                { path: ":id", element: <LostDetails /> },
+                { path: "UpdateLost/:id", element: <UpdateLost /> },
+                { path: "DeleteLost/:id", element: <DeleteLost /> }
             ]
         },
         {
@@ -36,17 +38,24 @@ const router = createBrowserRouter([{
             children: [
                 { index: true, element: <AllFounds /> },
                 { path: ":id", element: <FoundDetails /> },
-                {path: "UpdateFound/:id", element: <UpdateFound/>},
-                {path: "DeleteFound/:id", element: <DeleteFound/>},
+                { path: "UpdateFound/:id", element: <UpdateFound /> },
+                { path: "DeleteFound/:id", element: <DeleteFound /> },
             ]
         },
+
         { path: "login", element: <LogIn /> },
         { path: "users", element: <SignUp /> },
-        {path: "AllItems", element: <AllItems/>},
-        {path:"forgot-password" , element: <ForgotPassword />},
-        {path:"reset-password/:token" , element: <ResetPassword />},
-        {path: "UserProfile", element: <UserProfile/>},
-        
+        { path: "AllItems", element: <AllItems /> },
+        { path: "forgot-password", element: <ForgotPassword /> },
+        { path: "reset-password/:token", element: <ResetPassword /> },
+        {
+            path: "UserProfile",
+            children: [
+                { index: true, element: <UserProfile /> },
+                { path: "UpdateUser", element: <UptadeUser /> },
+            ]
+        },
+
 
     ]
 }])
