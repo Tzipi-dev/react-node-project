@@ -318,5 +318,5 @@ export const darkBrownCircleStyle: React.CSSProperties = {
   marginLeft: "68vw",
   fontSize:"xx-large",
   cursor: "pointer",
-  
+  marginTop:"-10vh"
 };
