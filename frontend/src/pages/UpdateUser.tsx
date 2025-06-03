@@ -16,7 +16,7 @@ const UpdateUser = () => {
     resolver: zodResolver(UserSchema),
   });
   const [UpdateUserMutation] = useUpdateUserMutation()
-  const navigate= useNavigate()
+  const navigate=useNavigate()
   useEffect(() => {
     const user = localStorage.getItem("currentUser");
     if (user !== null) {
@@ -47,8 +47,13 @@ const UpdateUser = () => {
       _id: currentUser?._id
     }
     const res = await UpdateUserMutation(UpdateUser)
-   localStorage.setItem("currentUser", JSON.stringify(res))
-   navigate("/")
+  //  localStorage.setItem("currentUser", JSON.stringify(res))
+  if ('data' in res) {
+  localStorage.setItem("currentUser", JSON.stringify(res.data));
+} else {
+  localStorage.setItem("currentUser", JSON.stringify(res));
+  }
+   navigate("/UserProfile")
   }
 
   return (
