@@ -23,6 +23,7 @@ import { useGetFoundsByIdUserQuery } from "../redux/api/usersFound/apiUsersFound
 import { useGetLostsByIdUserQuery } from "../redux/api/usresLost/apiUsresLostsSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { MdLocationOn, MdLock } from "react-icons/md";
+
 const UserProfile = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [open, setOpen] = useState(false);
@@ -31,7 +32,8 @@ const UserProfile = () => {
   const [openD, setOpenDelete] = useState(false);
   const handleOpenDelete = () => setOpenDelete(true);
   const handleCloseDelete = () => setOpenDelete(false);
-  const [firstLetter, setFirstLetter] = useState("א"); // ברירת מחדל לאות א'
+  const [firstLetter, setFirstLetter] = useState("א");
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
     const userName = user?.name || "אנונימי";
@@ -44,30 +46,34 @@ const UserProfile = () => {
       console.log("לא נמצא מידע ב-localStorage");
     }
   }, []);
-  
-    const { data: FoundsByIdUser, refetch: refetchFounds, isLoading: isLoadingFounds, isError: isErrorFounds } = useGetFoundsByIdUserQuery(
-    currentUser?._id ?? skipToken
-  );
-  const { data: LostByIdUser, refetch: refetchLosts, isLoading: isLoadingLosts, isError: isErrorLosts } = useGetLostsByIdUserQuery(
-    currentUser?._id ?? skipToken
-  );
+
+  const {
+    data: FoundsByIdUser,
+    refetch: refetchFounds,
+    isLoading: isLoadingFounds,
+    isError: isErrorFounds,
+    isUninitialized: isUninitializedFounds // ✅ חדש
+  } = useGetFoundsByIdUserQuery(currentUser?._id ?? skipToken);
+
+  const {
+    data: LostByIdUser,
+    refetch: refetchLosts,
+    isLoading: isLoadingLosts,
+    isError: isErrorLosts,
+    isUninitialized: isUninitializedLosts // ✅ חדש
+  } = useGetLostsByIdUserQuery(currentUser?._id ?? skipToken);
 
   useEffect(() => {
-    if (currentUser) {
+    if (!isUninitializedFounds && !isUninitializedLosts) {
       refetchFounds();
       refetchLosts();
     }
-  }, [currentUser]);
+  }, [isUninitializedFounds, isUninitializedLosts]); // ✅ חדש
 
-  if (!currentUser) {
-    return <CircularProgress color="error" />
-  }
-  if (isLoadingFounds || isLoadingLosts) {
-    return <CircularProgress color="error" />
-  }
-  if (isErrorFounds || isErrorLosts) {
-    return <div>אירעה שגיאה בטעינת הנתונים</div>;
-  }
+  if (!currentUser) return <CircularProgress color="error" />;
+  if (isLoadingFounds || isLoadingLosts) return <CircularProgress color="error" />;
+  if (isErrorFounds || isErrorLosts) return <div>אירעה שגיאה בטעינת הנתונים</div>;
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -78,7 +84,7 @@ const UserProfile = () => {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-  }
+  };
   return (
     <div style={mainContentStyle}>
 
