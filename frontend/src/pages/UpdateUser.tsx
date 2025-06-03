@@ -47,7 +47,7 @@ const UpdateUser = () => {
       _id: currentUser?._id
     }
     const res = await UpdateUserMutation(UpdateUser)
-   localStorage.setItem("currentUser", JSON.stringify(res))
+   localStorage.setItem("currentUser", JSON.stringify(res.data))
    navigate("/")
   }
 
