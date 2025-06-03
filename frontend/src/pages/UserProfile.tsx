@@ -95,7 +95,7 @@ const UserProfile = () => {
           </div>
         </Link>
       
-      <Box sx={{ display: 'flex', width: "25vw", marginRight: "50vw", marginTop: "-8vh" }}>
+      <Box sx={{ display: 'flex', width: "25vw", marginRight: "50vw", marginTop: "-10vh" }}>
         <Button onClick={handleOpen} style={updateButtonStyle} sx={{ display: "block" }}>
           לעדכון אבידה או מציאה
         </Button>
