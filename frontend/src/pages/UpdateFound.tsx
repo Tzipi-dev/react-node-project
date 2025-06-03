@@ -103,7 +103,7 @@ const UpdateFound = () => {
 
         setFound(updatedFound);
         addFound(updatedFound);
-        navigate('/');
+      navigate('/UserProfile');
     };
 
     const handleChangeCategory = (event: SelectChangeEvent) => {

@@ -1,5 +1,4 @@
 import { Link, useNavigate, useParams } from 'react-router';
-import { useEffect, useState } from 'react';
 import { useDeleteLostMutation, useGetLostByIdQuery } from '../redux/api/losts/apiLostSlice';
 import { Category, Cities, Lost, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
@@ -33,7 +32,7 @@ const DeleteLost = () => {
 
     try {
       await deleteLost({ _id: thisLost._id } as Lost).unwrap();
-      navigate('/');
+      navigate('/UserProfile');
     } catch (error) {
       console.error("שגיאה במחיקת האבידה:", error);
     }

@@ -8,6 +8,7 @@ import { inputStyle, textRowStyle } from "./CSS-pages"
 import { useEffect, useState } from "react"
 import { User } from "../interfaces/models"
 import { useUpdateUserMutation } from "../redux/api/users/apiUserSlice"
+import { useNavigate } from "react-router"
 
 const UpdateUser = () => {
   const [currentUser, setCurrentUser] = useState<User | null>()
@@ -15,6 +16,7 @@ const UpdateUser = () => {
     resolver: zodResolver(UserSchema),
   });
   const [UpdateUserMutation] = useUpdateUserMutation()
+  const navigate= useNavigate()
   useEffect(() => {
     const user = localStorage.getItem("currentUser");
     if (user !== null) {
@@ -46,7 +48,7 @@ const UpdateUser = () => {
     }
     const res = await UpdateUserMutation(UpdateUser)
    localStorage.setItem("currentUser", JSON.stringify(res))
-
+   navigate("/")
   }
 
   return (
