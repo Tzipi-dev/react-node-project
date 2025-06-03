@@ -44,13 +44,21 @@ const UserProfile = () => {
       console.log("לא נמצא מידע ב-localStorage");
     }
   }, []);
+  
+    const { data: FoundsByIdUser, refetch: refetchFounds, isLoading: isLoadingFounds, isError: isErrorFounds } = useGetFoundsByIdUserQuery(
+    currentUser?._id ?? skipToken
+  );
+  const { data: LostByIdUser, refetch: refetchLosts, isLoading: isLoadingLosts, isError: isErrorLosts } = useGetLostsByIdUserQuery(
+    currentUser?._id ?? skipToken
+  );
 
-  const { data: FoundsByIdUser, isLoading: isLoadingFounds, isError: isErrorFounds } = useGetFoundsByIdUserQuery(
-    currentUser?._id ?? skipToken
-  );
-  const { data: LostByIdUser, isLoading: isLoadingLosts, isError: isErrorLosts } = useGetLostsByIdUserQuery(
-    currentUser?._id ?? skipToken
-  );
+  useEffect(() => {
+    if (currentUser) {
+      refetchFounds();
+      refetchLosts();
+    }
+  }, [currentUser]);
+
   if (!currentUser) {
     return <CircularProgress color="error" />
   }

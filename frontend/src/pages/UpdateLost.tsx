@@ -85,7 +85,7 @@ const UpdateLost = () => {
 
         setLost(updatedLost);
         addLost(updatedLost);
-        navigate('/');
+        navigate('/UserProfile');
     };
 
     const handleChangeCategory = (event: SelectChangeEvent) => {

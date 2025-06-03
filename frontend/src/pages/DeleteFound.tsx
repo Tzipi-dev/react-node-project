@@ -33,7 +33,7 @@ const DeleteFound = () => {
 
     try {
       await DeleteFoundMutation({ _id: thisFound._id } as Found).unwrap();
-      navigate('/');
+      navigate('/UserProfile');
     } catch (error) {
       console.error("שגיאה במחיקת הפריט:", error);
     }
