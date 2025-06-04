@@ -11,7 +11,6 @@ const foundByIdRouter=require('./routes/foundsByIdUser')
 const lostByIdRouter=require('./routes/lostsByIdUser')
 const citiesRouter=require('./routes/cities')
 const corsOptions=require("./config/corsOptions")
-
 const connectDB=require("./config/dbConn")
 const PORT = process.env.PORT || 5000
 connectDB()
@@ -26,7 +25,6 @@ app.use('/losts', lostRouter)
 app.use('/founds', foundRouter)
 app.use('/login', loginRouter)
 app.use('/cities',citiesRouter)
-
 mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => app.listen(PORT, () => {
         console.log(`server is runing on port ${PORT}`);
