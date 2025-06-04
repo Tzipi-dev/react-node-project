@@ -121,7 +121,7 @@ const UserProfile = () => {
                         </div>
                         <div style={textRowStyle}>
                           <MdLock style={iconStyle} />
-                          <span>{found.category}</span>
+                          <span>{found.category.replace(/_/g, " ")}</span>
                         </div>
                       </div>
                     </NavLink>
@@ -147,7 +147,7 @@ const UserProfile = () => {
                         </div>
                         <div style={textRowStyle}>
                           <MdLock style={iconStyle} />
-                          <span>{lost.category}</span>
+                          <span>{lost.category.replace(/_/g, " ")}</span>
                         </div>
                       </div>
                     </NavLink>
@@ -180,7 +180,7 @@ const UserProfile = () => {
                         </div>
                         <div style={textRowStyle}>
                           <MdLock style={iconStyle} />
-                          <span>{found.category}</span>
+                          <span>{found.category.replace(/_/g, " ")}</span>
                         </div>
                       </div>
                     </NavLink>
@@ -206,7 +206,7 @@ const UserProfile = () => {
                         </div>
                         <div style={textRowStyle}>
                           <MdLock style={iconStyle} />
-                          <span>{lost.category}</span>
+                          <span>{lost.category.replace(/_/g, " ")}</span>
                         </div>
                       </div>
                     </NavLink>
@@ -239,7 +239,7 @@ const UserProfile = () => {
                       </div>
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
-                        <span>{found.category}</span>
+                        <span>{found.category.replace(/_/g, " ")}</span>
                       </div>
                     </div>
                   </Link>
@@ -267,7 +267,7 @@ const UserProfile = () => {
                       </div>
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
-                        <span>{lost.category}</span>
+                        <span>{lost.category.replace(/_/g, " ")}</span>
                       </div>
                     </div>
                   </Link>

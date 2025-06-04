@@ -173,7 +173,7 @@ const AddLost = () => {
                 .filter((val) => isNaN(Number(val)))
                 .map((category) => (
                   <MenuItem key={category} value={category}>
-                    {category}
+                   {category.replace(/_/g, " ")}
                   </MenuItem>
                 ))}
             </Select>

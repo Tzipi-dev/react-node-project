@@ -73,7 +73,7 @@ const DeleteLost = () => {
               <InputLabel id="city-select-label">עיר</InputLabel>
               <Select
                 labelId="city-select-label"
-                value={thisLost?.city || ''}
+                value={thisLost?.city.trim()  || ''}
                 label="עיר"
                 readOnly
                 disabled
@@ -103,7 +103,7 @@ const DeleteLost = () => {
                 {Object.values(Category)
                   .filter(val => isNaN(Number(val)))
                   .map(category => (
-                    <MenuItem key={category} value={category}>{category}</MenuItem>
+                    <MenuItem key={category} value={category}>{category.replace(/_/g, " ")}</MenuItem>
                   ))}
               </Select>
             </FormControl>

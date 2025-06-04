@@ -46,7 +46,7 @@ const LostDetails = () => {
               <div style={detailRow}><span style={labelStyle}>תאריך עברי:</span> <span style={valueStyle}>{hebrewDate}</span></div>
               <div style={detailRow}><span style={labelStyle}>עיר:</span> <span style={valueStyle}>{lost.city}</span></div>
               <div style={detailRow}><span style={labelStyle}>רחוב:</span> <span style={valueStyle}>{lost.street}</span></div>
-              <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{lost.category}</span></div>
+              <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{lost.category.replace(/_/g, " ")}</span></div>
 
               <div style={{ ...sectionTitle, marginTop: '30px' }}> צור קשר</div>
 

@@ -46,7 +46,7 @@ const FoundDetails = () => {
               <div style={detailRow}><span style={labelStyle}>תאריך עברי:</span> <span style={valueStyle}>{hebrewDate}</span></div>
               <div style={detailRow}><span style={labelStyle}>עיר:</span> <span style={valueStyle}>{found.city}</span></div>
               <div style={detailRow}><span style={labelStyle}>רחוב:</span> <span style={valueStyle}>{found.street}</span></div>
-              <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{found.category}</span></div>
+              <div style={detailRow}><span style={labelStyle}>קטגוריה:</span> <span style={valueStyle}>{found.category.replace(/_/g, " ")}</span></div>
 
               <div style={{ ...sectionTitle, marginTop: '30px' }}> צור קשר</div>
 

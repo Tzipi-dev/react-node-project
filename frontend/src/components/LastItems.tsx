@@ -56,7 +56,7 @@ const LastItems = () => {
                                     </div>
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
-                                        <p>{list[0]?.category}</p>
+                                        <p>{list[0]?.category.replace(/_/g, " ")}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -72,7 +72,7 @@ const LastItems = () => {
                                     </div>
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
-                                        <p>{list[1]?.category}</p>
+                                        <p>{list[1]?.category.replace(/_/g, " ")}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -88,7 +88,7 @@ const LastItems = () => {
                                     </div>
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
-                                        <p>{list[2]?.category}</p>
+                                        <p>{list[2]?.category.replace(/_/g, " ")}</p>
                                     </div>
                                 </div>
                             </Link>
@@ -104,7 +104,7 @@ const LastItems = () => {
                                     </div>
                                     <div style={textRowStyle}>
                                         <MdLock style={iconStyle} />
-                                        <p>{list[3]?.category}</p>
+                                        <p>{list[3]?.category.replace(/_/g, " ")}</p>
                                     </div>
                                 </div>
                             </div>

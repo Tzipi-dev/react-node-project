@@ -162,7 +162,7 @@ const AddFound = () => {
               onChange={handleChangeCategory}
             >
               {Object.values(Category).map((category) => (
-                <MenuItem key={category} value={category}>{category}</MenuItem>
+                <MenuItem key={category} value={category}>{category.replace(/_/g, " ")}</MenuItem>
               ))}
             </Select>
           </FormControl>

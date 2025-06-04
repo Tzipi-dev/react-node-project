@@ -74,7 +74,7 @@ const DeleteFound = () => {
               <InputLabel id="city-select-label">עיר</InputLabel>
               <Select
                 labelId="city-select-label"
-                value={thisFound?.city || ''}
+                value={thisFound?.city.trim() || ''}
                 label="עיר"
                 readOnly
                 disabled
@@ -104,7 +104,7 @@ const DeleteFound = () => {
                 {Object.values(Category)
                   .filter(val => isNaN(Number(val)))
                   .map(category => (
-                    <MenuItem key={category} value={category}>{category}</MenuItem>
+                    <MenuItem key={category} value={category}>{category.replace(/_/g, " ")}</MenuItem>
                   ))}
               </Select>
             </FormControl>
