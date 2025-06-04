@@ -28,7 +28,7 @@ const LogIn = () => {
       localStorage.setItem("currentUser", JSON.stringify(result.user));
       navigate('/')
     } catch (err) {
-      console.log(err);
+     
       setloginError("המשתמש אינו קיים או שאחד מהנתונים שגוי")
       setIsError(true)
     }

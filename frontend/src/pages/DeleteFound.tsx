@@ -13,7 +13,7 @@ const DeleteFound = () => {
   const navigate = useNavigate();
   const confirmAndDelete = async () => {
     if (!thisFound?._id) {
-      console.log("אין פריט למחיקה");
+   
       return;
     }
     const confirmed = window.confirm("האם אתה בטוח שברצונך למחוק את הפריט?");

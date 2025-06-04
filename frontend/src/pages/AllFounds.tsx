@@ -30,7 +30,7 @@ const AllFounds = () => {
   const open = Boolean(anchorEl);
   useEffect(() => {
     fetchingData();
-    console.log(GetAllFoundsQuery);
+   
   }, []);
   const fetchingData = async () => {
     try {
@@ -47,7 +47,7 @@ const AllFounds = () => {
   };
   const handleSelectCategory = (category: Category) => {
     setSelectedCategory(category);
-    console.log(category);
+   
     handleClose();
   };
   const resetHandling = () => {

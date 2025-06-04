@@ -1,10 +1,7 @@
 
 import { ContainerInfo } from "./CSS-components"
 import InfoCard from "./InfoCard"
-
-
 const DashboardCards = () => {
-
   return (
     <>
     <div style={ContainerInfo}>

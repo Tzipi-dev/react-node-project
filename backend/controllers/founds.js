@@ -27,7 +27,7 @@ exports.addFound = async (req, res) => {
 
 exports.deleteFound = async (req, res) => {
     const { id } = req.params
-    console.log(id);  
+   
     try {
         const idFound = await Found.findOneAndDelete({ _id: id })
         if (!idFound) {
@@ -44,7 +44,7 @@ exports.deleteFound = async (req, res) => {
 exports.updateFound = async (req, res) => {
     const { id } = req.params
     const { category, name, city, street, owner, date } = req.body
-    console.log(category, name, city, street, owner, date);
+   
     try {
         const updateFound = await Found.findOneAndUpdate(
             { _id: id },
@@ -150,7 +150,7 @@ const match = async (found) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      console.log(`Email sent to ${emailToSend}`);
+     
     } catch (error) {
       console.error(`Failed to send email to ${emailToSend}:`, error);
     }

@@ -42,7 +42,7 @@ exports.updateUser=async(req,res)=>{
             {new: true}
         )
         if (!updateUser){
-            console.log("-------------");
+           
            return  res.status(404).json({message: 'user not found'})
         }
         res.json(updateUser)

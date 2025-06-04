@@ -144,7 +144,7 @@ const match = async (lost) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      console.log(`Email sent to ${emailToSend}`);
+     
     } catch (error) {
       console.error(`Failed to send email to ${emailToSend}:`, error);
     }

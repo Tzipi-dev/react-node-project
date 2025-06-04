@@ -23,7 +23,7 @@ const DeleteLost = () => {
 
   const confirmAndDelete = async () => {
     if (!thisLost?._id) {
-      console.log("אין אבידה למחיקה");
+    
       return;
     }
 
