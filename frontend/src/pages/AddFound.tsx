@@ -57,7 +57,7 @@ const AddFound = () => {
     if (!data) return console.warn("אין נתונים. לא מבצעים את הקריאה.");
     try {
       const result = await AddFoundMutation(data).unwrap();
-      console.log(result);
+     
     } catch (error) {
       console.error("Invalid date format:", error);
     }

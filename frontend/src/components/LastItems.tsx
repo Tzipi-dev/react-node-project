@@ -20,7 +20,7 @@ const LastItems = () => {
             await dispatch(setAllFounds(GetAllFoundsQuery))
         }
         catch (error) {
-            console.error(error)
+            
         }
     }
     useEffect(() => {

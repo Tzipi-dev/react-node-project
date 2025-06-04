@@ -37,15 +37,14 @@ const SignUp = () => {
     try {
       const result = await AddUserMutation(data).unwrap();
       dispatch(setCurrentUser(result.user));
-      console.log("User added successfully:", result);
+   
       setCookie("token", result.accessToken, {
         path: "/",
         maxAge: 3600 * 24 * 7,
       });
       localStorage.setItem("currentUser", JSON.stringify(result.user));
       const result2 = zxcvbn(data.password.toString());
-      console.log(result2.score); 
-      console.log(result2.feedback); 
+      
       navigate("/");
     } catch (error) {
       console.error("Error adding user:", error);

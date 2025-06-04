@@ -33,7 +33,7 @@ const AllLosts = () => {
 
   useEffect(() => {
     fetchingData();
-    console.log(GetAllLostsQuery);
+   
   }, []);
 
   const fetchingData = async () => {
@@ -54,7 +54,7 @@ const AllLosts = () => {
 
   const handleSelectCategory = (category: Category) => {
     setSelectedCategory(category);
-    console.log(category);
+  
     handleClose();
   };
 

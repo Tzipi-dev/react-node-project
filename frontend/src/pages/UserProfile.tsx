@@ -43,7 +43,7 @@ const UserProfile = () => {
     if (res) {
       setCurrentUser(JSON.parse(res));
     } else {
-      console.log("לא נמצא מידע ב-localStorage");
+     
     }
   }, []);
 

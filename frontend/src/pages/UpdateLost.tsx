@@ -39,7 +39,7 @@ const UpdateLost = () => {
         if (data) {
             setCurrentUser(JSON.parse(data));
         } else {
-            console.log("לא נמצא מידע ב-localStorage");
+           
         }
     }, []);
 
@@ -58,9 +58,9 @@ const UpdateLost = () => {
         try {
             if (data) {
                 const result = await UpdateLostMutation(data).unwrap();
-                console.log(result);
+             
             } else {
-                console.log("אין נתונים. לא מבצעים את הקריאה.");
+                
             }
         } catch (error) {
             console.error('Error adding user:', error);
