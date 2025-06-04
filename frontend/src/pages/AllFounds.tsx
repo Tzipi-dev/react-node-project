@@ -97,7 +97,7 @@ const AllFounds = () => {
                   .filter((val) => isNaN(Number(val)))
                   .map((category) => (
                     <MenuItem key={category} onClick={() => handleSelectCategory(category)}>
-                      {category}
+                      {category.replace(/_/g, " ")}
                     </MenuItem>
                   ))}
               </Menu>
@@ -122,7 +122,7 @@ const AllFounds = () => {
 
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
-                        <span>{found.category}</span>
+                        <span>{found.category.replace(/_/g, " ")}</span>
                       </div>
                     </div>
                   </Link>
@@ -147,7 +147,7 @@ const AllFounds = () => {
 
                         <div style={textRowStyle}>
                           <MdLock style={iconStyle} />
-                          <p>{found.category}</p>
+                          <p>{found.category.replace(/_/g, " ")}</p>
                         </div>
                       </div>
                     </Link>
