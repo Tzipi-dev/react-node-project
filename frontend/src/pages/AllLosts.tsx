@@ -105,7 +105,7 @@ const AllLosts = () => {
                   .filter((val) => isNaN(Number(val)))
                   .map((category) => (
                     <MenuItem key={category} onClick={() => handleSelectCategory(category)}>
-                      {category}
+                      {category.replace(/_/g, " ")}
                     </MenuItem>
                   ))}
               </Menu>
@@ -130,7 +130,7 @@ const AllLosts = () => {
 
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
-                        <span>{lost.category}</span>
+                        <span>{lost.category.replace(/_/g, " ")}</span>
                       </div>
                     </div>
                   </Link>
@@ -154,7 +154,7 @@ const AllLosts = () => {
 
                       <div style={textRowStyle}>
                         <MdLock style={iconStyle} />
-                        <span>{lost.category}</span>
+                        <span>{lost.category.replace(/_/g, " ")}</span>
                       </div>
                     </div>
                     </Link>

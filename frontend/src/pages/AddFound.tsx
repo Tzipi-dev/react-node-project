@@ -41,7 +41,7 @@ const AddFound = () => {
   const [, setSelectedCity] = useState<string>("");
   const navigate = useNavigate();
   const today = new Date();
-  const maxDate = today.toISOString().split("T")[0]; // YYYY-MM-DD
+  const maxDate = today.toISOString().split("T")[0]; 
   useEffect(() => {
     const data = localStorage.getItem("currentUser");
     if (data) {
