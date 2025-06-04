@@ -50,12 +50,10 @@ const AllItems = () => {
                   <div style={cardStyle}>
                     <div style={badgeStyle}>Lost</div>
                     <div style={titleStyle}>{lost.name}</div>
-
                     <div style={textRowStyle}>
                       <MdLocationOn style={iconStyle} />
                       <span>{lost.city}</span>
                     </div>
-
                     <div style={textRowStyle}>
                       <MdLock style={iconStyle} />
                       <span>{lost.category}</span>
@@ -72,12 +70,10 @@ const AllItems = () => {
                  <div style={cardStyle}>
                     <div style={badgeStyle}>Found</div>
                     <div style={titleStyle}>{found.name}</div>
-
                     <div style={textRowStyle}>
                       <MdLocationOn style={iconStyle} />
                       <span>{found.city}</span>
                     </div>
-
                     <div style={textRowStyle}>
                       <MdLock style={iconStyle} />
                       <span>{found.category}</span>
@@ -99,12 +95,10 @@ const AllItems = () => {
                  <div style={cardStyle}>
                     <div style={badgeStyle}>Lost</div>
                     <div style={titleStyle}>{lost.name}</div>
-
                     <div style={textRowStyle}>
                       <MdLocationOn style={iconStyle} />
                       <span>{lost.city}</span>
                     </div>
-
                     <div style={textRowStyle}>
                       <MdLock style={iconStyle} />
                       <span>{lost.category}</span>

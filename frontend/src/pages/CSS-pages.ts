@@ -48,8 +48,11 @@ export const containerOfFound: CSSProperties = {
   display: 'flex',
   flexWrap: 'wrap',
   justifyContent: 'space-between',
-  gap: '16px', // זה יצור רווח אחיד בין הפריטים (אופקית ואנכית)
+  gap: '16px', 
   width: '100%',
+  minHeight: "500px",
+ 
+
 }
 export const item: CSSProperties = {
   fontFamily: "Segoe UI, sans-serif",
@@ -75,7 +78,7 @@ export const filterContainer: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  minWidth: "64vw"
+  minWidth: "68vw"
 }
 
 export const frameToGroupButton: CSSProperties = {
@@ -274,6 +277,7 @@ export const cardStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   gap: "16px",
+  
 };
 export const badgeStyle: React.CSSProperties = {
   alignSelf: "flex-start",

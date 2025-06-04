@@ -129,7 +129,7 @@ export const mainContentStyle: React.CSSProperties = {
   marginLeft: "14vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
   padding: "1rem", // ריווח פנימי לתוכן
   minHeight: "50vh",
-  
+  // minWidth: "100vw"
 };
 export const cardsContainerStyle: CSSProperties = {
   display: 'flex',
